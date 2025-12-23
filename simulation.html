@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taylor Polynomial Expansion Simulation</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 3px solid #0c2461;
+        }
+
+        h1 {
+            color: #0c2461;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #0c2461, #4a69bd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #4a6fa5;
+            font-size: 1.2rem;
+            font-weight: normal;
+        }
+
+        .simulation-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-left: 6px solid #4a69bd;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .simulation-container:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4a69bd, #0c2461);
+        }
+
+        .simulation-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 1100px) {
+            .simulation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .simulation-input-panel {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e1e8f0;
+            height: 700px; /* Fixed height for input panel */
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; /* Allow scrolling if content overflows */
+            min-height: 700px; /* Minimum height */
+            max-height: 700px; /* Maximum height */
+        }
+
+        .simulation-graph-container {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e1e8f0;
+            height: 700px; /* Fixed height for graph container */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .simulation-panel-title {
+            font-size: 1.4rem;
+            color: #0c2461;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4a69bd;
+            flex-shrink: 0; /* Prevent title from shrinking */
+        }
+
+        .simulation-form-group {
+            margin-bottom: 20px;
+            flex-shrink: 0; /* Prevent form groups from shrinking */
+        }
+
+        .simulation-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #0c2461;
+            font-size: 1rem;
+        }
+
+        .simulation-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .simulation-input:focus {
+            border-color: #4a69bd;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 105, 189, 0.2);
+        }
+
+        .simulation-button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-shrink: 0; /* Prevent button group from shrinking */
+        }
+
+        .simulation-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+        }
+
+        #simulation-calculate-btn {
+            background: linear-gradient(135deg, #0c2461, #4a69bd);
+            color: white;
+            box-shadow: 0 5px 15px rgba(12, 36, 97, 0.3);
+        }
+
+        #simulation-calculate-btn:hover {
+            background: linear-gradient(135deg, #4a69bd, #0c2461);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(12, 36, 97, 0.4);
+        }
+
+        #simulation-reset-btn {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #simulation-reset-btn:hover {
+            background: linear-gradient(135deg, #495057, #343a40);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .simulation-examples {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(120deg, #f0f5ff 0%, #e6eeff 100%);
+            border-radius: 10px;
+            border-left: 4px solid #4a69bd;
+            flex-shrink: 0; /* Prevent examples from shrinking */
+        }
+
+        .simulation-examples h4 {
+            color: #0c2461;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .simulation-example-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .simulation-example-btn {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            border: 2px solid #e1e8f0;
+            transition: all 0.3s;
+            font-weight: 500;
+            flex-shrink: 0; /* Prevent example buttons from shrinking */
+        }
+
+        .simulation-example-btn:hover {
+            background: linear-gradient(135deg, #0c2461, #4a69bd);
+            color: white;
+            border-color: #4a69bd;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(12, 36, 97, 0.2);
+        }
+
+        .simulation-result-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(120deg, #f0f5ff 0%, #e6eeff 100%);
+            border-radius: 10px;
+            border-left: 4px solid #4a69bd;
+            flex-grow: 1; /* Allow result section to grow */
+            overflow-y: auto; /* Allow scrolling if needed */
+            min-height: 250px; /* Minimum height for result section */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .simulation-result-title {
+            font-weight: 700;
+            color: #0c2461;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            flex-shrink: 0; /* Prevent title from shrinking */
+        }
+
+        /* Updated Taylor polynomial box styles */
+        .simulation-taylor-polynomial-box {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #e1e8f0;
+            min-height: 80px;
+            max-height: 150px; /* Increased maximum height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow-y: auto; /* Vertical scroll for long polynomials */
+            overflow-x: auto; /* Horizontal scroll if needed */
+            font-size: 1.1rem;
+            flex-shrink: 0; /* Prevent polynomial box from shrinking */
+            position: relative;
+        }
+
+        #simulation-taylor-result {
+            font-size: 1.1rem;
+            color: #0c2461;
+            line-height: 1.5;
+            padding: 5px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Ensure MathJax formulas are properly contained */
+        .MathJax {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            font-size: 1rem !important;
+        }
+
+        .simulation-value-comparison {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+            flex-shrink: 0; /* Prevent value comparison from shrinking */
+            margin-top: auto; /* Push to bottom if there's extra space */
+        }
+
+        @media (max-width: 768px) {
+            .simulation-value-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .simulation-input-panel,
+            .simulation-graph-container {
+                height: auto; /* Auto height on mobile */
+                min-height: 600px; /* Minimum height on mobile */
+                max-height: none; /* Remove max height on mobile */
+            }
+        }
+
+        .simulation-value-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e1e8f0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            flex-shrink: 0; /* Prevent value boxes from shrinking */
+        }
+
+        .simulation-value-label {
+            font-size: 0.9rem;
+            color: #4a6fa5;
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .simulation-value-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0c2461;
+        }
+
+        #simulation-graph {
+            width: 100%;
+            height: 450px; /* Fixed height for graph */
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            border: 2px solid #e1e8f0;
+            flex-grow: 1; /* Takes available space */
+            min-height: 450px; /* Minimum height */
+            max-height: 450px; /* Maximum height */
+            position: relative; /* For absolute positioning if needed */
+        }
+
+        .simulation-instructions {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(120deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            border-left: 4px solid #4a69bd;
+            flex-shrink: 0; /* Prevents shrinking */
+        }
+
+        .simulation-instructions h4 {
+            color: #0c2461;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .simulation-instructions ul {
+            padding-left: 20px;
+            color: #2c3e50;
+        }
+
+        .simulation-instructions li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .simulation-instructions li:before {
+            content: '•';
+            color: #4a69bd;
+            font-weight: bold;
+            position: absolute;
+            left: -15px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            display: none;
+            font-weight: 600;
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #e74c3c, #c62828);
+        }
+
+        .notification.info {
+            background: linear-gradient(135deg, #4a69bd, #0c2461);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .simulation-container {
+                padding: 20px;
+            }
+            
+            .simulation-example-buttons {
+                flex-direction: column;
+            }
+            
+            .simulation-button-group {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            #simulation-graph {
+                min-height: 400px; /* Smaller minimum height on mobile */
+                max-height: 400px; /* Smaller maximum height on mobile */
+            }
+        }
+
+        .progress-indicator {
+            height: 5px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0c2461, #4a69bd);
+            width: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .back-button {
+            display: block;
+            margin: 40px auto 20px;
+            background: linear-gradient(135deg, #0c2461, #4a69bd);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(12, 36, 97, 0.3);
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(12, 36, 97, 0.4);
+            background: linear-gradient(135deg, #4a69bd, #0c2461);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0 30px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 0.9rem;
+            background: rgba(12, 36, 97, 0.3);
+            border-radius: 10px;
+        }
+
+        .power-slider-container {
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e1e8f0;
+        }
+
+        .slider-value-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #0c2461;
+        }
+        
+        /* Scrollbar styling for the input panel */
+        .simulation-input-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .simulation-input-panel::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .simulation-input-panel::-webkit-scrollbar-thumb {
+            background: #4a69bd;
+            border-radius: 10px;
+        }
+        
+        .simulation-input-panel::-webkit-scrollbar-thumb:hover {
+            background: #0c2461;
+        }
+        
+        /* Scrollbar styling for Taylor polynomial box */
+        .simulation-taylor-polynomial-box::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        .simulation-taylor-polynomial-box::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .simulation-taylor-polynomial-box::-webkit-scrollbar-thumb {
+            background: #4a69bd;
+            border-radius: 4px;
+        }
+        
+        .simulation-taylor-polynomial-box::-webkit-scrollbar-thumb:hover {
+            background: #0c2461;
+        }
+        
+        .simulation-result-section::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .simulation-result-section::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .simulation-result-section::-webkit-scrollbar-thumb {
+            background: #3498db;
+            border-radius: 10px;
+        }
+        
+        .simulation-result-section::-webkit-scrollbar-thumb:hover {
+            background: #2980b9;
+        }
+        
+        /* MathJax display improvements */
+        .MathJax_Display {
+            margin: 0 !important;
+            padding: 5px 0 !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            max-width: 100% !important;
+        }
+        
+        mjx-container[jax="CHTML"] {
+            text-align: center !important;
+            margin: 0 !important;
+            max-width: 100% !important;
+        }
+        
+        mjx-math {
+            font-size: 0.95em !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Taylor Polynomial Expansion Simulation</h1>
+            <p class="subtitle">Interactive visualization of Taylor series approximations</p>
+            
+            <div class="progress-indicator">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Notification System -->
+        <div class="notification" id="notification"></div>
+
+        <!-- Simulation Container -->
+        <div class="simulation-container">
+            <div class="simulation-grid">
+                <div class="simulation-input-panel">
+                    <h3 class="simulation-panel-title"><i class="fas fa-sliders-h"></i> Function & Parameters</h3>
+                    
+                    <div class="simulation-form-group">
+                        <label class="simulation-label">Function f(x):</label>
+                        <input type="text" id="simulation-function" class="simulation-input" value="sin(x)" placeholder="e.g., sin(x), exp(x), cos(x)">
+                        <p style="font-size: 0.9rem; color: #4a6fa5; margin-top: 8px;">Use: sin(x), cos(x), exp(x), log(1+x), sqrt(x), x^2 for x²</p>
+                    </div>
+                    
+                    <div class="simulation-form-group">
+                        <label class="simulation-label">Expansion Point (a):</label>
+                        <input type="number" id="simulation-expansion-point" class="simulation-input" value="0" step="any">
+                    </div>
+                    
+                    <div class="simulation-form-group">
+                        <label class="simulation-label">Expansion Power (n):</label>
+                        <div class="power-slider-container">
+                            <input type="range" id="simulation-power" min="0" max="10" value="5" class="simulation-input" style="padding: 0; width: 100%;">
+                            <div class="slider-value-display">
+                                <span style="font-size: 0.9rem; color: #4a6fa5;">0</span>
+                                <span style="font-weight: 700;" id="simulation-power-value">5</span>
+                                <span style="font-size: 0.9rem; color: #4a6fa5;">10</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="simulation-form-group">
+                        <label class="simulation-label">X Range:</label>
+                        <div style="display: flex; gap: 15px;">
+                            <input type="number" id="simulation-x-min" class="simulation-input" value="-3" step="any" placeholder="Min">
+                            <input type="number" id="simulation-x-max" class="simulation-input" value="3" step="any" placeholder="Max">
+                        </div>
+                    </div>
+                    
+                    <div class="simulation-button-group">
+                        <button id="simulation-calculate-btn" class="simulation-btn">
+                            <i class="fas fa-calculator"></i> Calculate & Graph
+                        </button>
+                        <button id="simulation-reset-btn" class="simulation-btn">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                    
+                    <div class="simulation-examples">
+                        <h4><i class="fas fa-lightbulb"></i> Quick Examples</h4>
+                        <div class="simulation-example-buttons">
+                            <button class="simulation-example-btn" data-func="sin(x)" data-point="0" data-power="7" data-xmin="-6" data-xmax="6">sin(x)</button>
+                            <button class="simulation-example-btn" data-func="exp(x)" data-point="0" data-power="5" data-xmin="-2" data-xmax="2">exp(x)</button>
+                            <button class="simulation-example-btn" data-func="cos(x)" data-point="0" data-power="6" data-xmin="-6" data-xmax="6">cos(x)</button>
+                            <button class="simulation-example-btn" data-func="log(1+x)" data-point="0" data-power="6" data-xmin="-0.9" data-xmax="2">log(1+x)</button>
+                            <button class="simulation-example-btn" data-func="1/(1-x)" data-point="0" data-power="8" data-xmin="-1.5" data-xmax="1.5">1/(1-x)</button>
+                        </div>
+                    </div>
+                    
+                    <div class="simulation-result-section">
+                        <h4 class="simulation-result-title"><i class="fas fa-chart-line"></i> Taylor Polynomial</h4>
+                        <div class="simulation-taylor-polynomial-box">
+                            <div id="simulation-taylor-result">
+                                Enter function and click "Calculate & Graph"
+                            </div>
+                        </div>
+                        
+                        <h4 class="simulation-result-title"><i class="fas fa-balance-scale"></i> Value Comparison at x = <span id="simulation-x-value-display">0.000</span></h4>
+                        <div class="simulation-value-comparison">
+                            <div class="simulation-value-box">
+                                <span class="simulation-value-label">Original Function</span>
+                                <span class="simulation-value-number" id="simulation-original-value">-</span>
+                            </div>
+                            <div class="simulation-value-box">
+                                <span class="simulation-value-label">Taylor Approximation</span>
+                                <span class="simulation-value-number" id="simulation-taylor-value">-</span>
+                            </div>
+                            <div class="simulation-value-box">
+                                <span class="simulation-value-label">Difference</span>
+                                <span class="simulation-value-number" id="simulation-difference">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="simulation-graph-container">
+                    <h3 class="simulation-panel-title"><i class="fas fa-chart-area"></i> Visualization</h3>
+                    <div id="simulation-graph"></div>
+                    
+                    <div class="simulation-instructions">
+                        <h4><i class="fas fa-info-circle"></i> How to Use</h4>
+                        <ul>
+                            <li>Enter a mathematical function using JavaScript syntax</li>
+                            <li>Specify the expansion point (a) and highest power (n)</li>
+                            <li>Adjust the X range to focus on the region of interest</li>
+                            <li>Click "Calculate & Graph" to generate the Taylor polynomial</li>
+                            <li>Try the example functions for quick demonstrations</li>
+                            <li>Click on the graph to compare values at specific points</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Back to Home Button -->
+        <div class="button-container">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Taylor Polynomial Expansion Simulation | Created with Plotly.js & MathJax</p>
+            <p>Engineering Mathematics I Project | Information Technology Division P</p>
+            <p>For academic purposes only</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the simulation
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Taylor Polynomial Simulation initialized");
+            initializeSimulation();
+            initializeNotifications();
+            
+            // Animate progress bar
+            setTimeout(() => {
+                const progressFill = document.querySelector('.progress-fill');
+                if (progressFill) {
+                    progressFill.style.width = '100%';
+                }
+            }, 500);
+        });
+
+        // Notification System
+        function initializeNotifications() {
+            window.showNotification = function(message, type = 'info') {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.className = `notification ${type}`;
+                notification.style.display = 'block';
+                
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            };
+        }
+
+        // Simulation System
+        function initializeSimulation() {
+            console.log("Initializing simulation...");
+            
+            // DOM Elements for simulation
+            const functionInput = document.getElementById('simulation-function');
+            const expansionPointInput = document.getElementById('simulation-expansion-point');
+            const powerInput = document.getElementById('simulation-power');
+            const powerValue = document.getElementById('simulation-power-value');
+            const xMinInput = document.getElementById('simulation-x-min');
+            const xMaxInput = document.getElementById('simulation-x-max');
+            const calculateBtn = document.getElementById('simulation-calculate-btn');
+            const resetBtn = document.getElementById('simulation-reset-btn');
+            const taylorResult = document.getElementById('simulation-taylor-result');
+            const exampleBtns = document.querySelectorAll('.simulation-example-btn');
+            const originalValueSpan = document.getElementById('simulation-original-value');
+            const taylorValueSpan = document.getElementById('simulation-taylor-value');
+            const differenceSpan = document.getElementById('simulation-difference');
+            const xValueDisplay = document.getElementById('simulation-x-value-display');
+            
+            // Default values
+            const DEFAULT_FUNCTION = 'sin(x)';
+            const DEFAULT_POINT = 0;
+            const DEFAULT_POWER = 5;
+            const DEFAULT_X_MIN = -3;
+            const DEFAULT_X_MAX = 3;
+            
+            // Track current functions
+            let currentTaylorFunc = null;
+            let currentOriginalFunc = null;
+            let currentPlot = null; // Track current plot instance
+            
+            // Initialize with default values
+            function initializeSimulationValues() {
+                functionInput.value = DEFAULT_FUNCTION;
+                expansionPointInput.value = DEFAULT_POINT;
+                powerInput.value = DEFAULT_POWER;
+                powerValue.textContent = DEFAULT_POWER;
+                xMinInput.value = DEFAULT_X_MIN;
+                xMaxInput.value = DEFAULT_X_MAX;
+                
+                // Calculate and display initial result
+                calculateTaylorExpansion();
+            }
+            
+            // Update power value display
+            powerInput.addEventListener('input', function() {
+                powerValue.textContent = this.value;
+            });
+            
+            // Reset to default values
+            resetBtn.addEventListener('click', function() {
+                initializeSimulationValues();
+                showNotification('Reset to default values', 'info');
+            });
+            
+            // Example button click handlers
+            exampleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const func = this.getAttribute('data-func');
+                    const point = this.getAttribute('data-point');
+                    const power = this.getAttribute('data-power');
+                    const xmin = this.getAttribute('data-xmin');
+                    const xmax = this.getAttribute('data-xmax');
+                    
+                    functionInput.value = func;
+                    expansionPointInput.value = point;
+                    powerInput.value = power;
+                    powerValue.textContent = power;
+                    xMinInput.value = xmin;
+                    xMaxInput.value = xmax;
+                    
+                    calculateTaylorExpansion();
+                    showNotification(`Loaded example: ${func}`, 'info');
+                });
+            });
+            
+            // Calculate Taylor expansion
+            calculateBtn.addEventListener('click', calculateTaylorExpansion);
+            
+            // Main calculation function
+            function calculateTaylorExpansion() {
+                try {
+                    // Get user inputs
+                    const funcStr = functionInput.value.trim();
+                    const a = parseFloat(expansionPointInput.value);
+                    const n = parseInt(powerInput.value);
+                    const xMin = parseFloat(xMinInput.value);
+                    const xMax = parseFloat(xMaxInput.value);
+                    
+                    // Validate inputs
+                    if (isNaN(a) || isNaN(n) || n < 0 || n > 10) {
+                        throw new Error("Please enter valid values: a (any number), n (0-10)");
+                    }
+                    
+                    if (xMin >= xMax) {
+                        throw new Error("X Minimum must be less than X Maximum");
+                    }
+                    
+                    // Create the user function
+                    const userFunc = createFunction(funcStr);
+                    currentOriginalFunc = userFunc;
+                    
+                    // Calculate derivatives and coefficients
+                    const coefficients = [];
+                    for (let k = 0; k <= n; k++) {
+                        const derivative = numericalDerivative(userFunc, a, k);
+                        coefficients.push(derivative / factorial(k));
+                    }
+                    
+                    // Generate Taylor polynomial string
+                    const polyStr = generateTaylorPolynomialString(coefficients, a);
+                    taylorResult.innerHTML = `\\[T_{${n}}(x) = ${polyStr}\\]`;
+                    
+                    // Render MathJax
+                    MathJax.typesetPromise([taylorResult]).then(() => {
+                        // Adjust polynomial box height based on content
+                        adjustPolynomialBoxHeight();
+                    }).catch(err => {
+                        console.error("MathJax rendering error:", err);
+                        taylorResult.textContent = `T_${n}(x) = ${polyStr}`;
+                        adjustPolynomialBoxHeight();
+                    });
+                    
+                    // Create Taylor function
+                    const taylorFunc = createTaylorFunction(coefficients, a);
+                    currentTaylorFunc = taylorFunc;
+                    
+                    // Generate plot data
+                    const plotData = generatePlotData(userFunc, taylorFunc, xMin, xMax, a);
+                    
+                    // Create plot with fixed size
+                    createPlot(plotData, funcStr, a, n);
+                    
+                    // Update value comparison
+                    updateValueComparison(userFunc, taylorFunc, a);
+                    
+                    showNotification('Taylor polynomial calculated successfully!', 'info');
+                    
+                } catch (error) {
+                    showNotification(`Error: ${error.message}`, 'error');
+                    console.error(error);
+                }
+            }
+            
+            // Helper function to adjust polynomial box height
+            function adjustPolynomialBoxHeight() {
+                const polyBox = document.querySelector('.simulation-taylor-polynomial-box');
+                const resultElement = document.getElementById('simulation-taylor-result');
+                
+                if (polyBox && resultElement) {
+                    // Reset to minimum height first
+                    polyBox.style.maxHeight = '150px';
+                    
+                    // Get actual content height
+                    const contentHeight = resultElement.scrollHeight;
+                    
+                    // Adjust if content is taller than current box
+                    if (contentHeight > 120) {
+                        // Increase height up to 200px max
+                        const newHeight = Math.min(contentHeight + 30, 200);
+                        polyBox.style.maxHeight = `${newHeight}px`;
+                    }
+                }
+            }
+            
+            // Helper functions for simulation
+            function createFunction(funcStr) {
+                let processedStr = funcStr
+                    .replace(/\^/g, '**')
+                    .replace(/sin\(/g, 'Math.sin(')
+                    .replace(/cos\(/g, 'Math.cos(')
+                    .replace(/tan\(/g, 'Math.tan(')
+                    .replace(/exp\(/g, 'Math.exp(')
+                    .replace(/log\(/g, 'Math.log(')
+                    .replace(/sqrt\(/g, 'Math.sqrt(')
+                    .replace(/abs\(/g, 'Math.abs(');
+                
+                // Handle special case for 1/(1-x)
+                if (funcStr.includes('1/(1-x)') || funcStr.includes('1/(1 - x)')) {
+                    return function(x) {
+                        return 1 / (1 - x);
+                    };
+                }
+                
+                try {
+                    const testFn = new Function('x', `
+                        try {
+                            return ${processedStr};
+                        } catch(e) {
+                            return NaN;
+                        }
+                    `);
+                    
+                    const testResult = testFn(0);
+                    if (isNaN(testResult) && !funcStr.includes('log(0)') && !funcStr.includes('sqrt(-')) {
+                        throw new Error("Function returns NaN at x=0");
+                    }
+                    return testFn;
+                } catch (error) {
+                    throw new Error(`Invalid function: ${funcStr}. Use JavaScript math syntax.`);
+                }
+            }
+            
+            function factorial(n) {
+                if (n === 0 || n === 1) return 1;
+                let result = 1;
+                for (let i = 2; i <= n; i++) {
+                    result *= i;
+                }
+                return result;
+            }
+            
+            function numericalDerivative(f, x, order) {
+                if (order === 0) return f(x);
+                
+                const h = 1e-4;
+                if (order === 1) {
+                    return (f(x + h) - f(x - h)) / (2 * h);
+                } else {
+                    const f1 = numericalDerivative(f, x + h, order - 1);
+                    const f2 = numericalDerivative(f, x - h, order - 1);
+                    return (f1 - f2) / (2 * h);
+                }
+            }
+            
+            // Improved function to generate compact Taylor polynomial strings
+            function generateTaylorPolynomialString(coefficients, a) {
+                let terms = [];
+                
+                for (let k = 0; k < coefficients.length; k++) {
+                    const coeff = coefficients[k];
+                    
+                    // Skip very small coefficients (except the constant term)
+                    if (Math.abs(coeff) < 1e-10 && k !== 0) continue;
+                    
+                    let coeffStr;
+                    if (Math.abs(coeff) < 1e-10) {
+                        if (k === 0) coeffStr = "0";
+                        else continue;
+                    } else if (Math.abs(coeff - 1) < 1e-10 && k !== 0) {
+                        coeffStr = "";
+                    } else if (Math.abs(coeff + 1) < 1e-10 && k !== 0) {
+                        coeffStr = "-";
+                    } else {
+                        // Use compact decimal notation
+                        const rounded = Math.round(coeff * 1000) / 1000;
+                        coeffStr = rounded.toString();
+                        // Remove trailing zeros
+                        coeffStr = coeffStr.replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.$/, "");
+                    }
+                    
+                    let termStr;
+                    if (k === 0) {
+                        termStr = coeffStr;
+                    } else {
+                        const xTerm = a === 0 ? 'x' : `(x-${a})`;
+                        const powerStr = k === 1 ? xTerm : `${xTerm}^{${k}}`;
+                        
+                        if (coeffStr === "" || coeffStr === "-") {
+                            termStr = `${coeffStr}${powerStr}`;
+                        } else {
+                            termStr = `${coeffStr}${powerStr}`;
+                        }
+                    }
+                    
+                    // Add plus sign for positive terms (not the first one)
+                    if (k > 0 && coeff > 0 && terms.length > 0) {
+                        termStr = `+${termStr}`;
+                    }
+                    
+                    terms.push(termStr);
+                }
+                
+                if (terms.length === 0) return "0";
+                
+                return terms.join('');
+            }
+            
+            function createTaylorFunction(coefficients, a) {
+                return function(x) {
+                    let result = 0;
+                    for (let k = 0; k < coefficients.length; k++) {
+                        result += coefficients[k] * Math.pow(x - a, k);
+                    }
+                    return result;
+                };
+            }
+            
+            function generatePlotData(originalFunc, taylorFunc, xMin, xMax, a) {
+                const data = {
+                    x: [],
+                    yOriginal: [],
+                    yTaylor: [],
+                    yError: []
+                };
+                
+                const numPoints = 300;
+                const step = (xMax - xMin) / numPoints;
+                
+                for (let i = 0; i <= numPoints; i++) {
+                    const x = xMin + i * step;
+                    const yOrig = originalFunc(x);
+                    const yTaylor = taylorFunc(x);
+                    
+                    if (isFinite(yOrig) && isFinite(yTaylor)) {
+                        data.x.push(x);
+                        data.yOriginal.push(yOrig);
+                        data.yTaylor.push(yTaylor);
+                        data.yError.push(Math.abs(yOrig - yTaylor));
+                    }
+                }
+                
+                return data;
+            }
+            
+            function createPlot(data, funcStr, a, n) {
+                const graphDiv = document.getElementById('simulation-graph');
+                
+                // Clear previous plot if it exists
+                if (currentPlot) {
+                    Plotly.purge(graphDiv);
+                }
+                
+                // Create plot with fixed dimensions
+                const layout = {
+                    title: {
+                        text: `Taylor Approximation: f(x) = ${funcStr} vs T${n}(x)`,
+                        font: { 
+                            size: 18,
+                            color: '#0c2461'
+                        }
+                    },
+                    xaxis: {
+                        title: {
+                            text: 'x',
+                            font: {
+                                size: 14,
+                                color: '#0c2461'
+                            }
+                        },
+                        gridcolor: '#e1e8f0',
+                        zerolinecolor: '#0c2461',
+                        zerolinewidth: 2,
+                        fixedrange: true // Prevent zooming/panning on x-axis
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Function Value',
+                            font: {
+                                size: 14,
+                                color: '#0c2461'
+                            }
+                        },
+                        gridcolor: '#e1e8f0',
+                        zerolinecolor: '#0c2461',
+                        zerolinewidth: 2,
+                        fixedrange: true // Prevent zooming/panning on y-axis
+                    },
+                    yaxis2: {
+                        title: {
+                            text: 'Error',
+                            font: {
+                                size: 14,
+                                color: '#2ecc71'
+                            }
+                        },
+                        overlaying: 'y',
+                        side: 'right',
+                        gridcolor: 'rgba(46, 204, 113, 0.2)',
+                        fixedrange: true // Prevent zooming/panning on error axis
+                    },
+                    hovermode: 'closest',
+                    showlegend: true,
+                    legend: {
+                        x: 0.02,
+                        y: 0.98,
+                        bgcolor: 'rgba(255, 255, 255, 0.95)',
+                        bordercolor: '#0c2461',
+                        borderwidth: 1,
+                        font: {
+                            color: '#0c2461'
+                        }
+                    },
+                    plot_bgcolor: 'white',
+                    margin: { 
+                        t: 60, 
+                        r: 60, 
+                        b: 60, 
+                        l: 60,
+                        pad: 10
+                    },
+                    paper_bgcolor: 'white',
+                    autosize: true,
+                    height: 450, // Fixed height
+                    width: null, // Auto width
+                    dragmode: false, // Disable dragging
+                    scrollZoom: false // Disable scroll zoom
+                };
+                
+                // Original function trace
+                const trace1 = {
+                    x: data.x,
+                    y: data.yOriginal,
+                    mode: 'lines',
+                    name: `f(x) = ${funcStr}`,
+                    line: {
+                        color: '#3498db',
+                        width: 3
+                    }
+                };
+                
+                // Taylor polynomial trace
+                const trace2 = {
+                    x: data.x,
+                    y: data.yTaylor,
+                    mode: 'lines',
+                    name: `T${n}(x) (Taylor)`,
+                    line: {
+                        color: '#e74c3c',
+                        width: 2.5,
+                        dash: 'dash'
+                    }
+                };
+                
+                // Error trace
+                const trace3 = {
+                    x: data.x,
+                    y: data.yError,
+                    mode: 'lines',
+                    name: 'Error |f(x) - T(x)|',
+                    line: {
+                        color: '#2ecc71',
+                        width: 2,
+                        opacity: 0.7
+                    },
+                    yaxis: 'y2'
+                };
+                
+                // Expansion point marker
+                const originalY = createFunction(funcStr)(a);
+                const trace4 = {
+                    x: [a],
+                    y: [originalY],
+                    mode: 'markers+text',
+                    name: `Expansion point (${a.toFixed(2)}, ${originalY.toFixed(3)})`,
+                    marker: {
+                        color: '#f39c12',
+                        size: 14,
+                        symbol: 'star'
+                    },
+                    text: [`a=${a.toFixed(2)}`],
+                    textposition: 'top right',
+                    textfont: {
+                        size: 12,
+                        color: '#f39c12'
+                    }
+                };
+                
+                const plotData = [trace1, trace2, trace3, trace4];
+                
+                const config = {
+                    responsive: true,
+                    displayModeBar: true,
+                    displaylogo: false,
+                    modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d', 'zoom2d', 'zoomIn2d', 'zoomOut2d'],
+                    modeBarButtonsToAdd: [],
+                    staticPlot: false
+                };
+                
+                // Create new plot with fixed size
+                currentPlot = Plotly.newPlot(graphDiv, plotData, layout, config);
+                
+                // Add click event to graph
+                graphDiv.on('plotly_click', function(eventData) {
+                    if (eventData.points && eventData.points[0]) {
+                        const x = eventData.points[0].x;
+                        updateValueComparison(currentOriginalFunc, currentTaylorFunc, x);
+                    }
+                });
+                
+                // Prevent resize on window resize
+                window.addEventListener('resize', function() {
+                    Plotly.relayout(graphDiv, {
+                        'width': graphDiv.clientWidth,
+                        'height': 450
+                    });
+                });
+            }
+            
+            function updateValueComparison(originalFunc, taylorFunc, x) {
+                xValueDisplay.textContent = x.toFixed(3);
+                
+                const originalVal = originalFunc(x);
+                const taylorVal = taylorFunc(x);
+                const diff = Math.abs(originalVal - taylorVal);
+                
+                originalValueSpan.textContent = isFinite(originalVal) ? originalVal.toFixed(4) : "undefined";
+                taylorValueSpan.textContent = isFinite(taylorVal) ? taylorVal.toFixed(4) : "undefined";
+                differenceSpan.textContent = isFinite(diff) ? diff.toFixed(6) : "undefined";
+                
+                if (diff < 0.001) {
+                    differenceSpan.style.color = '#2ecc71';
+                } else if (diff < 0.1) {
+                    differenceSpan.style.color = '#f39c12';
+                } else {
+                    differenceSpan.style.color = '#e74c3c';
+                }
+            }
+            
+            // Initialize simulation values
+            initializeSimulationValues();
+        }
+    </script>
+</body>
+</html>

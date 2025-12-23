@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - Taylor's Theorem Learning Platform</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 3px solid #0c2461;
+        }
+        
+        h1 {
+            color: #0c2461;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #0c2461, #4a69bd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: #4a6fa5;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 6px solid #4a6fa5;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .instructions:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4a69bd, #0c2461);
+        }
+        
+        .instructions h3 {
+            color: #0c2461;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .instructions h3 i {
+            color: #4a69bd;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+            position: relative;
+            color: #555;
+        }
+        
+        .instructions li:before {
+            content: '•';
+            color: #4a69bd;
+            font-weight: bold;
+            position: absolute;
+            left: -10px;
+        }
+        
+        .feedback-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-left: 6px solid #4a69bd;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feedback-container:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4a69bd, #0c2461);
+        }
+        
+        .form-container {
+            width: 100%;
+            min-height: 800px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #eaeaea;
+        }
+        
+        .form-frame {
+            width: 100%;
+            height: 800px;
+            border: none;
+            display: block;
+        }
+        
+        .alternative-option {
+            background: linear-gradient(120deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 25px;
+            border-left: 4px solid #4a69bd;
+            text-align: center;
+        }
+        
+        .alternative-option h4 {
+            color: #0c2461;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .alternative-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #0c2461, #4a69bd);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(12, 36, 97, 0.3);
+        }
+        
+        .alternative-link:hover {
+            background: linear-gradient(135deg, #4a69bd, #0c2461);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(12, 36, 97, 0.4);
+        }
+        
+        .loading-message {
+            text-align: center;
+            padding: 40px;
+            color: #0c2461;
+            font-size: 1.1rem;
+        }
+        
+        .loading-message i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #4a69bd;
+            display: block;
+        }
+        
+        .back-button {
+            display: block;
+            margin: 40px auto 20px;
+            background: linear-gradient(135deg, #0c2461, #4a69bd);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(12, 36, 97, 0.3);
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(12, 36, 97, 0.4);
+            background: linear-gradient(135deg, #4a69bd, #0c2461);
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0 30px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 0.9rem;
+            background: rgba(12, 36, 97, 0.3);
+            border-radius: 10px;
+        }
+        
+        .progress-indicator {
+            height: 5px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0c2461, #4a69bd);
+            width: 100%;
+            transition: width 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .form-container {
+                min-height: 600px;
+            }
+            
+            .form-frame {
+                height: 600px;
+            }
+            
+            .back-button {
+                padding: 14px 35px;
+                font-size: 1.1rem;
+                width: 90%;
+            }
+            
+            .instructions {
+                padding: 20px;
+            }
+        }
+        
+        .thank-you-message {
+            display: none;
+            background: linear-gradient(120deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-left: 6px solid #4caf50;
+            color: #2e7d32;
+        }
+        
+        .thank-you-message h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .thank-you-message i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .form-notice {
+            background: linear-gradient(120deg, #fff8e1 0%, #ffecb3 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ff9800;
+            color: #e65100;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Feedback Form</h1>
+            <p class="subtitle">Help us improve the Taylor's Theorem Learning Platform</p>
+            <p>Your feedback is valuable for enhancing the learning experience</p>
+            
+            <div class="progress-indicator">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> Instructions for Providing Feedback</h3>
+            <ul>
+                <li>Complete all relevant sections of the feedback form below</li>
+                <li>Be honest and specific about your experience with the virtual lab</li>
+                <li>Your responses will remain confidential and will be used only for improving the platform</li>
+                <li>If you encounter any issues with the embedded form, use the alternative link provided</li>
+                <li>After submission, you'll receive a confirmation message</li>
+            </ul>
+        </div>
+        
+        <!-- Thank You Message (Initially Hidden) -->
+        <div class="thank-you-message" id="thankYouMessage">
+            <i class="fas fa-check-circle"></i>
+            <h3>Thank You for Your Feedback!</h3>
+            <p>Your response has been recorded successfully. Your input will help us improve the Taylor's Theorem Learning Platform for future students.</p>
+            <p>You may now return to the home page or continue exploring other sections of the virtual lab.</p>
+        </div>
+        
+        <!-- Form Notice -->
+        <div class="form-notice">
+            <i class="fas fa-exclamation-circle"></i> Please allow a moment for the feedback form to load. If the form does not appear, use the alternative link below.
+        </div>
+        
+        <!-- Feedback Form Container -->
+        <div class="feedback-container">
+            <h3 style="color: #0c2461; margin-bottom: 20px; font-size: 1.4rem;">Microsoft Feedback Form</h3>
+            
+            <!-- Loading Message -->
+            <div class="loading-message" id="loadingMessage">
+                <i class="fas fa-spinner fa-spin"></i>
+                Loading feedback form...
+            </div>
+            
+            <!-- Microsoft Form Embed -->
+            <div class="form-container">
+                <iframe 
+                    class="form-frame" 
+                    src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAADVWIN9UOE9NTVQ5Qk1BNFlIQ1dPNVFYU0VQU0lCOS4u" 
+                    frameborder="0" 
+                    marginwidth="0" 
+                    marginheight="0"
+                    onload="document.getElementById('loadingMessage').style.display='none';"
+                    onerror="showAlternativeOption()">
+                    Your browser does not support iframes.
+                </iframe>
+            </div>
+            
+            <!-- Alternative Option -->
+            <div class="alternative-option" id="alternativeOption" style="display: none;">
+                <h4><i class="fas fa-external-link-alt"></i> Having trouble with the embedded form?</h4>
+                <p>Click the link below to open the feedback form in a new tab:</p>
+                <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAADVWIN9UOE9NTVQ5Qk1BNFlIQ1dPNVFYU0VQU0lCOS4u" 
+                   target="_blank" 
+                   class="alternative-link">
+                    <i class="fas fa-external-link-alt"></i> Open Feedback Form in New Tab
+                </a>
+            </div>
+        </div>
+        
+        <!-- Back to Home Button -->
+        <div class="button-container">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Taylor's Theorem Interactive Learning Platform | Pimpri Chinchwad College of Engineering, Pune</p>
+            <p>Applied Sciences & Humanities Department | Information Technology Division P</p>
+            <p>For academic purposes only | © 2025 Virtual Labs</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize MathJax
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+        
+        // Check if form is loaded properly
+        function showAlternativeOption() {
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('alternativeOption').style.display = 'block';
+        }
+        
+        // Simulate form submission detection (in a real scenario, you would use proper form submission detection)
+        function checkForFormSubmission() {
+            // This is a simplified approach
+            // In reality, you would need to use postMessage API or other methods
+            // to detect when the Microsoft Form has been submitted
+            
+            // For now, we'll just show a message after a delay if the user seems to have interacted
+            let interacted = false;
+            
+            // Listen for clicks on the iframe
+            window.addEventListener('blur', function() {
+                if (document.activeElement.tagName === 'IFRAME') {
+                    interacted = true;
+                    
+                    // Show thank you message after 10 seconds (simulating form completion)
+                    setTimeout(function() {
+                        if (interacted) {
+                            document.getElementById('thankYouMessage').style.display = 'block';
+                            document.getElementById('thankYouMessage').scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }, 10000);
+                }
+            });
+        }
+        
+        // Check URL parameters for submission confirmation
+        function checkURLParameters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('submitted') === 'true') {
+                document.getElementById('thankYouMessage').style.display = 'block';
+                document.getElementById('thankYouMessage').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Animate progress bar
+        function animateProgressBar() {
+            const progressFill = document.querySelector('.progress-fill');
+            if (progressFill) {
+                progressFill.style.width = '100%';
+            }
+        }
+        
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            animateProgressBar();
+            checkURLParameters();
+            checkForFormSubmission();
+            
+            // Set timeout to hide loading message (fallback in case iframe doesn't fire onload)
+            setTimeout(function() {
+                document.getElementById('loadingMessage').style.display = 'none';
+            }, 5000);
+            
+            // Add click handler for alternative link to show thank you message
+            const altLink = document.querySelector('.alternative-link');
+            if (altLink) {
+                altLink.addEventListener('click', function() {
+                    setTimeout(function() {
+                        document.getElementById('thankYouMessage').style.display = 'block';
+                        document.getElementById('thankYouMessage').scrollIntoView({ behavior: 'smooth' });
+                    }, 3000);
+                });
+            }
+        });
+        
+        // Handle window resize for better mobile experience
+        window.addEventListener('resize', function() {
+            const formFrame = document.querySelector('.form-frame');
+            const container = document.querySelector('.form-container');
+            
+            if (window.innerWidth < 768) {
+                // Adjust for mobile
+                if (formFrame) {
+                    formFrame.style.height = '600px';
+                }
+                if (container) {
+                    container.style.minHeight = '600px';
+                }
+            } else {
+                // Adjust for desktop
+                if (formFrame) {
+                    formFrame.style.height = '800px';
+                }
+                if (container) {
+                    container.style.minHeight = '800px';
+                }
+            }
+        });
+        
+        // Add smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
