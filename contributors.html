@@ -1,822 +1,893 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taylor's Theorem Project - Team Contributions</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        border: 3px solid #0c2461;
+      }
+
+      h1 {
+        color: #0c2461;
+        font-size: 2.8rem;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #0c2461, #4a69bd);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .project-title {
+        color: #4a69bd;
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
+      .institution {
+        color: #666;
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+      }
+
+      .course-info {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        border-left: 5px solid #0c2461;
+        text-align: left;
+      }
+
+      .team-sequence {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .team-member {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        border: 2px solid transparent;
+        display: flex;
+        min-height: 250px;
+      }
+
+      .team-member:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      }
+
+      .member-sidebar {
+        width: 200px;
+        background: linear-gradient(135deg, #0c2461, #1e3799);
+        color: white;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .member-number {
+        background: rgba(255, 255, 255, 0.2);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+      }
+
+      .member-name-sidebar {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+
+      .member-role-sidebar {
+        font-size: 1rem;
+        color: #d1d8e0;
+        margin-bottom: 15px;
+      }
+
+      .role-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+
+      .lead-badge {
+        background: linear-gradient(135deg, #ff8a00, #ff5252);
+        color: white;
+      }
+
+      .frontend-badge {
+        background: linear-gradient(135deg, #00b09b, #96c93d);
+        color: white;
+      }
+
+      .backend-badge {
+        background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        color: white;
+      }
+
+      .theory-badge {
+        background: linear-gradient(135deg, #00c9ff, #92fe9d);
+        color: #333;
+      }
+
+      .member-content {
+        flex: 1;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .member-name-main {
+        font-size: 1.8rem;
+        color: #0c2461;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .detail-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .detail-icon {
+        color: #0c2461;
+        margin-right: 12px;
+        font-size: 1.2rem;
+        width: 25px;
+      }
+
+      .detail-label {
+        font-weight: 600;
+        color: #0c2461;
+        margin-right: 5px;
+        min-width: 70px;
+      }
+
+      .detail-value {
+        color: #444;
+        word-break: break-all;
+      }
+
+      .contribution-box {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 15px;
+        border-left: 4px solid #4a69bd;
+      }
+
+      .contribution-title {
+        color: #0c2461;
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+      }
+
+      .contribution-title i {
+        margin-right: 10px;
+      }
+
+      .contribution-list {
+        list-style-type: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 10px;
+      }
+
+      .contribution-list li {
+        padding: 8px 0;
+        position: relative;
+        padding-left: 25px;
+      }
+
+      .contribution-list li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #4a69bd;
+        font-weight: bold;
+      }
+
+      .faculty-section {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border: 3px solid #0c2461;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .faculty-section:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #0c2461, #4a69bd);
+      }
+
+      /* Make faculty box stand out like student cards */
+      .faculty-section:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      }
+
+      .faculty-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .faculty-header h2 {
+        color: #0c2461;
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+      }
+
+      .faculty-header p {
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+      .faculty-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        align-items: center;
+      }
+
+      .faculty-info {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .faculty-name {
+        font-size: 1.8rem;
+        color: #0c2461;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .faculty-department {
+        font-size: 1.2rem;
+        color: #4a69bd;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .faculty-institution {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 20px;
+      }
+
+      .faculty-quote {
+        font-style: italic;
+        color: #555;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border-left: 4px solid #0c2461;
+        margin-top: 20px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .faculty-photo {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 6px solid #fff;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        display: inline-block;
+        margin-bottom: 20px;
+      }
+
+      /* Back to Home Button Container */
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin: 50px 0 30px;
+      }
+
+      .back-button {
+        background: linear-gradient(135deg, #0c2461, #4a69bd);
+        color: white;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 6px 15px rgba(12, 36, 97, 0.25);
+        width: fit-content;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .back-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(12, 36, 97, 0.3);
+        background: linear-gradient(135deg, #4a69bd, #0c2461);
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        padding: 8px 10px;
+        border-top: none;
+        color: white;
+        font-size: 0.85rem;
+        background: transparent;
+        border-radius: 0;
+      }
+
+      .footer a {
+        color: #d1d8e0;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
         .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border: 3px solid #0c2461;
+          padding: 20px;
         }
-        
+
         h1 {
-            color: #0c2461;
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #0c2461, #4a69bd);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+          font-size: 2.2rem;
         }
-        
-        .project-title {
-            color: #4a69bd;
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        
-        .institution {
-            color: #666;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-        }
-        
-        .course-info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border-left: 5px solid #0c2461;
-            text-align: left;
-        }
-        
-        .team-sequence {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
+
         .team-member {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            border: 2px solid transparent;
-            display: flex;
-            min-height: 250px;
+          flex-direction: column;
+          min-height: auto;
         }
-        
-        .team-member:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-        }
-        
+
         .member-sidebar {
-            width: 200px;
-            background: linear-gradient(135deg, #0c2461, #1e3799);
-            color: white;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+          width: 100%;
+          padding: 20px;
         }
-        
-        .member-number {
-            background: rgba(255, 255, 255, 0.2);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-        
-        .member-name-sidebar {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        
-        .member-role-sidebar {
-            font-size: 1rem;
-            color: #d1d8e0;
-            margin-bottom: 15px;
-        }
-        
-        .role-badge {
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        
-        .lead-badge {
-            background: linear-gradient(135deg, #ff8a00, #ff5252);
-            color: white;
-        }
-        
-        .frontend-badge {
-            background: linear-gradient(135deg, #00b09b, #96c93d);
-            color: white;
-        }
-        
-        .backend-badge {
-            background: linear-gradient(135deg, #8e2de2, #4a00e0);
-            color: white;
-        }
-        
-        .theory-badge {
-            background: linear-gradient(135deg, #00c9ff, #92fe9d);
-            color: #333;
-        }
-        
-        .member-content {
-            flex: 1;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .member-name-main {
-            font-size: 1.8rem;
-            color: #0c2461;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
+
         .detail-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+          grid-template-columns: 1fr;
         }
-        
-        .detail-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .detail-icon {
-            color: #0c2461;
-            margin-right: 12px;
-            font-size: 1.2rem;
-            width: 25px;
-        }
-        
-        .detail-label {
-            font-weight: 600;
-            color: #0c2461;
-            margin-right: 5px;
-            min-width: 70px;
-        }
-        
-        .detail-value {
-            color: #444;
-            word-break: break-all;
-        }
-        
-        .contribution-box {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 15px;
-            border-left: 4px solid #4a69bd;
-        }
-        
-        .contribution-title {
-            color: #0c2461;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .contribution-title i {
-            margin-right: 10px;
-        }
-        
+
         .contribution-list {
-            list-style-type: none;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 10px;
+          grid-template-columns: 1fr;
         }
-        
-        .contribution-list li {
-            padding: 8px 0;
-            position: relative;
-            padding-left: 25px;
-        }
-        
-        .contribution-list li:before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #4a69bd;
-            font-weight: bold;
-        }
-        
-        .faculty-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border: 3px solid #0c2461;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .faculty-section:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #0c2461, #4a69bd);
-        }
-        
-        .faculty-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .faculty-header h2 {
-            color: #0c2461;
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .faculty-header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-        
+
         .faculty-details {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            align-items: center;
+          flex-direction: column;
         }
-        
-        .faculty-info {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .faculty-name {
-            font-size: 1.8rem;
-            color: #0c2461;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
-        .faculty-department {
-            font-size: 1.2rem;
-            color: #4a69bd;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-        
-        .faculty-institution {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .faculty-quote {
-            font-style: italic;
-            color: #555;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #0c2461;
-            margin-top: 20px;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-        
-        /* Back to Home Button Container */
-        .button-container {
-            display: flex;
-            justify-content: center;
-            margin: 50px 0 30px;
-        }
-        
+
         .back-button {
-            background: linear-gradient(135deg, #0c2461, #4a69bd);
-            color: white;
-            border: none;
-            padding: 16px 45px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(12, 36, 97, 0.3);
-            width: fit-content;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
+          padding: 14px 35px;
+          font-size: 1.1rem;
+          width: 90%;
         }
-        
-        .back-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(12, 36, 97, 0.4);
-            background: linear-gradient(135deg, #4a69bd, #0c2461);
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 0.9rem;
-            background: rgba(12, 36, 97, 0.3);
-            border-radius: 10px;
-        }
-        
-        .footer a {
-            color: #d1d8e0;
-            text-decoration: none;
-        }
-        
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .team-member {
-                flex-direction: column;
-                min-height: auto;
-            }
-            
-            .member-sidebar {
-                width: 100%;
-                padding: 20px;
-            }
-            
-            .detail-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .contribution-list {
-                grid-template-columns: 1fr;
-            }
-            
-            .faculty-details {
-                flex-direction: column;
-            }
-            
-            .back-button {
-                padding: 14px 35px;
-                font-size: 1.1rem;
-                width: 90%;
-            }
-        }
-        
-        .sequence-indicator {
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            background: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            color: #0c2461;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-            border: 2px solid #0c2461;
-        }
-        
-        .member-1 {
-            border-color: #ff8a00;
-        }
-        
-        .member-1:hover {
-            box-shadow: 0 20px 40px rgba(255, 138, 0, 0.25);
-        }
-        
-        .member-2 {
-            border-color: #00b09b;
-        }
-        
-        .member-2:hover {
-            box-shadow: 0 20px 40px rgba(0, 176, 155, 0.25);
-        }
-        
-        .member-3 {
-            border-color: #8e2de2;
-        }
-        
-        .member-3:hover {
-            box-shadow: 0 20px 40px rgba(142, 45, 226, 0.25);
-        }
-        
-        .member-4 {
-            border-color: #00c9ff;
-        }
-        
-        .member-4:hover {
-            box-shadow: 0 20px 40px rgba(0, 201, 255, 0.25);
-        }
+      }
+
+      .sequence-indicator {
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        background: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        color: #0c2461;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+        border: 2px solid #0c2461;
+      }
+
+      .member-1 {
+        border-color: #ff8a00;
+      }
+
+      .member-1:hover {
+        box-shadow: 0 20px 40px rgba(255, 138, 0, 0.25);
+      }
+
+      .member-2 {
+        border-color: #00b09b;
+      }
+
+      .member-2:hover {
+        box-shadow: 0 20px 40px rgba(0, 176, 155, 0.25);
+      }
+
+      .member-3 {
+        border-color: #8e2de2;
+      }
+
+      .member-3:hover {
+        box-shadow: 0 20px 40px rgba(142, 45, 226, 0.25);
+      }
+
+      .member-4 {
+        border-color: #00c9ff;
+      }
+
+      .member-4:hover {
+        box-shadow: 0 20px 40px rgba(0, 201, 255, 0.25);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <!-- Header Section -->
-        <div class="header">
-            <h1>Taylor's Theorem Interactive Learning Platform</h1>
-            <div class="project-title">Linear Algebra & Unitary Calculus Project</div>
-            <div class="institution">Pimpri Chinchwad College of Engineering, Pune</div>
-            
-            <div class="course-info">
-                <p><strong>Course:</strong> Linear Algebra & Unitary Calculus</p>
-                <p><strong>Branch:</strong> Information Technology</p>
-                <p><strong>Division:</strong> P</p>
-                <p><strong>Academic Year:</strong> 2025-2026</p>
-            </div>
+      <!-- Header Section -->
+      <div class="header">
+        <h1>Taylor's Theorem Interactive Learning Platform</h1>
+        <div class="project-title">
+          Linear Algebra & Univariate Calculus Project
         </div>
-        
-        <!-- Team Members in Sequence -->
-        <h2 style="color: white; text-align: center; margin-bottom: 30px; font-size: 2.2rem;">Project Team - Contribution Sequence</h2>
-        
-        <div class="team-sequence">
-            <!-- 1. Lead Developer -->
-            <div class="team-member member-1">
-                <div class="sequence-indicator">1 - TEAM LEAD</div>
-                <div class="member-sidebar">
-                    <div class="member-number">1</div>
-                    <div class="member-name-sidebar">PRATIK DEEPAK PHAPALE</div>
-                    <div class="member-role-sidebar">Lead Developer</div>
-                    <div class="role-badge lead-badge">LEAD DEVELOPER</div>
-                </div>
-                <div class="member-content">
-                    <div class="member-name-main">PRATIK DEEPAK PHAPALE</div>
-                    
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-id-card"></i></div>
-                            <div class="detail-label">PRN:</div>
-                            <div class="detail-value">125B1F210</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-envelope"></i></div>
-                            <div class="detail-label">Email:</div>
-                            <div class="detail-value">pratik.phapale25@pccoepune.org</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-code-branch"></i></div>
-                            <div class="detail-label">Branch:</div>
-                            <div class="detail-value">Information Technology</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-users"></i></div>
-                            <div class="detail-label">Division:</div>
-                            <div class="detail-value">P</div>
-                        </div>
-                    </div>
-                    
-                    <div class="contribution-box">
-                        <div class="contribution-title">
-                            <i class="fas fa-tasks"></i> Lead Developer Contributions
-                        </div>
-                        <ul class="contribution-list">
-                            <li>Project architecture and overall design</li>
-                            <li>Team coordination and project management</li>
-                            <li>Integration of all components</li>
-                            <li>Code review and quality assurance</li>
-                            <li>Project timeline and milestone management</li>
-                            <li>Final implementation and deployment oversight</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 2. Frontend Developer -->
-            <div class="team-member member-2">
-                <div class="sequence-indicator">2 - FRONTEND SPECIALIST</div>
-                <div class="member-sidebar">
-                    <div class="member-number">2</div>
-                    <div class="member-name-sidebar">SWAPNIL ARJUN JADHAV</div>
-                    <div class="member-role-sidebar">Frontend Developer</div>
-                    <div class="role-badge frontend-badge">FRONTEND DEVELOPER</div>
-                </div>
-                <div class="member-content">
-                    <div class="member-name-main">SWAPNIL ARJUN JADHAV</div>
-                    
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-id-card"></i></div>
-                            <div class="detail-label">PRN:</div>
-                            <div class="detail-value">125B1F211</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-envelope"></i></div>
-                            <div class="detail-label">Email:</div>
-                            <div class="detail-value">swapnil.jadhav25@pccoepune.org</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-code-branch"></i></div>
-                            <div class="detail-label">Branch:</div>
-                            <div class="detail-value">Information Technology</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-users"></i></div>
-                            <div class="detail-label">Division:</div>
-                            <div class="detail-value">P</div>
-                        </div>
-                    </div>
-                    
-                    <div class="contribution-box">
-                        <div class="contribution-title">
-                            <i class="fas fa-tasks"></i> Frontend Developer Contributions
-                        </div>
-                        <ul class="contribution-list">
-                            <li>HTML/CSS interface design and development</li>
-                            <li>Responsive and mobile-friendly layouts</li>
-                            <li>Interactive UI components and animations</li>
-                            <li>User experience optimization</li>
-                            <li>Visual design and styling implementation</li>
-                            <li>Cross-browser compatibility testing</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 3. Backend Developer -->
-            <div class="team-member member-3">
-                <div class="sequence-indicator">3 - BACKEND SPECIALIST</div>
-                <div class="member-sidebar">
-                    <div class="member-number">3</div>
-                    <div class="member-name-sidebar">SWASTIK SANDIPKUMAR PHAPALE</div>
-                    <div class="member-role-sidebar">Backend Developer</div>
-                    <div class="role-badge backend-badge">BACKEND DEVELOPER</div>
-                </div>
-                <div class="member-content">
-                    <div class="member-name-main">SWASTIK SANDIPKUMAR PHAPALE</div>
-                    
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-id-card"></i></div>
-                            <div class="detail-label">PRN:</div>
-                            <div class="detail-value">125B1F212</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-envelope"></i></div>
-                            <div class="detail-label">Email:</div>
-                            <div class="detail-value">swastik.phapale25@pccoepune.org</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-code-branch"></i></div>
-                            <div class="detail-label">Branch:</div>
-                            <div class="detail-value">Information Technology</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-users"></i></div>
-                            <div class="detail-label">Division:</div>
-                            <div class="detail-value">P</div>
-                        </div>
-                    </div>
-                    
-                    <div class="contribution-box">
-                        <div class="contribution-title">
-                            <i class="fas fa-tasks"></i> Backend Developer Contributions
-                        </div>
-                        <ul class="contribution-list">
-                            <li>Server-side logic and algorithm implementation</li>
-                            <li>Database design and management</li>
-                            <li>API development and integration</li>
-                            <li>Taylor series calculation algorithms</li>
-                            <li>System performance optimization</li>
-                            <li>Security implementation and data handling</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 4. Theory & Documentation -->
-            <div class="team-member member-4">
-                <div class="sequence-indicator">4 - THEORY & DOCUMENTATION</div>
-                <div class="member-sidebar">
-                    <div class="member-number">4</div>
-                    <div class="member-name-sidebar">SARTHAK PRAVIN GANDHI</div>
-                    <div class="member-role-sidebar">Theory & Documentation Lead</div>
-                    <div class="role-badge theory-badge">THEORY & DOCUMENTATION</div>
-                </div>
-                <div class="member-content">
-                    <div class="member-name-main">SARTHAK PRAVIN GANDHI</div>
-                    
-                    <div class="detail-grid">
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-id-card"></i></div>
-                            <div class="detail-label">PRN:</div>
-                            <div class="detail-value">125B1F201</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-envelope"></i></div>
-                            <div class="detail-label">Email:</div>
-                            <div class="detail-value">sarthak.gandhi25@pccoepune.org</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-code-branch"></i></div>
-                            <div class="detail-label">Branch:</div>
-                            <div class="detail-value">Information Technology</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-icon"><i class="fas fa-users"></i></div>
-                            <div class="detail-label">Division:</div>
-                            <div class="detail-value">P</div>
-                        </div>
-                    </div>
-                    
-                    <div class="contribution-box">
-                        <div class="contribution-title">
-                            <i class="fas fa-tasks"></i> Theory & Documentation Contributions
-                        </div>
-                        <ul class="contribution-list">
-                            <li>Mathematical theory research and validation</li>
-                            <li>Test case development and quality assurance</li>
-                            <li>Project documentation and technical writing</li>
-                            <li>Content accuracy verification</li>
-                            <li>Educational content development</li>
-                            <li>Testing methodology and validation procedures</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div class="institution">
+          Pimpri Chinchwad College of Engineering, Pune
         </div>
-        
-        <!-- Faculty Guidance Section -->
-        <div class="faculty-section">
-            <div class="faculty-header">
-                <h2>Faculty Guidance</h2>
-                <p>Under the mentorship and supervision of</p>
+
+        <div class="course-info">
+          <p><strong>Course:</strong> Linear Algebra & Univariate Calculus</p>
+          <p><strong>Branch:</strong> Information Technology</p>
+          <p><strong>Division:</strong> P</p>
+          <p><strong>Academic Year:</strong> 2025-2026</p>
+        </div>
+      </div>
+
+      <!-- Faculty Guidance Section -->
+      <div class="faculty-section">
+        <div class="faculty-header">
+          <h2>Faculty Guidance</h2>
+          <p>Under the mentorship and supervision of</p>
+        </div>
+
+        <div class="faculty-details">
+          <div class="faculty-info">
+            <div class="faculty-name">Prof. Dinesh Kute</div>
+            <div class="faculty-department">
+              Department of Applied Sciences & Humanities
             </div>
-            
-            <div class="faculty-details">
-                <div class="faculty-info">
-                    <div class="faculty-name">Prof. Dinesh Kute</div>
-                    <div class="faculty-department">Department of Applied Sciences & Humanities</div>
-                    <div class="faculty-institution">Pimpri Chinchwad College of Engineering, Pune</div>
-                    
-                    <div class="detail-item">
-                        <div class="detail-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                        <div class="detail-label">Subject:</div>
-                        <div class="detail-value">Linear Algebra & Unitary Calculus</div>
-                    </div>
-                    
-                    <div class="detail-item">
-                        <div class="detail-icon"><i class="fas fa-book"></i></div>
-                        <div class="detail-label">Expertise:</div>
-                        <div class="detail-value">Advanced Mathematics, Calculus, Taylor's Theorem</div>
-                    </div>
-                    
-                    <div class="faculty-quote">
-                        "Mathematics is the language with which God has written the universe. Taylor's Theorem, in particular, provides us with a powerful tool to approximate complex functions using polynomials, making it an essential concept in both theoretical mathematics and practical engineering applications. This project exemplifies how technology can enhance mathematical learning."
-                    </div>
-                </div>
-                
-                <div style="flex: 1; min-width: 300px; text-align: center;">
-                    <div style="font-size: 5rem; color: #0c2461; margin-bottom: 20px;">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <h3 style="color: #0c2461; margin-bottom: 15px;">Mentorship Role</h3>
-                    <ul style="text-align: left; list-style-type: none; padding-left: 0;">
-                        <li style="padding: 10px 0; border-bottom: 1px dashed #ddd;">
-                            <i class="fas fa-check-circle" style="color: #4a69bd; margin-right: 10px;"></i> 
-                            Theoretical guidance on Taylor's Theorem concepts
-                        </li>
-                        <li style="padding: 10px 0; border-bottom: 1px dashed #ddd;">
-                            <i class="fas fa-check-circle" style="color: #4a69bd; margin-right: 10px;"></i> 
-                            Project concept validation and direction
-                        </li>
-                        <li style="padding: 10px 0; border-bottom: 1px dashed #ddd;">
-                            <i class="fas fa-check-circle" style="color: #4a69bd; margin-right: 10px;"></i> 
-                            Mathematical accuracy verification
-                        </li>
-                        <li style="padding: 10px 0; border-bottom: 1px dashed #ddd;">
-                            <i class="fas fa-check-circle" style="color: #4a69bd; margin-right: 10px;"></i> 
-                            Educational methodology consultation
-                        </li>
-                        <li style="padding: 10px 0;">
-                            <i class="fas fa-check-circle" style="color: #4a69bd; margin-right: 10px;"></i> 
-                            Final project evaluation and assessment
-                        </li>
-                    </ul>
-                </div>
+            <div class="faculty-institution">
+              Pimpri Chinchwad College of Engineering, Pune
             </div>
+
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="fas fa-chalkboard-teacher"></i>
+              </div>
+              <div class="detail-label">Subject:</div>
+              <div class="detail-value">
+                Linear Algebra & Univariate Calculus
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-icon"><i class="fas fa-book"></i></div>
+              <div class="detail-label">Expertise:</div>
+              <div class="detail-value">
+                Advanced Mathematics, Calculus, Taylor's Theorem
+              </div>
+            </div>
+
+            <div class="faculty-quote">
+              "Mathematics is the language with which God has written the
+              universe. Taylor's Theorem, in particular, provides us with a
+              powerful tool to approximate complex functions using polynomials,
+              making it an essential concept in both theoretical mathematics and
+              practical engineering applications. This project exemplifies how
+              technology can enhance mathematical learning."
+            </div>
+          </div>
+
+          <div style="flex: 1; min-width: 300px; text-align: center">
+            <img
+              src="dineshsir.jpg"
+              alt="Prof. Dinesh Kute"
+              class="faculty-photo"
+              loading="lazy"
+            />
+            <h3 style="color: #0c2461; margin-bottom: 15px">Mentorship Role</h3>
+            <ul
+              style="text-align: left; list-style-type: none; padding-left: 0"
+            >
+              <li style="padding: 10px 0; border-bottom: 1px dashed #ddd">
+                <i
+                  class="fas fa-check-circle"
+                  style="color: #4a69bd; margin-right: 10px"
+                ></i>
+                Theoretical guidance on Taylor's Theorem concepts
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px dashed #ddd">
+                <i
+                  class="fas fa-check-circle"
+                  style="color: #4a69bd; margin-right: 10px"
+                ></i>
+                Project concept validation and direction
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px dashed #ddd">
+                <i
+                  class="fas fa-check-circle"
+                  style="color: #4a69bd; margin-right: 10px"
+                ></i>
+                Mathematical accuracy verification
+              </li>
+              <li style="padding: 10px 0; border-bottom: 1px dashed #ddd">
+                <i
+                  class="fas fa-check-circle"
+                  style="color: #4a69bd; margin-right: 10px"
+                ></i>
+                Educational methodology consultation
+              </li>
+              <li style="padding: 10px 0">
+                <i
+                  class="fas fa-check-circle"
+                  style="color: #4a69bd; margin-right: 10px"
+                ></i>
+                Final project evaluation and assessment
+              </li>
+            </ul>
+          </div>
         </div>
-        
-        <!-- Single Back to Home Button Container -->
-        <div class="button-container">
-            <a href="index.html" class="back-button">
-                <i class="fas fa-home"></i> Back to Home
-            </a>
+      </div>
+
+      <!-- Team Members in Sequence -->
+      <h2
+        style="
+          color: white;
+          text-align: center;
+          margin-bottom: 30px;
+          font-size: 2.2rem;
+        "
+      >
+        Project Team - Contribution Sequence
+      </h2>
+
+      <div class="team-sequence">
+        <!-- 1. Lead Developer -->
+        <div class="team-member member-1">
+          <div class="sequence-indicator">1 - TEAM LEAD</div>
+          <div class="member-sidebar">
+            <div class="member-number">1</div>
+            <div class="member-name-sidebar">PRATIK DEEPAK PHAPALE</div>
+            <div class="member-role-sidebar">Lead Developer</div>
+            <div class="role-badge lead-badge">LEAD DEVELOPER</div>
+          </div>
+          <div class="member-content">
+            <div class="member-name-main">PRATIK DEEPAK PHAPALE</div>
+
+            <div class="detail-grid">
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-id-card"></i></div>
+                <div class="detail-label">PRN:</div>
+                <div class="detail-value">125B1F210</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-envelope"></i></div>
+                <div class="detail-label">Email:</div>
+                <div class="detail-value">pratik.phapale25@pccoepune.org</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon">
+                  <i class="fas fa-code-branch"></i>
+                </div>
+                <div class="detail-label">Branch:</div>
+                <div class="detail-value">Information Technology</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-users"></i></div>
+                <div class="detail-label">Division:</div>
+                <div class="detail-value">P</div>
+              </div>
+            </div>
+
+            <div class="contribution-box">
+              <div class="contribution-title">
+                <i class="fas fa-tasks"></i> Lead Developer Contributions
+              </div>
+              <ul class="contribution-list">
+                <li>Project architecture and overall design</li>
+                <li>Team coordination and project management</li>
+                <li>Integration of all components</li>
+                <li>Code review and quality assurance</li>
+                <li>Project timeline and milestone management</li>
+                <li>Final implementation and deployment oversight</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            <p>© 2025 Taylor's Theorem Interactive Learning Platform | Pimpri Chinchwad College of Engineering, Pune</p>
-            <p>Linear Algebra & Unitary Calculus Project | Information Technology Division P | Academic Year 2025-2026</p>
-            <p>For academic purposes only</p>
+
+        <!-- 2. Frontend Developer -->
+        <div class="team-member member-2">
+          <div class="sequence-indicator">2 - FRONTEND SPECIALIST</div>
+          <div class="member-sidebar">
+            <div class="member-number">2</div>
+            <div class="member-name-sidebar">SWAPNIL ARJUN JADHAV</div>
+            <div class="member-role-sidebar">Frontend Developer</div>
+            <div class="role-badge frontend-badge">FRONTEND DEVELOPER</div>
+          </div>
+          <div class="member-content">
+            <div class="member-name-main">SWAPNIL ARJUN JADHAV</div>
+
+            <div class="detail-grid">
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-id-card"></i></div>
+                <div class="detail-label">PRN:</div>
+                <div class="detail-value">125B1F211</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-envelope"></i></div>
+                <div class="detail-label">Email:</div>
+                <div class="detail-value">swapnil.jadhav25@pccoepune.org</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon">
+                  <i class="fas fa-code-branch"></i>
+                </div>
+                <div class="detail-label">Branch:</div>
+                <div class="detail-value">Information Technology</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-users"></i></div>
+                <div class="detail-label">Division:</div>
+                <div class="detail-value">P</div>
+              </div>
+            </div>
+
+            <div class="contribution-box">
+              <div class="contribution-title">
+                <i class="fas fa-tasks"></i> Frontend Developer Contributions
+              </div>
+              <ul class="contribution-list">
+                <li>HTML/CSS interface design and development</li>
+                <li>Responsive and mobile-friendly layouts</li>
+                <li>Interactive UI components and animations</li>
+                <li>User experience optimization</li>
+                <li>Visual design and styling implementation</li>
+                <li>Cross-browser compatibility testing</li>
+              </ul>
+            </div>
+          </div>
         </div>
+
+        <!-- 3. Backend Developer -->
+        <div class="team-member member-3">
+          <div class="sequence-indicator">3 - BACKEND SPECIALIST</div>
+          <div class="member-sidebar">
+            <div class="member-number">3</div>
+            <div class="member-name-sidebar">SWASTIK SANDIPKUMAR PHAPALE</div>
+            <div class="member-role-sidebar">Backend Developer</div>
+            <div class="role-badge backend-badge">BACKEND DEVELOPER</div>
+          </div>
+          <div class="member-content">
+            <div class="member-name-main">SWASTIK SANDIPKUMAR PHAPALE</div>
+
+            <div class="detail-grid">
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-id-card"></i></div>
+                <div class="detail-label">PRN:</div>
+                <div class="detail-value">125B1F212</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-envelope"></i></div>
+                <div class="detail-label">Email:</div>
+                <div class="detail-value">swastik.phapale25@pccoepune.org</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon">
+                  <i class="fas fa-code-branch"></i>
+                </div>
+                <div class="detail-label">Branch:</div>
+                <div class="detail-value">Information Technology</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-users"></i></div>
+                <div class="detail-label">Division:</div>
+                <div class="detail-value">P</div>
+              </div>
+            </div>
+
+            <div class="contribution-box">
+              <div class="contribution-title">
+                <i class="fas fa-tasks"></i> Backend Developer Contributions
+              </div>
+              <ul class="contribution-list">
+                <li>Server-side logic and algorithm implementation</li>
+                <li>Database design and management</li>
+                <li>API development and integration</li>
+                <li>Taylor series calculation algorithms</li>
+                <li>System performance optimization</li>
+                <li>Security implementation and data handling</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Theory & Documentation -->
+        <div class="team-member member-4">
+          <div class="sequence-indicator">4 - THEORY & DOCUMENTATION</div>
+          <div class="member-sidebar">
+            <div class="member-number">4</div>
+            <div class="member-name-sidebar">SARTHAK PRAVIN GANDHI</div>
+            <div class="member-role-sidebar">Theory & Documentation Lead</div>
+            <div class="role-badge theory-badge">THEORY & DOCUMENTATION</div>
+          </div>
+          <div class="member-content">
+            <div class="member-name-main">SARTHAK PRAVIN GANDHI</div>
+
+            <div class="detail-grid">
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-id-card"></i></div>
+                <div class="detail-label">PRN:</div>
+                <div class="detail-value">125B1F201</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-envelope"></i></div>
+                <div class="detail-label">Email:</div>
+                <div class="detail-value">sarthak.gandhi25@pccoepune.org</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon">
+                  <i class="fas fa-code-branch"></i>
+                </div>
+                <div class="detail-label">Branch:</div>
+                <div class="detail-value">Information Technology</div>
+              </div>
+
+              <div class="detail-item">
+                <div class="detail-icon"><i class="fas fa-users"></i></div>
+                <div class="detail-label">Division:</div>
+                <div class="detail-value">P</div>
+              </div>
+            </div>
+
+            <div class="contribution-box">
+              <div class="contribution-title">
+                <i class="fas fa-tasks"></i> Theory & Documentation
+                Contributions
+              </div>
+              <ul class="contribution-list">
+                <li>Mathematical theory research and validation</li>
+                <li>Test case development and quality assurance</li>
+                <li>Project documentation and technical writing</li>
+                <li>Content accuracy verification</li>
+                <li>Educational content development</li>
+                <li>Testing methodology and validation procedures</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Single Back to Home Button Container -->
+      <div class="button-container">
+        <a href="index.html" class="back-button">
+          <i class="fas fa-home"></i> Back to Home
+        </a>
+      </div>
+
+      <!-- Footer (content removed per request) -->
+      <div class="footer" aria-hidden="true"></div>
     </div>
-    
+
     <script>
-        // Add scroll animations
-        document.addEventListener('DOMContentLoaded', function() {
-            const teamMembers = document.querySelectorAll('.team-member');
-            
-            // Add animation on scroll
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-            
-            teamMembers.forEach((member, index) => {
-                member.style.opacity = '0';
-                member.style.transform = 'translateY(30px)';
-                member.style.transition = `opacity 0.6s ease ${index * 0.2}s, transform 0.6s ease ${index * 0.2}s`;
-                observer.observe(member);
-            });
-            
-            // Faculty section animation
-            const facultySection = document.querySelector('.faculty-section');
-            facultySection.style.opacity = '0';
-            facultySection.style.transform = 'translateY(30px)';
-            facultySection.style.transition = 'opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s';
-            
-            setTimeout(() => {
-                facultySection.style.opacity = '1';
-                facultySection.style.transform = 'translateY(0)';
-            }, 800);
+      // Add scroll animations
+      document.addEventListener("DOMContentLoaded", function () {
+        const teamMembers = document.querySelectorAll(".team-member");
+
+        // Add animation on scroll
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "translateY(0)";
+            }
+          });
+        }, observerOptions);
+
+        teamMembers.forEach((member, index) => {
+          member.style.opacity = "0";
+          member.style.transform = "translateY(30px)";
+          member.style.transition = `opacity 0.6s ease ${
+            index * 0.2
+          }s, transform 0.6s ease ${index * 0.2}s`;
+          observer.observe(member);
         });
+
+        // Faculty section animation: observe so it animates when scrolled into view
+        const facultySection = document.querySelector(".faculty-section");
+        facultySection.style.opacity = "0";
+        facultySection.style.transform = "translateY(30px)";
+        facultySection.style.transition = "opacity 0.6s ease 0s, transform 0.6s ease 0s";
+        observer.observe(facultySection);
+      });
     </script>
-</body>
+  </body>
 </html>
