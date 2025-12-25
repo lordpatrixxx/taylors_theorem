@@ -1,651 +1,735 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aim & Objectives - Taylor's Theorem Learning Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        border: 3px solid #0c2461;
+      }
+
+      h1 {
+        color: #0c2461;
+        font-size: 2.8rem;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #0c2461, #4a69bd);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+
+      /* Heading font: Roboto Slab for a more attractive serif heading */
+      h1,
+      h2,
+      h3,
+      .section-title,
+      .objective-title,
+      .key-formula h3 {
+        font-family: "Roboto Slab", serif;
+        font-weight: 500;
+      }
+
+      .aim-section {
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border-left: 6px solid #4a69bd;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .aim-section:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #4a69bd, #0c2461);
+      }
+
+      .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+
+      .section-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #0c2461, #4a69bd);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        color: white;
+        font-size: 1.8rem;
+        flex-shrink: 0;
+      }
+
+      .section-title {
+        font-size: 2rem;
+        color: #0c2461;
+        font-weight: 600;
+      }
+
+      .aim-content {
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border-left: 4px solid #0c2461;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #333;
+      }
+
+      .objectives-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+      }
+
+      .objective-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border: 2px solid transparent;
+      }
+
+      .objective-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        border-color: #4a69bd;
+      }
+
+      .objective-number {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #0c2461, #4a69bd);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .objective-title {
+        font-size: 1.4rem;
+        color: #0c2461;
+        margin-bottom: 15px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .objective-title i {
+        color: #4a69bd;
+      }
+
+      .objective-description {
+        color: #555;
+        line-height: 1.6;
+        font-size: 1.1rem;
+      }
+
+      .outcomes-section {
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border-left: 6px solid #00b09b;
+        position: relative;
+      }
+
+      .outcomes-section:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #00b09b, #96c93d);
+      }
+
+      .outcomes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 25px;
+      }
+
+      .outcome-item {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid #00b09b;
+        transition: transform 0.2s ease;
+      }
+
+      .outcome-item:hover {
+        transform: translateX(10px);
+        background: #f0f5ff;
+      }
+
+      .outcome-icon {
+        font-size: 1.8rem;
+        color: #00b09b;
+        margin-bottom: 15px;
+      }
+
+      .outcome-text {
+        color: #333;
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .key-formula {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 40px 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border: 2px solid #0c2461;
+        text-align: center;
+      }
+
+      .key-formula h3 {
+        color: #0c2461;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+
+      .formula-box {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        font-size: 1.4rem;
+        color: #0c2461;
+        font-family: "Cambria Math", serif;
+        border: 1px dashed #4a69bd;
+        margin: 20px 0;
+        overflow-x: auto;
+      }
+
+      .navigation-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #0c2461, #4a69bd);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(12, 36, 97, 0.3);
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        padding: 8px 0;
+        color: white;
+        font-size: 0.85rem;
+        background: transparent;
+      }
+
+      @media (max-width: 768px) {
         .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border: 3px solid #0c2461;
+          padding: 20px;
         }
-        
+
         h1 {
-            color: #0c2461;
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #0c2461, #4a69bd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+          font-size: 2.2rem;
         }
-        
-        .subtitle {
-            color: #4a69bd;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-        }
-        
-        .aim-section {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border-left: 6px solid #4a69bd;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .aim-section:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #4a69bd, #0c2461);
-        }
-        
+
         .section-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
+          flex-direction: column;
+          text-align: center;
+          gap: 15px;
         }
-        
+
         .section-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #0c2461, #4a69bd);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            color: white;
-            font-size: 1.8rem;
-            flex-shrink: 0;
+          margin-right: 0;
         }
-        
-        .section-title {
-            font-size: 2rem;
-            color: #0c2461;
-            font-weight: 600;
-        }
-        
-        .aim-content {
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #0c2461;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #333;
-        }
-        
+
         .objectives-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+          grid-template-columns: 1fr;
         }
-        
-        .objective-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid transparent;
-        }
-        
-        .objective-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            border-color: #4a69bd;
-        }
-        
-        .objective-number {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #0c2461, #4a69bd);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .objective-title {
-            font-size: 1.4rem;
-            color: #0c2461;
-            margin-bottom: 15px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .objective-title i {
-            color: #4a69bd;
-        }
-        
-        .objective-description {
-            color: #555;
-            line-height: 1.6;
-            font-size: 1.1rem;
-        }
-        
-        .outcomes-section {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border-left: 6px solid #00b09b;
-            position: relative;
-        }
-        
-        .outcomes-section:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #00b09b, #96c93d);
-        }
-        
+
         .outcomes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+          grid-template-columns: 1fr;
         }
-        
-        .outcome-item {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #00b09b;
-            transition: transform 0.2s ease;
-        }
-        
-        .outcome-item:hover {
-            transform: translateX(10px);
-            background: #f0f5ff;
-        }
-        
-        .outcome-icon {
-            font-size: 1.8rem;
-            color: #00b09b;
-            margin-bottom: 15px;
-        }
-        
-        .outcome-text {
-            color: #333;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-        
-        .key-formula {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border: 2px solid #0c2461;
-            text-align: center;
-        }
-        
-        .key-formula h3 {
-            color: #0c2461;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-        
-        .formula-box {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 10px;
-            font-size: 1.4rem;
-            color: #0c2461;
-            font-family: 'Cambria Math', serif;
-            border: 1px dashed #4a69bd;
-            margin: 20px 0;
-            overflow-x: auto;
-        }
-        
+
         .navigation-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 40px;
-            flex-wrap: wrap;
+          flex-direction: column;
         }
-        
+
         .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
+          width: 100%;
         }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #0c2461, #4a69bd);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(12, 36, 97, 0.3);
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: white;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .header {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .section-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-            
-            .section-icon {
-                margin-right: 0;
-            }
-            
-            .objectives-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .outcomes-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .navigation-buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
-        
-        .progress-indicator {
-            height: 5px;
-            background: #f0f0f0;
-            border-radius: 5px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #0c2461, #4a69bd);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        .highlight {
-            background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            color: #0c2461;
-        }
+      }
+
+      .progress-indicator {
+        height: 5px;
+        background: #f0f0f0;
+        border-radius: 5px;
+        margin: 20px 0;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #0c2461, #4a69bd);
+        width: 0%;
+        transition: width 0.5s ease;
+      }
+
+      .highlight {
+        background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+        color: #0c2461;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <!-- Header Section -->
-        <div class="header">
-            <h1>Taylor's Theorem Learning Platform</h1>
-            <div class="subtitle">Aim, Objectives & Learning Outcomes</div>
-            
-            <div class="progress-indicator">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
+      <!-- Header Section -->
+      <div class="header">
+        <h1>Taylor's Theorem Learning Platform</h1>
+        <div class="subtitle">Aim, Objectives & Learning Outcomes</div>
+
+        <div class="progress-indicator">
+          <div class="progress-fill" id="progressFill"></div>
         </div>
-        
-        <!-- Aim Section -->
-        <div class="aim-section">
-            <div class="section-header">
-                <div class="section-icon">
-                    <i class="fas fa-bullseye"></i>
-                </div>
-                <div>
-                    <div class="section-title">Aim of the Experiment</div>
-                    <p style="color: #666; font-size: 1.1rem;">Primary educational goal of this interactive learning platform</p>
-                </div>
-            </div>
-            
-            <div class="aim-content">
-                <p>To understand and visualize the concept of Taylor series expansion for approximating functions using polynomials, enabling students to grasp both the theoretical foundations and practical applications of this fundamental mathematical tool in engineering and scientific contexts.</p>
-            </div>
+      </div>
+
+      <!-- Aim Section -->
+      <div class="aim-section">
+        <div class="section-header">
+          <div class="section-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <div>
+            <div class="section-title">Aim of the Experiment</div>
+            <p style="color: #666; font-size: 1.1rem">
+              Primary educational goal of this interactive learning platform
+            </p>
+          </div>
         </div>
-        
-        <!-- Key Formula -->
-        <div class="key-formula">
-            <h3><i class="fas fa-calculator"></i> Taylor's Theorem Formula</h3>
-            <div class="formula-box">
-                \[
-                f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x-a)^n
-                \]
-            </div>
-            <p style="color: #666; font-size: 1.1rem;">The foundation of polynomial approximation for smooth functions</p>
+
+        <div class="aim-content">
+          <p>
+            To understand and visualize the concept of Taylor series expansion
+            for approximating functions using polynomials, enabling students to
+            grasp both the theoretical foundations and practical applications of
+            this fundamental mathematical tool in engineering and scientific
+            contexts.
+          </p>
         </div>
-        
-        <!-- Objectives Section -->
-        <div class="aim-section" style="border-left-color: #ff9800;">
-            <div class="section-header">
-                <div class="section-icon" style="background: linear-gradient(135deg, #ff9800, #ff5722);">
-                    <i class="fas fa-tasks"></i>
-                </div>
-                <div>
-                    <div class="section-title">Learning Objectives</div>
-                    <p style="color: #666; font-size: 1.1rem;">Specific goals to be achieved through this interactive platform</p>
-                </div>
-            </div>
-            
-            <div class="objectives-container">
-                <div class="objective-card">
-                    <div class="objective-number">1</div>
-                    <div class="objective-title">
-                        <i class="fas fa-calculator"></i> Understand Mathematical Foundation
-                    </div>
-                    <div class="objective-description">
-                        Grasp the theoretical basis of Taylor's theorem, including its assumptions, limitations, and mathematical proof. Learn how functions can be represented as infinite series of polynomial terms.
-                    </div>
-                </div>
-                
-                <div class="objective-card">
-                    <div class="objective-number">2</div>
-                    <div class="objective-title">
-                        <i class="fas fa-chart-line"></i> Calculate Taylor Polynomials
-                    </div>
-                    <div class="objective-description">
-                        Learn to compute Taylor polynomial expansions for various common functions (exponential, trigonometric, logarithmic) and understand the pattern in their coefficients.
-                    </div>
-                </div>
-                
-                <div class="objective-card">
-                    <div class="objective-number">3</div>
-                    <div class="objective-title">
-                        <i class="fas fa-eye"></i> Visualize Approximation Improvement
-                    </div>
-                    <div class="objective-description">
-                        Observe how increasing the polynomial degree enhances function approximation accuracy, particularly near the expansion point, and understand convergence behavior.
-                    </div>
-                </div>
-                
-                <div class="objective-card">
-                    <div class="objective-number">4</div>
-                    <div class="objective-title">
-                        <i class="fas fa-bullseye"></i> Analyze Expansion Point Impact
-                    </div>
-                    <div class="objective-description">
-                        Explore how the choice of expansion point (center) affects approximation accuracy and understand the radius of convergence concept.
-                    </div>
-                </div>
-                
-                <div class="objective-card">
-                    <div class="objective-number">5</div>
-                    <div class="objective-title">
-                        <i class="fas fa-balance-scale"></i> Compare Function & Approximation
-                    </div>
-                    <div class="objective-description">
-                        Directly compare original functions with their Taylor polynomial approximations to understand error distribution and approximation limitations.
-                    </div>
-                </div>
-            </div>
+      </div>
+
+      <!-- Key Formula -->
+      <div class="key-formula">
+        <h3><i class="fas fa-calculator"></i> Taylor's Theorem Formula</h3>
+        <div class="formula-box">
+          \[ f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x-a)^n \]
         </div>
-        
-        <!-- Learning Outcomes Section -->
-        <div class="outcomes-section">
-            <div class="section-header">
-                <div class="section-icon" style="background: linear-gradient(135deg, #00b09b, #96c93d);">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <div>
-                    <div class="section-title">Learning Outcomes</div>
-                    <p style="color: #666; font-size: 1.1rem;">Skills and knowledge gained after completing this experiment</p>
-                </div>
-            </div>
-            
-            <div class="outcomes-grid">
-                <div class="outcome-item">
-                    <div class="outcome-icon">
-                        <i class="fas fa-book-open"></i>
-                    </div>
-                    <div class="outcome-text">
-                        <span class="highlight">Explain Taylor's theorem</span> and its significance in function approximation, including its theoretical foundations and practical importance in mathematics and engineering.
-                    </div>
-                </div>
-                
-                <div class="outcome-item">
-                    <div class="outcome-icon">
-                        <i class="fas fa-calculator"></i>
-                    </div>
-                    <div class="outcome-text">
-                        <span class="highlight">Calculate Taylor polynomials</span> for common functions including exponential, trigonometric, logarithmic, and polynomial functions using the standard formula.
-                    </div>
-                </div>
-                
-                <div class="outcome-item">
-                    <div class="outcome-icon">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <div class="outcome-text">
-                        <span class="highlight">Analyze the error</span> in Taylor polynomial approximations using remainder term formulas and understand how error varies with polynomial degree and distance from expansion point.
-                    </div>
-                </div>
-                
-                <div class="outcome-item">
-                    <div class="outcome-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <div class="outcome-text">
-                        <span class="highlight">Apply Taylor series</span> in practical mathematical and engineering problems such as numerical analysis, physics simulations, and scientific computing applications.
-                    </div>
-                </div>
-                
-                <div class="outcome-item">
-                    <div class="outcome-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="outcome-text">
-                        <span class="highlight">Implement computational methods</span> for Taylor series approximation in programming environments and understand their computational efficiency and accuracy trade-offs.
-                    </div>
-                </div>
-                
-                <div class="outcome-item">
-                    <div class="outcome-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <div class="outcome-text">
-                        <span class="highlight">Critically evaluate</span> when Taylor series approximations are appropriate and identify situations where alternative approximation methods might be more suitable.
-                    </div>
-                </div>
-            </div>
+        <p style="color: #666; font-size: 1.1rem">
+          The foundation of polynomial approximation for smooth functions
+        </p>
+      </div>
+
+      <!-- Objectives Section -->
+      <div class="aim-section" style="border-left-color: #ff9800">
+        <div class="section-header">
+          <div
+            class="section-icon"
+            style="background: linear-gradient(135deg, #ff9800, #ff5722)"
+          >
+            <i class="fas fa-tasks"></i>
+          </div>
+          <div>
+            <div class="section-title">Learning Objectives</div>
+            <p style="color: #666; font-size: 1.1rem">
+              Specific goals to be achieved through this interactive platform
+            </p>
+          </div>
         </div>
-        
-        <!-- Practical Applications -->
-        <div class="aim-section" style="border-left-color: #8e44ad;">
-            <div class="section-header">
-                <div class="section-icon" style="background: linear-gradient(135deg, #8e44ad, #9b59b6);">
-                    <i class="fas fa-rocket"></i>
-                </div>
-                <div>
-                    <div class="section-title">Practical Applications</div>
-                    <p style="color: #666; font-size: 1.1rem;">Real-world uses of Taylor's Theorem</p>
-                </div>
+
+        <div class="objectives-container">
+          <div class="objective-card">
+            <div class="objective-number">1</div>
+            <div class="objective-title">
+              <i class="fas fa-calculator"></i> Understand Mathematical
+              Foundation
             </div>
-            
-            <div class="objectives-container">
-                <div class="objective-card">
-                    <div class="objective-title">
-                        <i class="fas fa-microchip"></i> Numerical Analysis
-                    </div>
-                    <div class="objective-description">
-                        Used in computer algorithms for calculating trigonometric, exponential, and logarithmic functions where direct computation is computationally expensive.
-                    </div>
-                </div>
-                
-                <div class="objective-card">
-                    <div class="objective-title">
-                        <i class="fas fa-satellite"></i> Physics & Engineering
-                    </div>
-                    <div class="objective-description">
-                        Approximates complex physical equations in mechanics, electromagnetism, and quantum physics for analytical solutions and simulations.
-                    </div>
-                </div>
-                
-                <div class="objective-card">
-                    <div class="objective-title">
-                        <i class="fas fa-chart-pie"></i> Economics & Finance
-                    </div>
-                    <div class="objective-description">
-                        Models complex financial derivatives and economic growth patterns through polynomial approximations of nonlinear functions.
-                    </div>
-                </div>
+            <div class="objective-description">
+              Grasp the theoretical basis of Taylor's theorem, including its
+              assumptions, limitations, and mathematical proof. Learn how
+              functions can be represented as infinite series of polynomial
+              terms.
             </div>
+          </div>
+
+          <div class="objective-card">
+            <div class="objective-number">2</div>
+            <div class="objective-title">
+              <i class="fas fa-chart-line"></i> Calculate Taylor Polynomials
+            </div>
+            <div class="objective-description">
+              Learn to compute Taylor polynomial expansions for various common
+              functions (exponential, trigonometric, logarithmic) and understand
+              the pattern in their coefficients.
+            </div>
+          </div>
+
+          <div class="objective-card">
+            <div class="objective-number">3</div>
+            <div class="objective-title">
+              <i class="fas fa-eye"></i> Visualize Approximation Improvement
+            </div>
+            <div class="objective-description">
+              Observe how increasing the polynomial degree enhances function
+              approximation accuracy, particularly near the expansion point, and
+              understand convergence behavior.
+            </div>
+          </div>
+
+          <div class="objective-card">
+            <div class="objective-number">4</div>
+            <div class="objective-title">
+              <i class="fas fa-bullseye"></i> Analyze Expansion Point Impact
+            </div>
+            <div class="objective-description">
+              Explore how the choice of expansion point (center) affects
+              approximation accuracy and understand the radius of convergence
+              concept.
+            </div>
+          </div>
+
+          <div class="objective-card">
+            <div class="objective-number">5</div>
+            <div class="objective-title">
+              <i class="fas fa-balance-scale"></i> Compare Function &
+              Approximation
+            </div>
+            <div class="objective-description">
+              Directly compare original functions with their Taylor polynomial
+              approximations to understand error distribution and approximation
+              limitations.
+            </div>
+          </div>
         </div>
-        
-        <!-- Navigation Buttons - Only Back to Home remains -->
-        <div class="navigation-buttons">
-            <a href="index.html" class="btn btn-primary">
-                <i class="fas fa-home"></i> Back to Home
-            </a>
+      </div>
+
+      <!-- Learning Outcomes Section -->
+      <div class="outcomes-section">
+        <div class="section-header">
+          <div
+            class="section-icon"
+            style="background: linear-gradient(135deg, #00b09b, #96c93d)"
+          >
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div>
+            <div class="section-title">Learning Outcomes</div>
+            <p style="color: #666; font-size: 1.1rem">
+              Skills and knowledge gained after completing this experiment
+            </p>
+          </div>
         </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            <p>© 2024 Taylor's Theorem Interactive Learning Platform | Pimpri Chinchwad College of Engineering, Pune</p>
-            <p>Engineering Mathematics I Project | Information Technology Division P</p>
-            <p>For academic purposes only</p>
+
+        <div class="outcomes-grid">
+          <div class="outcome-item">
+            <div class="outcome-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div class="outcome-text">
+              <span class="highlight">Explain Taylor's theorem</span> and its
+              significance in function approximation, including its theoretical
+              foundations and practical importance in mathematics and
+              engineering.
+            </div>
+          </div>
+
+          <div class="outcome-item">
+            <div class="outcome-icon">
+              <i class="fas fa-calculator"></i>
+            </div>
+            <div class="outcome-text">
+              <span class="highlight">Calculate Taylor polynomials</span> for
+              common functions including exponential, trigonometric,
+              logarithmic, and polynomial functions using the standard formula.
+            </div>
+          </div>
+
+          <div class="outcome-item">
+            <div class="outcome-icon">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="outcome-text">
+              <span class="highlight">Analyze the error</span> in Taylor
+              polynomial approximations using remainder term formulas and
+              understand how error varies with polynomial degree and distance
+              from expansion point.
+            </div>
+          </div>
+
+          <div class="outcome-item">
+            <div class="outcome-icon">
+              <i class="fas fa-cogs"></i>
+            </div>
+            <div class="outcome-text">
+              <span class="highlight">Apply Taylor series</span> in practical
+              mathematical and engineering problems such as numerical analysis,
+              physics simulations, and scientific computing applications.
+            </div>
+          </div>
+
+          <div class="outcome-item">
+            <div class="outcome-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <div class="outcome-text">
+              <span class="highlight">Implement computational methods</span> for
+              Taylor series approximation in programming environments and
+              understand their computational efficiency and accuracy trade-offs.
+            </div>
+          </div>
+
+          <div class="outcome-item">
+            <div class="outcome-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="outcome-text">
+              <span class="highlight">Critically evaluate</span> when Taylor
+              series approximations are appropriate and identify situations
+              where alternative approximation methods might be more suitable.
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Practical Applications -->
+      <div class="aim-section" style="border-left-color: #8e44ad">
+        <div class="section-header">
+          <div
+            class="section-icon"
+            style="background: linear-gradient(135deg, #8e44ad, #9b59b6)"
+          >
+            <i class="fas fa-rocket"></i>
+          </div>
+          <div>
+            <div class="section-title">Practical Applications</div>
+            <p style="color: #666; font-size: 1.1rem">
+              Real-world uses of Taylor's Theorem
+            </p>
+          </div>
+        </div>
+
+        <div class="objectives-container">
+          <div class="objective-card">
+            <div class="objective-title">
+              <i class="fas fa-microchip"></i> Numerical Analysis
+            </div>
+            <div class="objective-description">
+              Used in computer algorithms for calculating trigonometric,
+              exponential, and logarithmic functions where direct computation is
+              computationally expensive.
+            </div>
+          </div>
+
+          <div class="objective-card">
+            <div class="objective-title">
+              <i class="fas fa-satellite"></i> Physics & Engineering
+            </div>
+            <div class="objective-description">
+              Approximates complex physical equations in mechanics,
+              electromagnetism, and quantum physics for analytical solutions and
+              simulations.
+            </div>
+          </div>
+
+          <div class="objective-card">
+            <div class="objective-title">
+              <i class="fas fa-chart-pie"></i> Economics & Finance
+            </div>
+            <div class="objective-description">
+              Models complex financial derivatives and economic growth patterns
+              through polynomial approximations of nonlinear functions.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons - Only Back to Home remains -->
+      <div class="navigation-buttons">
+        <a href="index.html" class="btn btn-primary">
+          <i class="fas fa-home"></i> Back to Home
+        </a>
+      </div>
+
+      <!-- Footer (content removed per request) -->
+      <div class="footer" aria-hidden="true"></div>
     </div>
-    
+
     <script>
-        // Initialize MathJax for formula rendering
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            }
-        };
-        
-        // Progress bar animation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animate progress bar
+      // Initialize MathJax for formula rendering
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+        },
+      };
+
+      // Progress bar animation
+      document.addEventListener("DOMContentLoaded", function () {
+        // Animate progress bar
+        setTimeout(() => {
+          document.getElementById("progressFill").style.width = "100%";
+        }, 500);
+
+        // Animate cards on scroll
+        const cards = document.querySelectorAll(
+          ".objective-card, .outcome-item"
+        );
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry, index) => {
+              if (entry.isIntersecting) {
+                setTimeout(() => {
+                  entry.target.style.opacity = "1";
+                  entry.target.style.transform = "translateY(0)";
+                }, index * 100);
+              }
+            });
+          },
+          {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px",
+          }
+        );
+
+        cards.forEach((card) => {
+          card.style.opacity = "0";
+          card.style.transform = "translateY(20px)";
+          card.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+          observer.observe(card);
+        });
+
+        // Add click effect to cards
+        cards.forEach((card) => {
+          card.addEventListener("click", function () {
+            this.style.transform = "scale(0.98)";
             setTimeout(() => {
-                document.getElementById('progressFill').style.width = '100%';
-            }, 500);
-            
-            // Animate cards on scroll
-            const cards = document.querySelectorAll('.objective-card, .outcome-item');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }, index * 100);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            cards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(card);
-            });
-            
-            // Add click effect to cards
-            cards.forEach(card => {
-                card.addEventListener('click', function() {
-                    this.style.transform = 'scale(0.98)';
-                    setTimeout(() => {
-                        this.style.transform = '';
-                    }, 200);
-                });
-            });
+              this.style.transform = "";
+            }, 200);
+          });
         });
-        
-        // Update progress based on scroll
-        window.addEventListener('scroll', function() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrollPercent = scrollTop / docHeight;
-            
-            const progressFill = document.getElementById('progressFill');
-            if (progressFill) {
-                const baseWidth = 100;
-                const scrollBasedWidth = Math.min(baseWidth + (scrollPercent * 20), 100);
-                progressFill.style.width = scrollBasedWidth + '%';
-            }
-        });
+      });
+
+      // Update progress based on scroll
+      window.addEventListener("scroll", function () {
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrollPercent = scrollTop / docHeight;
+
+        const progressFill = document.getElementById("progressFill");
+        if (progressFill) {
+          const baseWidth = 100;
+          const scrollBasedWidth = Math.min(
+            baseWidth + scrollPercent * 20,
+            100
+          );
+          progressFill.style.width = scrollBasedWidth + "%";
+        }
+      });
     </script>
-    
+
     <!-- MathJax Script -->
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</body>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+  </body>
 </html>

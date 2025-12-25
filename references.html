@@ -1,591 +1,655 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>References - Taylor's Theorem Learning Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Slab:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border: 3px solid #0c2461;
-        }
-        
-        h1 {
-            color: #0c2461;
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #0c2461, #4a69bd);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .subtitle {
-            color: #4a69bd;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-        }
-        
-        .project-info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border-left: 5px solid #0c2461;
-            text-align: left;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        border: 3px solid #0c2461;
+      }
+
+      h1 {
+        font-family: "Roboto Slab", serif;
+        font-size: 2.8rem;
+        margin-bottom: 10px;
+        background: linear-gradient(90deg, #0c2461, #4a69bd);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+
+      .subtitle {
+        color: #4a69bd;
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+      }
+
+      .project-info {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 20px;
+        border-left: 5px solid #0c2461;
+        text-align: left;
+      }
+
+      .references-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .reference-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        border: 2px solid transparent;
+      }
+
+      .reference-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      }
+
+      .card-header {
+        background: linear-gradient(135deg, #0c2461, #1e3799);
+        color: white;
+        padding: 25px;
+        text-align: center;
+        position: relative;
+      }
+
+      .card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+      }
+
+      .card-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .card-subtitle {
+        font-size: 1.1rem;
+        color: #d1d8e0;
+      }
+
+      .card-content {
+        padding: 30px;
+      }
+
+      .reference-list {
+        list-style-type: none;
+      }
+
+      .reference-item {
+        padding: 20px;
+        margin-bottom: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border-left: 4px solid #4a69bd;
+        transition: transform 0.2s ease, background 0.2s ease;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .reference-item:hover {
+        transform: translateX(5px);
+        background: #f0f5ff;
+      }
+
+      .reference-number {
+        background: #4a69bd;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 15px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .reference-details {
+        flex: 1;
+      }
+
+      .reference-title {
+        font-weight: 600;
+        color: #0c2461;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+        line-height: 1.4;
+      }
+
+      .reference-authors {
+        color: #555;
+        margin-bottom: 5px;
+        font-style: italic;
+      }
+
+      .reference-publisher {
+        color: #666;
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+      }
+
+      .reference-edition {
+        display: inline-block;
+        background: #e8f4fc;
+        color: #0c2461;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-top: 5px;
+      }
+
+      .online-resource {
+        padding: 15px;
+        margin-bottom: 12px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 3px solid #00b09b;
+      }
+
+      .resource-title {
+        font-weight: 600;
+        color: #0c2461;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+      }
+
+      .resource-title i {
+        margin-right: 10px;
+        color: #00b09b;
+      }
+
+      .resource-link {
+        color: #4a69bd;
+        text-decoration: none;
+        font-size: 0.95rem;
+        word-break: break-all;
+        display: inline-block;
+        margin-top: 5px;
+      }
+
+      .resource-link:hover {
+        text-decoration: underline;
+      }
+
+      .additional-reading {
+        padding: 18px;
+        margin-bottom: 15px;
+        background: #fff8e1;
+        border-radius: 8px;
+        border-left: 3px solid #ff9800;
+      }
+
+      .reading-title {
+        font-weight: 600;
+        color: #0c2461;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+      }
+
+      .reading-title i {
+        margin-right: 10px;
+        color: #ff9800;
+      }
+
+      .reading-author {
+        color: #555;
+        margin-bottom: 5px;
+        font-style: italic;
+      }
+
+      .reading-source {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .footer-note {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 40px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border: 3px solid #0c2461;
+      }
+
+      .footer-note h3 {
+        color: #0c2461;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+      }
+
+      .virtual-lab {
+        background: linear-gradient(135deg, #0c2461, #4a69bd);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .virtual-lab h4 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+      }
+
+      /* Back to Home Button Container */
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0 12px;
+      }
+
+      .back-button {
+        background: linear-gradient(135deg, #0c2461, #4a69bd);
+        color: white;
+        border: none;
+        padding: 10px 28px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.25s ease;
+        box-shadow: 0 6px 15px rgba(12, 36, 97, 0.25);
+        width: fit-content;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .back-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(12, 36, 97, 0.3);
+        background: linear-gradient(135deg, #4a69bd, #0c2461);
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        padding: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        color: white;
+        font-size: 0.85rem;
+        background: rgba(12, 36, 97, 0.22);
+        border-radius: 6px;
+      }
+
+      @media (max-width: 768px) {
         .references-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+          grid-template-columns: 1fr;
         }
-        
-        .reference-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            border: 2px solid transparent;
+
+        .header {
+          padding: 20px;
         }
-        
-        .reference-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+
+        h1 {
+          font-size: 2.2rem;
         }
-        
-        .card-header {
-            background: linear-gradient(135deg, #0c2461, #1e3799);
-            color: white;
-            padding: 25px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .card-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .card-subtitle {
-            font-size: 1.1rem;
-            color: #d1d8e0;
-        }
-        
-        .card-content {
-            padding: 30px;
-        }
-        
-        .reference-list {
-            list-style-type: none;
-        }
-        
+
         .reference-item {
-            padding: 20px;
-            margin-bottom: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #4a69bd;
-            transition: transform 0.2s ease, background 0.2s ease;
-            display: flex;
-            align-items: flex-start;
+          flex-direction: column;
+          align-items: flex-start;
         }
-        
-        .reference-item:hover {
-            transform: translateX(5px);
-            background: #f0f5ff;
-        }
-        
+
         .reference-number {
-            background: #4a69bd;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 15px;
-            flex-shrink: 0;
-            margin-top: 2px;
+          margin-bottom: 10px;
         }
-        
-        .reference-details {
-            flex: 1;
-        }
-        
-        .reference-title {
-            font-weight: 600;
-            color: #0c2461;
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-            line-height: 1.4;
-        }
-        
-        .reference-authors {
-            color: #555;
-            margin-bottom: 5px;
-            font-style: italic;
-        }
-        
-        .reference-publisher {
-            color: #666;
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-        }
-        
-        .reference-edition {
-            display: inline-block;
-            background: #e8f4fc;
-            color: #0c2461;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-top: 5px;
-        }
-        
-        .online-resource {
-            padding: 15px;
-            margin-bottom: 12px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 3px solid #00b09b;
-        }
-        
-        .resource-title {
-            font-weight: 600;
-            color: #0c2461;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .resource-title i {
-            margin-right: 10px;
-            color: #00b09b;
-        }
-        
-        .resource-link {
-            color: #4a69bd;
-            text-decoration: none;
-            font-size: 0.95rem;
-            word-break: break-all;
-            display: inline-block;
-            margin-top: 5px;
-        }
-        
-        .resource-link:hover {
-            text-decoration: underline;
-        }
-        
-        .additional-reading {
-            padding: 18px;
-            margin-bottom: 15px;
-            background: #fff8e1;
-            border-radius: 8px;
-            border-left: 3px solid #ff9800;
-        }
-        
-        .reading-title {
-            font-weight: 600;
-            color: #0c2461;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .reading-title i {
-            margin-right: 10px;
-            color: #ff9800;
-        }
-        
-        .reading-author {
-            color: #555;
-            margin-bottom: 5px;
-            font-style: italic;
-        }
-        
-        .reading-source {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        .footer-note {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 40px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border: 3px solid #0c2461;
-        }
-        
-        .footer-note h3 {
-            color: #0c2461;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-        
-        .virtual-lab {
-            background: linear-gradient(135deg, #0c2461, #4a69bd);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        
-        .virtual-lab h4 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-        }
-        
-        /* Back to Home Button Container */
-        .button-container {
-            display: flex;
-            justify-content: center;
-            margin: 40px 0 20px;
-        }
-        
+
         .back-button {
-            background: linear-gradient(135deg, #0c2461, #4a69bd);
-            color: white;
-            border: none;
-            padding: 16px 45px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(12, 36, 97, 0.3);
-            width: fit-content;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
+          padding: 10px 20px;
+          font-size: 1rem;
+          width: 90%;
         }
-        
-        .back-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(12, 36, 97, 0.4);
-            background: linear-gradient(135deg, #4a69bd, #0c2461);
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 25px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 0.9rem;
-            background: rgba(12, 36, 97, 0.3);
-            border-radius: 10px;
-        }
-        
-        @media (max-width: 768px) {
-            .references-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .header {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .reference-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .reference-number {
-                margin-bottom: 10px;
-            }
-            
-            .back-button {
-                padding: 14px 35px;
-                font-size: 1.1rem;
-                width: 90%;
-            }
-        }
-        
-        .citation-style {
-            font-family: 'Georgia', serif;
-            font-size: 1rem;
-            line-height: 1.5;
-        }
+      }
+
+      .citation-style {
+        font-family: "Georgia", serif;
+        font-size: 1rem;
+        line-height: 1.5;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <!-- Header Section -->
-        <div class="header">
-            <h1>Project References</h1>
-            <div class="subtitle">Taylor's Theorem Learning Platform - Research Sources</div>
-            
-            <div class="project-info">
-                <p>This project was developed based on comprehensive research from authoritative textbooks, online educational resources, and additional academic readings. Below are the primary references used in developing the Taylor's Theorem Interactive Learning Platform.</p>
-            </div>
+      <!-- Header Section -->
+      <div class="header">
+        <h1>Project References</h1>
+        <div class="subtitle">
+          Taylor's Theorem Learning Platform - Research Sources
         </div>
-        
-        <!-- References Container -->
-        <div class="references-container">
-            <!-- Textbooks Card -->
-            <div class="reference-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-book-open"></i>
-                    </div>
-                    <div class="card-title">Textbooks</div>
-                    <div class="card-subtitle">Primary Academic References</div>
-                </div>
-                
-                <div class="card-content">
-                    <ul class="reference-list">
-                        <li class="reference-item">
-                            <div class="reference-number">1</div>
-                            <div class="reference-details">
-                                <div class="reference-title">Thomas' Calculus</div>
-                                <div class="reference-authors">Thomas, G. B., et al.</div>
-                                <div class="reference-publisher">Pearson Education</div>
-                                <span class="reference-edition">14th Edition</span>
-                                <p class="citation-style" style="margin-top: 8px; font-size: 0.9rem; color: #666;">Comprehensive coverage of calculus concepts including detailed explanations of Taylor series and polynomial approximations.</p>
-                            </div>
-                        </li>
-                        
-                        <li class="reference-item">
-                            <div class="reference-number">2</div>
-                            <div class="reference-details">
-                                <div class="reference-title">Calculus: Early Transcendentals</div>
-                                <div class="reference-authors">Stewart, J.</div>
-                                <div class="reference-publisher">Cengage Learning</div>
-                                <span class="reference-edition">8th Edition</span>
-                                <p class="citation-style" style="margin-top: 8px; font-size: 0.9rem; color: #666;">Provides clear explanations of Taylor and Maclaurin series with practical applications in engineering.</p>
-                            </div>
-                        </li>
-                        
-                        <li class="reference-item">
-                            <div class="reference-number">3</div>
-                            <div class="reference-details">
-                                <div class="reference-title">Advanced Engineering Mathematics</div>
-                                <div class="reference-authors">Kreyszig, E.</div>
-                                <div class="reference-publisher">Wiley</div>
-                                <span class="reference-edition">10th Edition</span>
-                                <p class="citation-style" style="margin-top: 8px; font-size: 0.9rem; color: #666;">Advanced mathematical methods with emphasis on engineering applications of Taylor series expansions.</p>
-                            </div>
-                        </li>
-                        
-                        <li class="reference-item">
-                            <div class="reference-number">4</div>
-                            <div class="reference-details">
-                                <div class="reference-title">Numerical Methods for Engineers</div>
-                                <div class="reference-authors">Chapra, S. C., & Canale, R. P.</div>
-                                <div class="reference-publisher">McGraw-Hill</div>
-                                <span class="reference-edition">7th Edition</span>
-                                <p class="citation-style" style="margin-top: 8px; font-size: 0.9rem; color: #666;">Practical implementation of Taylor series in numerical methods and computational applications.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Online Resources Card -->
-            <div class="reference-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <div class="card-title">Online Resources</div>
-                    <div class="card-subtitle">Digital Learning Platforms</div>
-                </div>
-                
-                <div class="card-content">
-                    <div class="online-resource">
-                        <div class="resource-title">
-                            <i class="fas fa-university"></i> Khan Academy
-                        </div>
-                        <div class="resource-link">https://www.khanacademy.org/math/calculus-2/cs2-series/cs2-taylor-maclaurin-series</div>
-                        <p style="margin-top: 8px; font-size: 0.95rem; color: #555;">Comprehensive video tutorials and interactive exercises on Taylor and Maclaurin series.</p>
-                    </div>
-                    
-                    <div class="online-resource">
-                        <div class="resource-title">
-                            <i class="fas fa-graduation-cap"></i> MIT OpenCourseWare
-                        </div>
-                        <div class="resource-link">https://ocw.mit.edu/courses/18-01-single-variable-calculus-fall-2006/</div>
-                        <p style="margin-top: 8px; font-size: 0.95rem; color: #555;">Complete course materials including lecture notes, videos, and problem sets on single variable calculus.</p>
-                    </div>
-                    
-                    <div class="online-resource">
-                        <div class="resource-title">
-                            <i class="fas fa-calculator"></i> Wolfram MathWorld
-                        </div>
-                        <div class="resource-link">https://mathworld.wolfram.com/TaylorSeries.html</div>
-                        <p style="margin-top: 8px; font-size: 0.95rem; color: #555;">Detailed mathematical definitions, formulas, and examples of Taylor series expansions.</p>
-                    </div>
-                    
-                    <div class="online-resource">
-                        <div class="resource-title">
-                            <i class="fas fa-sticky-note"></i> Paul's Online Math Notes
-                        </div>
-                        <div class="resource-link">https://tutorial.math.lamar.edu/classes/calcii/taylorseries.aspx</div>
-                        <p style="margin-top: 8px; font-size: 0.95rem; color: #555;">Clear explanations and worked examples of Taylor series in Calculus II curriculum.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Additional Reading Card -->
-            <div class="reference-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="card-title">Additional Reading</div>
-                    <div class="card-subtitle">Supplementary Academic Materials</div>
-                </div>
-                
-                <div class="card-content">
-                    <div class="additional-reading">
-                        <div class="reading-title">
-                            <i class="fas fa-book"></i> Taylor Series
-                        </div>
-                        <div class="reading-author">Weisstein, Eric W.</div>
-                        <div class="reading-source">From MathWorld - A Wolfram Web Resource</div>
-                        <p style="margin-top: 8px; font-size: 0.95rem; color: #555;">Comprehensive mathematical reference on Taylor series theory and applications.</p>
-                    </div>
-                    
-                    <div class="additional-reading">
-                        <div class="reading-title">
-                            <i class="fas fa-book"></i> Calculus
-                        </div>
-                        <div class="reading-author">Strang, G.</div>
-                        <div class="reading-source">Wellesley-Cambridge Press</div>
-                        <p style="margin-top: 8px; font-size: 0.95rem; color: #555;">Alternative approach to teaching calculus concepts with practical applications.</p>
-                    </div>
-                    
-                    <div class="additional-reading">
-                        <div class="reading-title">
-                            <i class="fas fa-book"></i> Mathematical Methods in the Physical Sciences
-                        </div>
-                        <div class="reading-author">Boas, M. L.</div>
-                        <div class="reading-source">Wiley</div>
-                        <p style="margin-top: 8px; font-size: 0.95rem; color: #555;">Application of Taylor series in physical sciences and engineering problems.</p>
-                    </div>
-                </div>
-            </div>
+
+        <div class="project-info">
+          <p>
+            This project was developed based on comprehensive research from
+            authoritative textbooks, online educational resources, and
+            additional academic readings. Below are the primary references used
+            in developing the Taylor's Theorem Interactive Learning Platform.
+          </p>
         </div>
-        
-        <!-- Footer Note -->
-        <div class="footer-note">
-            <h3>Virtual Lab Information</h3>
-            <p style="font-size: 1.1rem; color: #666; margin-bottom: 20px; line-height: 1.6;">
-                This interactive learning platform is part of the Linear Algebra & Unitary Calculus curriculum at Pimpri Chinchwad College of Engineering. The references listed above were carefully selected to ensure accurate and comprehensive coverage of Taylor's Theorem and its applications.
-            </p>
-            
-            <div class="virtual-lab">
-                <h4>Virtual Labs © 2025</h4>
-                <p>Applied Sciences & Humanities Department</p>
-                <p>Pimpri Chinchwad College of Engineering, Pune</p>
+      </div>
+
+      <!-- References Container -->
+      <div class="references-container">
+        <!-- Textbooks Card -->
+        <div class="reference-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <i class="fas fa-book-open"></i>
             </div>
-            
-            <!-- Single Back to Home Button -->
-            <div class="button-container">
-                <a href="index.html" class="back-button">
-                    <i class="fas fa-home"></i> Back to Home
-                </a>
+            <div class="card-title">Textbooks</div>
+            <div class="card-subtitle">Primary Academic References</div>
+          </div>
+
+          <div class="card-content">
+            <ul class="reference-list">
+              <li class="reference-item">
+                <div class="reference-number">1</div>
+                <div class="reference-details">
+                  <div class="reference-title">Thomas' Calculus</div>
+                  <div class="reference-authors">Thomas, G. B., et al.</div>
+                  <div class="reference-publisher">Pearson Education</div>
+                  <span class="reference-edition">14th Edition</span>
+                  <p
+                    class="citation-style"
+                    style="margin-top: 8px; font-size: 0.9rem; color: #666"
+                  >
+                    Comprehensive coverage of calculus concepts including
+                    detailed explanations of Taylor series and polynomial
+                    approximations.
+                  </p>
+                </div>
+              </li>
+
+              <li class="reference-item">
+                <div class="reference-number">2</div>
+                <div class="reference-details">
+                  <div class="reference-title">
+                    Calculus: Early Transcendentals
+                  </div>
+                  <div class="reference-authors">Stewart, J.</div>
+                  <div class="reference-publisher">Cengage Learning</div>
+                  <span class="reference-edition">8th Edition</span>
+                  <p
+                    class="citation-style"
+                    style="margin-top: 8px; font-size: 0.9rem; color: #666"
+                  >
+                    Provides clear explanations of Taylor and Maclaurin series
+                    with practical applications in engineering.
+                  </p>
+                </div>
+              </li>
+
+              <li class="reference-item">
+                <div class="reference-number">3</div>
+                <div class="reference-details">
+                  <div class="reference-title">
+                    Advanced Engineering Mathematics
+                  </div>
+                  <div class="reference-authors">Kreyszig, E.</div>
+                  <div class="reference-publisher">Wiley</div>
+                  <span class="reference-edition">10th Edition</span>
+                  <p
+                    class="citation-style"
+                    style="margin-top: 8px; font-size: 0.9rem; color: #666"
+                  >
+                    Advanced mathematical methods with emphasis on engineering
+                    applications of Taylor series expansions.
+                  </p>
+                </div>
+              </li>
+
+              <li class="reference-item">
+                <div class="reference-number">4</div>
+                <div class="reference-details">
+                  <div class="reference-title">
+                    Numerical Methods for Engineers
+                  </div>
+                  <div class="reference-authors">
+                    Chapra, S. C., & Canale, R. P.
+                  </div>
+                  <div class="reference-publisher">McGraw-Hill</div>
+                  <span class="reference-edition">7th Edition</span>
+                  <p
+                    class="citation-style"
+                    style="margin-top: 8px; font-size: 0.9rem; color: #666"
+                  >
+                    Practical implementation of Taylor series in numerical
+                    methods and computational applications.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Online Resources Card -->
+        <div class="reference-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <i class="fas fa-globe"></i>
             </div>
+            <div class="card-title">Online Resources</div>
+            <div class="card-subtitle">Digital Learning Platforms</div>
+          </div>
+
+          <div class="card-content">
+            <div class="online-resource">
+              <div class="resource-title">
+                <i class="fas fa-university"></i> Khan Academy
+              </div>
+              <div class="resource-link">
+                https://www.khanacademy.org/math/calculus-2/cs2-series/cs2-taylor-maclaurin-series
+              </div>
+              <p style="margin-top: 8px; font-size: 0.95rem; color: #555">
+                Comprehensive video tutorials and interactive exercises on
+                Taylor and Maclaurin series.
+              </p>
+            </div>
+
+            <div class="online-resource">
+              <div class="resource-title">
+                <i class="fas fa-graduation-cap"></i> MIT OpenCourseWare
+              </div>
+              <div class="resource-link">
+                https://ocw.mit.edu/courses/18-01-single-variable-calculus-fall-2006/
+              </div>
+              <p style="margin-top: 8px; font-size: 0.95rem; color: #555">
+                Complete course materials including lecture notes, videos, and
+                problem sets on single variable calculus.
+              </p>
+            </div>
+
+            <div class="online-resource">
+              <div class="resource-title">
+                <i class="fas fa-calculator"></i> Wolfram MathWorld
+              </div>
+              <div class="resource-link">
+                https://mathworld.wolfram.com/TaylorSeries.html
+              </div>
+              <p style="margin-top: 8px; font-size: 0.95rem; color: #555">
+                Detailed mathematical definitions, formulas, and examples of
+                Taylor series expansions.
+              </p>
+            </div>
+
+            <div class="online-resource">
+              <div class="resource-title">
+                <i class="fas fa-sticky-note"></i> Paul's Online Math Notes
+              </div>
+              <div class="resource-link">
+                https://tutorial.math.lamar.edu/classes/calcii/taylorseries.aspx
+              </div>
+              <p style="margin-top: 8px; font-size: 0.95rem; color: #555">
+                Clear explanations and worked examples of Taylor series in
+                Calculus II curriculum.
+              </p>
+            </div>
+          </div>
         </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            <p>© 2025 Taylor's Theorem Interactive Learning Platform | Pimpri Chinchwad College of Engineering, Pune</p>
-            <p>Linear Algebra & Unitary Calculus Project | Information Technology Division P | Academic Year 2025-2026</p>
-            <p>For academic purposes only</p>
+
+        <!-- Additional Reading Card -->
+        <div class="reference-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="card-title">Additional Reading</div>
+            <div class="card-subtitle">Supplementary Academic Materials</div>
+          </div>
+
+          <div class="card-content">
+            <div class="additional-reading">
+              <div class="reading-title">
+                <i class="fas fa-book"></i> Taylor Series
+              </div>
+              <div class="reading-author">Weisstein, Eric W.</div>
+              <div class="reading-source">
+                From MathWorld - A Wolfram Web Resource
+              </div>
+              <p style="margin-top: 8px; font-size: 0.95rem; color: #555">
+                Comprehensive mathematical reference on Taylor series theory and
+                applications.
+              </p>
+            </div>
+
+            <div class="additional-reading">
+              <div class="reading-title">
+                <i class="fas fa-book"></i> Calculus
+              </div>
+              <div class="reading-author">Strang, G.</div>
+              <div class="reading-source">Wellesley-Cambridge Press</div>
+              <p style="margin-top: 8px; font-size: 0.95rem; color: #555">
+                Alternative approach to teaching calculus concepts with
+                practical applications.
+              </p>
+            </div>
+
+            <div class="additional-reading">
+              <div class="reading-title">
+                <i class="fas fa-book"></i> Mathematical Methods in the Physical
+                Sciences
+              </div>
+              <div class="reading-author">Boas, M. L.</div>
+              <div class="reading-source">Wiley</div>
+              <p style="margin-top: 8px; font-size: 0.95rem; color: #555">
+                Application of Taylor series in physical sciences and
+                engineering problems.
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Back to Home Button (moved and simplified) -->
+      <div class="button-container">
+        <a href="index.html" class="back-button">
+          <i class="fas fa-home"></i> Back to Home
+        </a>
+      </div>
     </div>
-    
+
     <script>
-        // Add animation to reference items on scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            const referenceItems = document.querySelectorAll('.reference-item');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }, index * 100);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
+      // Add animation to reference items on scroll
+      document.addEventListener("DOMContentLoaded", function () {
+        const referenceItems = document.querySelectorAll(".reference-item");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry, index) => {
+              if (entry.isIntersecting) {
+                setTimeout(() => {
+                  entry.target.style.opacity = "1";
+                  entry.target.style.transform = "translateY(0)";
+                }, index * 100);
+              }
             });
-            
-            referenceItems.forEach(item => {
-                item.style.opacity = '0';
-                item.style.transform = 'translateY(20px)';
-                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(item);
-            });
-            
-            // Add hover effects to cards
-            const cards = document.querySelectorAll('.reference-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    const icon = this.querySelector('.card-icon i');
-                    icon.style.transform = 'scale(1.2) rotate(5deg)';
-                    icon.style.transition = 'transform 0.3s ease';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    const icon = this.querySelector('.card-icon i');
-                    icon.style.transform = 'scale(1) rotate(0)';
-                });
-            });
+          },
+          {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px",
+          }
+        );
+
+        referenceItems.forEach((item) => {
+          item.style.opacity = "0";
+          item.style.transform = "translateY(20px)";
+          item.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+          observer.observe(item);
         });
+
+        // Add hover effects to cards
+        const cards = document.querySelectorAll(".reference-card");
+        cards.forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            const icon = this.querySelector(".card-icon i");
+            icon.style.transform = "scale(1.2) rotate(5deg)";
+            icon.style.transition = "transform 0.3s ease";
+          });
+
+          card.addEventListener("mouseleave", function () {
+            const icon = this.querySelector(".card-icon i");
+            icon.style.transform = "scale(1) rotate(0)";
+          });
+        });
+      });
     </script>
-</body>
+  </body>
 </html>

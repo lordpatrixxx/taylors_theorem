@@ -14,12 +14,18 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Slab:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
       body {
@@ -46,12 +52,13 @@
       }
 
       h1 {
-        color: #0c2461;
+        font-family: "Roboto Slab", serif;
         font-size: 2.8rem;
         margin-bottom: 10px;
         background: linear-gradient(90deg, #0c2461, #4a69bd);
-        -webkit-background-clip: text;
         background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
         -webkit-text-fill-color: transparent;
       }
 
@@ -200,24 +207,24 @@
 
       .back-button {
         display: block;
-        margin: 40px auto 20px;
+        margin: 16px auto 8px;
         background: linear-gradient(135deg, #0c2461, #4a69bd);
         color: white;
         border: none;
-        padding: 16px 45px;
-        border-radius: 10px;
+        padding: 10px 28px;
+        border-radius: 8px;
         cursor: pointer;
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 600;
         text-align: center;
         text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 8px 20px rgba(12, 36, 97, 0.3);
+        transition: all 0.25s ease;
+        box-shadow: 0 6px 14px rgba(12, 36, 97, 0.28);
         width: fit-content;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
+        gap: 10px;
       }
 
       .back-button:hover {
@@ -229,18 +236,17 @@
       .button-container {
         display: flex;
         justify-content: center;
-        margin: 50px 0 30px;
+        margin: 18px 0 12px;
       }
 
       .footer {
         text-align: center;
-        margin-top: 40px;
-        padding: 25px;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        margin-top: 12px;
+        padding: 8px 0;
         color: white;
-        font-size: 0.9rem;
-        background: rgba(12, 36, 97, 0.3);
-        border-radius: 10px;
+        font-size: 0.82rem;
+        background: rgba(12, 36, 97, 0.22);
+        border-radius: 6px;
       }
 
       .progress-indicator {
@@ -280,8 +286,8 @@
         }
 
         .back-button {
-          padding: 14px 35px;
-          font-size: 1.1rem;
+          padding: 12px 24px;
+          font-size: 1rem;
           width: 90%;
         }
 
@@ -395,18 +401,8 @@
         </a>
       </div>
 
-      <!-- Footer -->
-      <div class="footer">
-        <p>
-          Taylor's Theorem Interactive Learning Platform | Pimpri Chinchwad
-          College of Engineering, Pune
-        </p>
-        <p>
-          Applied Sciences & Humanities Department | Information Technology
-          Division P
-        </p>
-        <p>For academic purposes only | © 2025 Virtual Labs</p>
-      </div>
+      <!-- Footer (compact - content removed) -->
+      <div class="footer"></div>
     </div>
 
     <script>
