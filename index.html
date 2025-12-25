@@ -1,1041 +1,997 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Virtual Labs - LAUC</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
 
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
 
+      .container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 25px;
+      }
+
+      /* Header Styles */
+      header {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 18px 0;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        position: relative;
+        overflow: hidden;
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #00c6ff, #0072ff);
+        z-index: 1;
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .pcce-logo-container {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding-right: 30px;
+        border-right: 2px solid rgba(255, 255, 255, 0.25);
+        transition: transform 0.3s ease;
+      }
+
+      .pcce-logo-container:hover {
+        transform: translateY(-3px);
+      }
+
+      .pcce-logo-img {
+        width: 65px;
+        height: 65px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ffffff, #f0f0f0);
+        padding: 8px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .pcce-logo-img:hover {
+        transform: rotate(5deg) scale(1.05);
+      }
+
+      .pcce-logo-text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .pcce-logo-text .main {
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.2;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        letter-spacing: 0.5px;
+      }
+
+      .pcce-logo-text .sub {
+        font-size: 13px;
+        color: #e6f7ff;
+        opacity: 0.95;
+        margin-top: 4px;
+        font-weight: 300;
+      }
+
+      .virtual-labs-logo {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 8px 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .virtual-labs-logo:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-3px);
+      }
+
+      .virtual-labs-logo i {
+        font-size: 36px;
+        color: #00c6ff;
+        text-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .virtual-labs-logo h1 {
+        font-size: 28px;
+        font-weight: 700;
+        font-family: "Roboto Slab", serif;
+      }
+
+      .virtual-labs-logo span {
+        color: #00c6ff;
+        text-shadow: 0 0 8px rgba(0, 198, 255, 0.4);
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 18px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .user-info:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateX(5px);
+      }
+
+      .user-info i {
+        font-size: 22px;
+        color: #00c6ff;
+      }
+
+      .user-info span {
+        font-weight: 500;
+        font-size: 15px;
+      }
+
+      /* Main Content Layout */
+      .main-content {
+        display: flex;
+        margin-top: 40px;
+        gap: 35px;
+      }
+
+      /* Sidebar Navigation */
+      .sidebar {
+        flex: 0 0 300px;
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #d9d9d9, -8px -8px 16px #ffffff;
+        padding: 25px 0;
+        height: fit-content;
+        position: sticky;
+        top: 30px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .sidebar h3 {
+        padding: 0 25px 20px;
+        color: #1e3c72;
+        border-bottom: 2px solid #e0e7ff;
+        margin-bottom: 20px;
+        font-size: 22px;
+        font-weight: 600;
+        position: relative;
+      }
+
+      .sidebar h3::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 25px;
+        width: 50px;
+        height: 2px;
+        background: #00c6ff;
+      }
+
+      .nav-menu {
+        list-style: none;
+      }
+
+      .nav-item {
+        padding: 15px 30px;
+        border-left: 5px solid transparent;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 5px 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .nav-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 198, 255, 0.1),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .nav-item:hover::before {
+        left: 100%;
+      }
+
+      .nav-item:hover {
+        background: linear-gradient(
+          90deg,
+          rgba(0, 198, 255, 0.05),
+          rgba(30, 60, 114, 0.05)
+        );
+        border-left-color: #00c6ff;
+        padding-left: 35px;
+      }
+
+      .nav-item.active {
+        background: linear-gradient(
+          90deg,
+          rgba(0, 198, 255, 0.1),
+          rgba(30, 60, 114, 0.05)
+        );
+        border-left-color: #0072ff;
+        color: #0072ff;
+        font-weight: 600;
+        box-shadow: inset 3px 0 10px rgba(0, 114, 255, 0.1);
+      }
+
+      .nav-item i {
+        width: 24px;
+        text-align: center;
+        font-size: 18px;
+      }
+
+      /* Content Area */
+      .content {
+        flex: 1;
+        background: linear-gradient(145deg, #ffffff, #f8f9ff);
+        border-radius: 20px;
+        box-shadow: 8px 8px 16px #d9d9d9, -8px -8px 16px #ffffff;
+        padding: 35px;
+        min-height: 650px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        animation: fadeIn 0.8s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .content-header {
+        margin-bottom: 35px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #e0e7ff;
+        position: relative;
+      }
+
+      .breadcrumb {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .breadcrumb a {
+        color: #0072ff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .breadcrumb a:hover {
+        color: #00c6ff;
+        text-decoration: underline;
+      }
+
+      .breadcrumb i {
+        font-size: 12px;
+        color: #999;
+      }
+
+      .content-header h2 {
+        font-size: 32px;
+        color: #1e3c72;
+        font-weight: 700;
+        margin-bottom: 8px;
+        background: linear-gradient(90deg, #1e3c72, #0072ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: "Roboto Slab", serif;
+      }
+
+      .content-header p {
+        color: #666;
+        margin-top: 5px;
+        font-size: 16px;
+        padding-left: 5px;
+      }
+
+      /* Aim Sections */
+      .aim-sections {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 25px;
+        margin-top: 20px;
+        margin-bottom: 45px;
+      }
+
+      .section-card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        height: 100%;
+        perspective: 1000px;
+      }
+
+      .section-card {
+        background: linear-gradient(145deg, #ffffff, #f8f9ff);
+        border-radius: 16px;
+        padding: 25px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 2px solid transparent;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05),
+          -5px -5px 15px rgba(255, 255, 255, 0.8);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .section-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #00c6ff, #0072ff);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+      }
+
+      .section-card:hover::before {
+        transform: scaleX(1);
+      }
+
+      .section-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(0, 114, 255, 0.15);
+        border-color: rgba(0, 198, 255, 0.3);
+      }
+
+      .section-card.active {
+        background: linear-gradient(135deg, #e6f7ff, #d6eaff);
+        border-color: #0072ff;
+        box-shadow: 0 10px 25px rgba(0, 114, 255, 0.2);
+      }
+
+      .section-card i {
+        font-size: 40px;
+        margin-bottom: 20px;
+        color: #0072ff;
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.3s ease;
+      }
+
+      .section-card:hover i {
+        transform: scale(1.2) rotate(5deg);
+      }
+
+      .section-card h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #1e3c72;
+        font-weight: 600;
+      }
+
+      .section-card p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+      }
+
+      /* Feedback Section */
+      .feedback-section {
+        background: linear-gradient(135deg, #e6f7ff, #d6eaff);
+        border-radius: 16px;
+        padding: 30px;
+        border: 2px solid rgba(0, 198, 255, 0.3);
+        box-shadow: 5px 5px 15px rgba(0, 114, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feedback-section::before {
+        content: "";
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 150px;
+        height: 150px;
+        background: rgba(0, 198, 255, 0.1);
+        border-radius: 50%;
+      }
+
+      .feedback-header {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 25px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .feedback-header i {
+        font-size: 32px;
+        color: #0072ff;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border-radius: 50%;
+        box-shadow: 0 5px 15px rgba(0, 114, 255, 0.2);
+      }
+
+      .feedback-header h3 {
+        color: #1e3c72;
+        font-size: 26px;
+        font-weight: 600;
+      }
+
+      .feedback-content {
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .feedback-content p {
+        margin-bottom: 18px;
+        color: #333;
+        line-height: 1.7;
+        font-size: 16px;
+      }
+
+      .feedback-button {
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+        color: white;
+        border: none;
+        padding: 15px 35px;
+        font-size: 16px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 8px 20px rgba(0, 114, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        text-decoration: none;
+      }
+
+      .feedback-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s ease;
+        z-index: -1;
+      }
+
+      .feedback-button:hover::before {
+        left: 100%;
+      }
+
+      .feedback-button:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 15px 30px rgba(0, 114, 255, 0.4);
+      }
+
+      .feedback-button:active {
+        transform: translateY(-2px) scale(1.02);
+      }
+
+      /* Footer (simplified) */
+      footer {
+        margin-top: 50px;
+        padding: 20px 0; /* normal spacing */
+        text-align: center;
+        color: #666;
+        font-size: 15px;
+        border-top: none;
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .footer-logo {
+        display: inline-block;
+        margin: 0 8px;
+        font-weight: 700;
+        color: #1e3c72;
+        background: linear-gradient(90deg, #1e3c72, #0072ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: "Roboto Slab", serif;
+      }
+
+      footer p {
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.8;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
         .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 25px;
+          max-width: 100%;
+          padding: 0 20px;
         }
 
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 18px 0;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            position: relative;
-            overflow: hidden;
+        .aim-sections {
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+      }
+
+      @media (max-width: 992px) {
+        .main-content {
+          flex-direction: column;
         }
 
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
-            z-index: 1;
+        .sidebar {
+          width: 100%;
+          position: static;
         }
 
+        .aim-sections {
+          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
         .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 2;
+          flex-direction: column;
+          gap: 25px;
+          text-align: center;
         }
 
         .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 30px;
+          flex-direction: column;
+          gap: 25px;
+          width: 100%;
         }
 
         .pcce-logo-container {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            padding-right: 30px;
-            border-right: 2px solid rgba(255, 255, 255, 0.25);
-            transition: transform 0.3s ease;
-        }
-
-        .pcce-logo-container:hover {
-            transform: translateY(-3px);
-        }
-
-        .pcce-logo-img {
-            width: 65px;
-            height: 65px;
-            object-fit: contain;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #ffffff, #f0f0f0);
-            padding: 8px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .pcce-logo-img:hover {
-            transform: rotate(5deg) scale(1.05);
-        }
-
-        .pcce-logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .pcce-logo-text .main {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.2;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-            letter-spacing: 0.5px;
-        }
-
-        .pcce-logo-text .sub {
-            font-size: 13px;
-            color: #e6f7ff;
-            opacity: 0.95;
-            margin-top: 4px;
-            font-weight: 300;
+          border-right: none;
+          padding-right: 0;
+          border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+          padding-bottom: 25px;
+          justify-content: center;
+          width: 100%;
         }
 
         .virtual-labs-logo {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            padding: 8px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+          justify-content: center;
+          padding: 10px 20px;
         }
 
-        .virtual-labs-logo:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-3px);
-        }
-
-        .virtual-labs-logo i {
-            font-size: 36px;
-            color: #00c6ff;
-            text-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .virtual-labs-logo h1 {
-            font-size: 28px;
-            font-weight: 700;
-            font-family: 'Roboto Slab', serif;
-        }
-
-        .virtual-labs-logo span {
-            color: #00c6ff;
-            text-shadow: 0 0 8px rgba(0, 198, 255, 0.4);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 18px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .user-info:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateX(5px);
-        }
-
-        .user-info i {
-            font-size: 22px;
-            color: #00c6ff;
-        }
-
-        .user-info span {
-            font-weight: 500;
-            font-size: 15px;
-        }
-
-        /* Main Content Layout */
-        .main-content {
-            display: flex;
-            margin-top: 40px;
-            gap: 35px;
-        }
-
-        /* Sidebar Navigation */
-        .sidebar {
-            flex: 0 0 300px;
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            border-radius: 20px;
-            box-shadow: 8px 8px 16px #d9d9d9, -8px -8px 16px #ffffff;
-            padding: 25px 0;
-            height: fit-content;
-            position: sticky;
-            top: 30px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .sidebar h3 {
-            padding: 0 25px 20px;
-            color: #1e3c72;
-            border-bottom: 2px solid #e0e7ff;
-            margin-bottom: 20px;
-            font-size: 22px;
-            font-weight: 600;
-            position: relative;
-        }
-
-        .sidebar h3::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 25px;
-            width: 50px;
-            height: 2px;
-            background: #00c6ff;
-        }
-
-        .nav-menu {
-            list-style: none;
-        }
-
-        .nav-item {
-            padding: 15px 30px;
-            border-left: 5px solid transparent;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin: 5px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 198, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .nav-item:hover::before {
-            left: 100%;
-        }
-
-        .nav-item:hover {
-            background: linear-gradient(90deg, rgba(0, 198, 255, 0.05), rgba(30, 60, 114, 0.05));
-            border-left-color: #00c6ff;
-            padding-left: 35px;
-        }
-
-        .nav-item.active {
-            background: linear-gradient(90deg, rgba(0, 198, 255, 0.1), rgba(30, 60, 114, 0.05));
-            border-left-color: #0072ff;
-            color: #0072ff;
-            font-weight: 600;
-            box-shadow: inset 3px 0 10px rgba(0, 114, 255, 0.1);
-        }
-
-        .nav-item i {
-            width: 24px;
-            text-align: center;
-            font-size: 18px;
-        }
-
-        /* Content Area */
-        .content {
-            flex: 1;
-            background: linear-gradient(145deg, #ffffff, #f8f9ff);
-            border-radius: 20px;
-            box-shadow: 8px 8px 16px #d9d9d9, -8px -8px 16px #ffffff;
-            padding: 35px;
-            min-height: 650px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .content-header {
-            margin-bottom: 35px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e0e7ff;
-            position: relative;
-        }
-
-        .breadcrumb {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .breadcrumb a {
-            color: #0072ff;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .breadcrumb a:hover {
-            color: #00c6ff;
-            text-decoration: underline;
-        }
-
-        .breadcrumb i {
-            font-size: 12px;
-            color: #999;
+        .aim-sections {
+          grid-template-columns: repeat(2, 1fr);
         }
 
         .content-header h2 {
-            font-size: 32px;
-            color: #1e3c72;
-            font-weight: 700;
-            margin-bottom: 8px;
-            background: linear-gradient(90deg, #1e3c72, #0072ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-family: 'Roboto Slab', serif;
+          font-size: 28px;
         }
+      }
 
-        .content-header p {
-            color: #666;
-            margin-top: 5px;
-            font-size: 16px;
-            padding-left: 5px;
-        }
-
-        /* Aim Sections */
+      @media (max-width: 576px) {
         .aim-sections {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 25px;
-            margin-bottom: 45px;
+          grid-template-columns: 1fr;
         }
 
-        .section-card-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            height: 100%;
-            perspective: 1000px;
+        .content {
+          padding: 25px;
         }
 
-        .section-card {
-            background: linear-gradient(145deg, #ffffff, #f8f9ff);
-            border-radius: 16px;
-            padding: 25px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid transparent;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05), -5px -5px 15px rgba(255, 255, 255, 0.8);
-            position: relative;
-            overflow: hidden;
+        .pcce-logo-container {
+          flex-direction: column;
+          text-align: center;
         }
 
-        .section-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
+        .pcce-logo-img {
+          width: 75px;
+          height: 75px;
         }
 
-        .section-card:hover::before {
-            transform: scaleX(1);
+        .virtual-labs-logo h1 {
+          font-size: 24px;
         }
 
-        .section-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 114, 255, 0.15);
-            border-color: rgba(0, 198, 255, 0.3);
+        .user-info {
+          padding: 8px 15px;
+          font-size: 14px;
         }
+      }
 
-        .section-card.active {
-            background: linear-gradient(135deg, #e6f7ff, #d6eaff);
-            border-color: #0072ff;
-            box-shadow: 0 10px 25px rgba(0, 114, 255, 0.2);
-        }
+      /* Particles effect for background */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
 
-        .section-card i {
-            font-size: 40px;
-            margin-bottom: 20px;
-            color: #0072ff;
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            transition: all 0.3s ease;
-        }
+      .particle {
+        position: absolute;
+        background: rgba(0, 198, 255, 0.1);
+        border-radius: 50%;
+        animation: float 15s infinite linear;
+      }
 
-        .section-card:hover i {
-            transform: scale(1.2) rotate(5deg);
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
         }
+        100% {
+          transform: translateY(-1000px) rotate(720deg);
+        }
+      }
 
-        .section-card h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #1e3c72;
-            font-weight: 600;
-        }
-
-        .section-card p {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.5;
-        }
-
-        /* Question Section */
-        .question-section {
-            background: linear-gradient(135deg, #f8f9ff, #eef2ff);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 35px;
-            border-left: 6px solid #0072ff;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .question-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, rgba(0, 198, 255, 0.1), rgba(0, 114, 255, 0.05));
-            border-radius: 0 0 0 100%;
-        }
-
-        .question-section h3 {
-            color: #1e3c72;
-            margin-bottom: 18px;
-            font-size: 24px;
-            font-weight: 600;
-            position: relative;
-            display: inline-block;
-        }
-
-        .question-section h3::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: #00c6ff;
-            border-radius: 3px;
-        }
-
-        .question-text {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 20px;
-            line-height: 1.6;
-            padding-right: 20px;
-        }
-
-        /* Feedback Section */
-        .feedback-section {
-            background: linear-gradient(135deg, #e6f7ff, #d6eaff);
-            border-radius: 16px;
-            padding: 30px;
-            border: 2px solid rgba(0, 198, 255, 0.3);
-            box-shadow: 5px 5px 15px rgba(0, 114, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feedback-section::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: rgba(0, 198, 255, 0.1);
-            border-radius: 50%;
-        }
-
-        .feedback-header {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .feedback-header i {
-            font-size: 32px;
-            color: #0072ff;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.2);
-        }
-
-        .feedback-header h3 {
-            color: #1e3c72;
-            font-size: 26px;
-            font-weight: 600;
-        }
-
-        .feedback-content {
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .feedback-content p {
-            margin-bottom: 18px;
-            color: #333;
-            line-height: 1.7;
-            font-size: 16px;
-        }
-
-        .feedback-button {
-            background: linear-gradient(135deg, #00c6ff, #0072ff);
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            font-size: 16px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 8px 20px rgba(0, 114, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            text-decoration: none;
-        }
-
-        .feedback-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-            z-index: -1;
-        }
-
-        .feedback-button:hover::before {
-            left: 100%;
-        }
-
-        .feedback-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 114, 255, 0.4);
-        }
-
-        .feedback-button:active {
-            transform: translateY(-2px) scale(1.02);
-        }
-
-        /* Footer */
-        footer {
-            margin-top: 50px;
-            padding: 25px 0;
-            text-align: center;
-            color: #666;
-            font-size: 15px;
-            border-top: 2px solid #e0e7ff;
-            background: linear-gradient(145deg, #ffffff, #f8f9ff);
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .footer-logo {
-            display: inline-block;
-            margin: 0 8px;
-            font-weight: 700;
-            color: #1e3c72;
-            background: linear-gradient(90deg, #1e3c72, #0072ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-family: 'Roboto Slab', serif;
-        }
-
-        footer p {
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .container {
-                max-width: 100%;
-                padding: 0 20px;
-            }
-            
-            .aim-sections {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-        }
-
-        @media (max-width: 992px) {
-            .main-content {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                position: static;
-            }
-            
-            .aim-sections {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 25px;
-                text-align: center;
-            }
-            
-            .logo-section {
-                flex-direction: column;
-                gap: 25px;
-                width: 100%;
-            }
-            
-            .pcce-logo-container {
-                border-right: none;
-                padding-right: 0;
-                border-bottom: 2px solid rgba(255, 255, 255, 0.25);
-                padding-bottom: 25px;
-                justify-content: center;
-                width: 100%;
-            }
-            
-            .virtual-labs-logo {
-                justify-content: center;
-                padding: 10px 20px;
-            }
-            
-            .aim-sections {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .content-header h2 {
-                font-size: 28px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .aim-sections {
-                grid-template-columns: 1fr;
-            }
-            
-            .content {
-                padding: 25px;
-            }
-            
-            .pcce-logo-container {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .pcce-logo-img {
-                width: 75px;
-                height: 75px;
-            }
-            
-            .virtual-labs-logo h1 {
-                font-size: 24px;
-            }
-            
-            .user-info {
-                padding: 8px 15px;
-                font-size: 14px;
-            }
-        }
-
-        /* Particles effect for background */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(0, 198, 255, 0.1);
-            border-radius: 50%;
-            animation: float 15s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(-1000px) rotate(720deg); }
-        }
-
-        /* Feedback Button Link Style */
-        .feedback-button-link {
-            display: inline-block;
-            text-decoration: none;
-        }
+      /* Feedback Button Link Style */
+      .feedback-button-link {
+        display: inline-block;
+        text-decoration: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Particles background -->
     <div class="particles" id="particles"></div>
 
     <!-- Header -->
     <header>
-        <div class="container header-container">
-            <div class="logo-section">
-                <!-- PCOE Logo -->
-                <div class="pcce-logo-container">
-                    <img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" 
-                         alt="PCOE Logo" 
-                         class="pcce-logo-img"
-                         id="pcceLogo"
-                         onerror="this.onerror=null; this.src='https://via.placeholder.com/65x65/1e3c72/ffffff?text=PCOE'">
-                    <div class="pcce-logo-text">
-                        <div class="main">APPLIED SCIENCES & HUMANITIES</div>
-                        <div class="sub">Pimpri Chinchwad College of Engineering</div>
-                    </div>
-                </div>
-                
-                <!-- Virtual Labs Logo -->
-                <div class="virtual-labs-logo">
-                    <i class="fas fa-flask"></i>
-                    <h1>Virtual <span>Labs</span></h1>
-                </div>
+      <div class="container header-container">
+        <div class="logo-section">
+          <!-- PCOE Logo -->
+          <div class="pcce-logo-container">
+            <img
+              src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png"
+              alt="PCOE Logo"
+              class="pcce-logo-img"
+              id="pcceLogo"
+              onerror="this.onerror=null; this.src='https://via.placeholder.com/65x65/1e3c72/ffffff?text=PCOE'"
+            />
+            <div class="pcce-logo-text">
+              <div class="main">APPLIED SCIENCES & HUMANITIES</div>
+              <div class="sub">Pimpri Chinchwad College of Engineering</div>
             </div>
-            
-            <div class="user-info">
-                <i class="fas fa-user-circle"></i>
-                <span>Welcome, Student</span>
-            </div>
+          </div>
+
+          <!-- Virtual Labs Logo -->
+          <div class="virtual-labs-logo">
+            <i class="fas fa-flask"></i>
+            <h1>Virtual <span>Labs</span></h1>
+          </div>
         </div>
+
+        <div class="user-info">
+          <i class="fas fa-user-circle"></i>
+          <span>Welcome, Student</span>
+        </div>
+      </div>
     </header>
 
     <!-- Main Content -->
     <div class="container">
-        <div class="main-content">
-            <!-- Content Area -->
-            <main class="content">
-                <div class="content-header">
-                    <div class="breadcrumb">
-                        <a href="#"><i class="fas fa-home"></i> Home</a>
-                        <i class="fas fa-chevron-right"></i>
-                        <a href="#">Engineering Mathematics</a>
-                        <i class="fas fa-chevron-right"></i>
-                        <span>Polynomial Expansion Using Taylor’s Theorem</span>
-                    </div>
-                    <h2>A Virtual Lab on Polynomial Expansion Using Taylor’s Theorem</h2>
-                    <p>Linear Algebra & Univariate Calculus</p>
-                </div>
+      <div class="main-content">
+        <!-- Content Area -->
+        <main class="content">
+          <!-- Aim Sections -->
+          <div class="aim-sections">
+            <a href="aim.html" class="section-card-link">
+              <div class="section-card active">
+                <i class="fas fa-bullseye"></i>
+                <h3>Aim</h3>
+                <p>Objective of the experiment</p>
+              </div>
+            </a>
 
-                <!-- Aim Sections -->
-                <div class="aim-sections">
-                    <a href="aim.html" class="section-card-link">
-                        <div class="section-card active">
-                            <i class="fas fa-bullseye"></i>
-                            <h3>Aim</h3>
-                            <p>Objective of the experiment</p>
-                        </div>
-                    </a>
+            <a href="theory.html" class="section-card-link">
+              <div class="section-card">
+                <i class="fas fa-book-open"></i>
+                <h3>Theory</h3>
+                <p>Background concepts</p>
+              </div>
+            </a>
 
-                    <a href="theory.html" class="section-card-link">
-                        <div class="section-card">
-                            <i class="fas fa-book-open"></i>
-                            <h3>Theory</h3>
-                            <p>Background concepts</p>
-                        </div>
-                    </a>
+            <a href="pretest.html" class="section-card-link">
+              <div class="section-card">
+                <i class="fas fa-question-circle"></i>
+                <h3>Pretest</h3>
+                <p>Pre-experiment assessment</p>
+              </div>
+            </a>
 
-                    <a href="pretest.html" class="section-card-link">
-                        <div class="section-card">
-                            <i class="fas fa-question-circle"></i>
-                            <h3>Pretest</h3>
-                            <p>Pre-experiment assessment</p>
-                        </div>
-                    </a>
+            <a href="simulation.html" class="section-card-link">
+              <div class="section-card">
+                <i class="fas fa-desktop"></i>
+                <h3>Simulation</h3>
+                <p>Interactive simulation</p>
+              </div>
+            </a>
 
-                    <a href="simulation.html" class="section-card-link">
-                        <div class="section-card">
-                            <i class="fas fa-desktop"></i>
-                            <h3>Simulation</h3>
-                            <p>Interactive simulation</p>
-                        </div>
-                    </a>
+            <a href="posttest.html" class="section-card-link">
+              <div class="section-card">
+                <i class="fas fa-clipboard-check"></i>
+                <h3>Posttest</h3>
+                <p>Post-experiment assessment</p>
+              </div>
+            </a>
 
-                    <a href="posttest.html" class="section-card-link">
-                        <div class="section-card">
-                            <i class="fas fa-clipboard-check"></i>
-                            <h3>Posttest</h3>
-                            <p>Post-experiment assessment</p>
-                        </div>
-                    </a>
+            <a href="references.html" class="section-card-link">
+              <div class="section-card">
+                <i class="fas fa-book"></i>
+                <h3>References</h3>
+                <p>Further reading materials</p>
+              </div>
+            </a>
 
-                    <a href="references.html" class="section-card-link">
-                        <div class="section-card">
-                            <i class="fas fa-book"></i>
-                            <h3>References</h3>
-                            <p>Further reading materials</p>
-                        </div>
-                    </a>
+            <a href="contributors.html" class="section-card-link">
+              <div class="section-card">
+                <i class="fas fa-users"></i>
+                <h3>Contributors</h3>
+                <p>People involved</p>
+              </div>
+            </a>
 
-                    <a href="contributors.html" class="section-card-link">
-                        <div class="section-card">
-                            <i class="fas fa-users"></i>
-                            <h3>Contributors</h3>
-                            <p>People involved</p>
-                        </div>
-                    </a>
-
-                    <a href="feedback.html" class="section-card-link">
-                        <div class="section-card feedback-card">
-                            <i class="fas fa-comment-alt"></i>
-                            <h3>Feedback</h3>
-                            <p>Share your experience</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Question Section -->
-                <div class="question-section">
-                    <h3>Ready to Explore?</h3>
-                    <div class="question-text">
-                        This virtual lab will guide you through understanding the concept of matrix rank through interactive simulations and step-by-step explanations. Click on any section above to begin your learning journey.
-                    </div>
-                </div>
-
-                <!-- Feedback Section -->
-                <div class="feedback-section">
-                    <div class="feedback-header">
-                        <i class="fas fa-comments"></i>
-                        <h3>Your Feedback Matters</h3>
-                    </div>
-                    <div class="feedback-content">
-                        <p>Help us improve this virtual lab by sharing your experience. Your feedback will help us enhance the learning experience for future students.</p>
-                        <p>What did you find most useful? What could be improved? We value your input!</p>
-                    </div>
-                    <!-- UPDATED: Changed button to anchor tag that links to feedback.html -->
-                    <a href="feedback.html" class="feedback-button">
-                        <i class="fas fa-paper-plane"></i>
-                        Share Your Feedback
-                    </a>
-                </div>
-            </main>
-        </div>
+            <a href="feedback.html" class="section-card-link">
+              <div class="section-card feedback-card">
+                <i class="fas fa-comment-alt"></i>
+                <h3>Feedback</h3>
+                <p>Share your experience</p>
+              </div>
+            </a>
+          </div>
+        </main>
+      </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer (content removed per request) -->
     <footer class="container">
-        <p>Virtual Labs &copy; 2025 | Applied Sciences & Humanities Department | 
-           <span class="footer-logo">Pimpri Chinchwad College of Engineering</span>
-        </p>
-        <p style="margin-top: 10px; font-size: 13px; color: #888;">
-            <i class="fas fa-graduation-cap"></i> Empowering Engineering Education Through Virtual Labs
-        </p>
+      <!-- footer intentionally left empty to provide normal spacing -->
     </footer>
 
     <script>
-        // Create particles effect
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Random properties
-                const size = Math.random() * 100 + 20;
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                const opacity = Math.random() * 0.1 + 0.05;
-                const animationDuration = Math.random() * 20 + 10;
-                const animationDelay = Math.random() * 5;
-                
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
-                particle.style.opacity = opacity;
-                particle.style.animationDuration = `${animationDuration}s`;
-                particle.style.animationDelay = `${animationDelay}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
+      // Create particles effect
+      function createParticles() {
+        const particlesContainer = document.getElementById("particles");
+        const particleCount = 30;
+
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement("div");
+          particle.classList.add("particle");
+
+          // Random properties
+          const size = Math.random() * 100 + 20;
+          const posX = Math.random() * 100;
+          const posY = Math.random() * 100;
+          const opacity = Math.random() * 0.1 + 0.05;
+          const animationDuration = Math.random() * 20 + 10;
+          const animationDelay = Math.random() * 5;
+
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${posX}%`;
+          particle.style.top = `${posY}%`;
+          particle.style.opacity = opacity;
+          particle.style.animationDuration = `${animationDuration}s`;
+          particle.style.animationDelay = `${animationDelay}s`;
+
+          particlesContainer.appendChild(particle);
         }
+      }
 
-        // Image loading debug
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            
-            const logoImg = document.getElementById('pcceLogo');
-            
-            logoImg.onload = function() {
-                console.log('✓ PCOE logo loaded successfully');
-            };
-            
-            logoImg.onerror = function() {
-                console.log('✗ PCOE logo failed to load, using fallback');
-            };
+      // Image loading debug
+      document.addEventListener("DOMContentLoaded", function () {
+        createParticles();
+
+        const logoImg = document.getElementById("pcceLogo");
+
+        logoImg.onload = function () {
+          console.log("✓ PCOE logo loaded successfully");
+        };
+
+        logoImg.onerror = function () {
+          console.log("✗ PCOE logo failed to load, using fallback");
+        };
+      });
+
+      // Navigation menu interaction
+      const navItems = document.querySelectorAll(".nav-item");
+      navItems.forEach((item) => {
+        item.addEventListener("click", () => {
+          navItems.forEach((i) => i.classList.remove("active"));
+          item.classList.add("active");
         });
+      });
 
-        // Navigation menu interaction
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                navItems.forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-            });
+      // Section cards interaction with enhanced animation
+      document.querySelectorAll(".section-card-link").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const card = this.querySelector(".section-card");
+
+          // Add click animation
+          card.style.transform = "translateY(-5px) scale(0.98)";
+
+          // Remove active class from all cards
+          document.querySelectorAll(".section-card").forEach((c) => {
+            c.classList.remove("active");
+          });
+
+          // Add active class to clicked card
+          card.classList.add("active");
+
+          // Reset transform
+          setTimeout(() => {
+            card.style.transform = "";
+          }, 200);
+
+          // Navigate after animation
+          const href = this.getAttribute("href");
+          setTimeout(() => {
+            window.location.href = href;
+          }, 300);
         });
+      });
 
-        // Section cards interaction with enhanced animation
-        document.querySelectorAll('.section-card-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const card = this.querySelector('.section-card');
-                
-                // Add click animation
-                card.style.transform = 'translateY(-5px) scale(0.98)';
-                
-                // Remove active class from all cards
-                document.querySelectorAll('.section-card').forEach(c => {
-                    c.classList.remove('active');
-                });
-                
-                // Add active class to clicked card
-                card.classList.add('active');
-                
-                // Reset transform
-                setTimeout(() => {
-                    card.style.transform = '';
-                }, 200);
-                
-                // Navigate after animation
-                const href = this.getAttribute('href');
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 300);
-            });
+      // Feedback button animation (for the anchor tag)
+      const feedbackButton = document.querySelector(".feedback-button");
+      if (feedbackButton) {
+        feedbackButton.addEventListener("click", function (e) {
+          // Animation effect
+          this.style.transform = "scale(0.95)";
+          setTimeout(() => {
+            this.style.transform = "";
+          }, 200);
+
+          // Optional: Add a smooth transition before navigating
+          // The default anchor tag behavior will navigate to feedback.html
+          // You can remove this if you want immediate navigation
+          e.preventDefault();
+          const href = this.getAttribute("href");
+
+          // Add navigation delay for animation
+          setTimeout(() => {
+            window.location.href = href;
+          }, 300);
         });
+      }
 
-        // Feedback button animation (for the anchor tag)
-        const feedbackButton = document.querySelector('.feedback-button');
-        if (feedbackButton) {
-            feedbackButton.addEventListener('click', function(e) {
-                // Animation effect
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 200);
-                
-                // Optional: Add a smooth transition before navigating
-                // The default anchor tag behavior will navigate to feedback.html
-                // You can remove this if you want immediate navigation
-                e.preventDefault();
-                const href = this.getAttribute('href');
-                
-                // Add navigation delay for animation
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 300);
-            });
+      // Add scroll effect to header
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        if (window.scrollY > 50) {
+          header.style.boxShadow = "0 6px 20px rgba(0, 0, 0, 0.2)";
+          header.style.padding = "12px 0";
+        } else {
+          header.style.boxShadow = "0 6px 20px rgba(0, 0, 0, 0.15)";
+          header.style.padding = "18px 0";
         }
+      });
 
-        // Add scroll effect to header
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.2)';
-                header.style.padding = '12px 0';
-            } else {
-                header.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.15)';
-                header.style.padding = '18px 0';
-            }
+      // Hover effect for all interactive elements
+      document
+        .querySelectorAll(
+          ".pcce-logo-container, .virtual-labs-logo, .user-info, .section-card, .feedback-button"
+        )
+        .forEach((element) => {
+          element.addEventListener("mouseenter", () => {
+            element.style.transition = "all 0.3s ease";
+          });
         });
 
-        // Hover effect for all interactive elements
-        document.querySelectorAll('.pcce-logo-container, .virtual-labs-logo, .user-info, .section-card, .feedback-button').forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                element.style.transition = 'all 0.3s ease';
-            });
-        });
-
-        // Highlight current page in navigation
-        function highlightCurrentPage() {
-            const currentPage = window.location.pathname.split('/').pop();
-            if (currentPage === 'index.html' || currentPage === '') {
-                // On home page, highlight the first card
-                document.querySelectorAll('.section-card')[0]?.classList.add('active');
-            }
+      // Highlight current page in navigation
+      function highlightCurrentPage() {
+        const currentPage = window.location.pathname.split("/").pop();
+        if (currentPage === "index.html" || currentPage === "") {
+          // On home page, highlight the first card
+          document
+            .querySelectorAll(".section-card")[0]
+            ?.classList.add("active");
         }
+      }
 
-        // Call on page load
-        highlightCurrentPage();
+      // Call on page load
+      highlightCurrentPage();
     </script>
-</body>
-
+  </body>
 </html>
