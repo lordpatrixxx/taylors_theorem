@@ -8,12 +8,18 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Slab:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
       body {
@@ -40,12 +46,13 @@
       }
 
       h1 {
-        color: #0c2461;
+        font-family: "Roboto Slab", serif;
         font-size: 2.8rem;
         margin-bottom: 10px;
         background: linear-gradient(90deg, #0c2461, #4a69bd);
-        -webkit-background-clip: text;
         background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
         -webkit-text-fill-color: transparent;
       }
 
@@ -120,11 +127,28 @@
         margin-bottom: 15px;
       }
 
+      /* Contributor photo (replaces number badge) */
+      .member-photo {
+        width: 110px;
+        height: 110px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 6px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        display: inline-block;
+        margin-bottom: 15px;
+      }
+
       .member-name-sidebar {
+        font-family: "Roboto Slab", serif;
         font-size: 1.4rem;
         margin-bottom: 10px;
         font-weight: 600;
         line-height: 1.3;
+      }
+
+      .member-name-main {
+        font-family: "Roboto Slab", serif;
       }
 
       .member-role-sidebar {
@@ -420,6 +444,11 @@
           padding: 20px;
         }
 
+        .member-photo {
+          width: 100px;
+          height: 100px;
+        }
+
         .detail-grid {
           grid-template-columns: 1fr;
         }
@@ -619,7 +648,7 @@
         <div class="team-member member-1">
           <div class="sequence-indicator">1 - TEAM LEAD</div>
           <div class="member-sidebar">
-            <div class="member-number">1</div>
+            <img src="pratik.jpg" alt="Pratik Phapale" class="member-photo" />
             <div class="member-name-sidebar">PRATIK DEEPAK PHAPALE</div>
             <div class="member-role-sidebar">Lead Developer</div>
             <div class="role-badge lead-badge">LEAD DEVELOPER</div>
@@ -675,7 +704,7 @@
         <div class="team-member member-2">
           <div class="sequence-indicator">2 - FRONTEND SPECIALIST</div>
           <div class="member-sidebar">
-            <div class="member-number">2</div>
+            <img src="swapnil.png" alt="Swapnil Jadhav" class="member-photo" />
             <div class="member-name-sidebar">SWAPNIL ARJUN JADHAV</div>
             <div class="member-role-sidebar">Frontend Developer</div>
             <div class="role-badge frontend-badge">FRONTEND DEVELOPER</div>
@@ -731,7 +760,7 @@
         <div class="team-member member-3">
           <div class="sequence-indicator">3 - BACKEND SPECIALIST</div>
           <div class="member-sidebar">
-            <div class="member-number">3</div>
+            <img src="swastik.png" alt="Swastik Phapale" class="member-photo" />
             <div class="member-name-sidebar">SWASTIK SANDIPKUMAR PHAPALE</div>
             <div class="member-role-sidebar">Backend Developer</div>
             <div class="role-badge backend-badge">BACKEND DEVELOPER</div>
@@ -787,7 +816,7 @@
         <div class="team-member member-4">
           <div class="sequence-indicator">4 - THEORY & DOCUMENTATION</div>
           <div class="member-sidebar">
-            <div class="member-number">4</div>
+            <img src="sarthak.jpg" alt="Sarthak Gandhi" class="member-photo" />
             <div class="member-name-sidebar">SARTHAK PRAVIN GANDHI</div>
             <div class="member-role-sidebar">Theory & Documentation Lead</div>
             <div class="role-badge theory-badge">THEORY & DOCUMENTATION</div>
