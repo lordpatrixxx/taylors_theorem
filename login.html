@@ -1,625 +1,745 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Virtual Labs LAUC</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Poppins", sans-serif;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Virtual Labs LAUC</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-      body {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        color: #333;
-        min-height: 100vh;
-        position: relative;
-        overflow-x: hidden;
-      }
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-      /* Particles background */
-      .particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 0;
-      }
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-      .particle {
-        position: absolute;
-        background: rgba(0, 198, 255, 0.1);
-        border-radius: 50%;
-        animation: float 15s infinite linear;
-      }
+    .particle {
+      position: absolute;
+      background: rgba(0, 198, 255, 0.1);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+    }
 
-      @keyframes float {
-        0% {
-          transform: translateY(0) rotate(0deg);
-        }
-        100% {
-          transform: translateY(-1000px) rotate(720deg);
-        }
-      }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-1000px) rotate(720deg); }
+    }
 
-      /* Header Styles */
-      header {
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        color: white;
-        padding: 18px 0;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-      }
+    header {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: white;
+      padding: 18px 0;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
 
-      header::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #00c6ff, #0072ff);
-        z-index: 1;
-      }
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+    }
 
-      .container {
-        max-width: 1300px;
-        margin: 0 auto;
-        padding: 0 25px;
-      }
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 25px;
+    }
 
-      .header-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-        z-index: 2;
-      }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-      .logo-section {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-      }
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
 
-      .pcce-logo-container {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        padding-right: 30px;
-        border-right: 2px solid rgba(255, 255, 255, 0.25);
-        transition: transform 0.3s ease;
-      }
+    .pcce-logo-container {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding-right: 30px;
+      border-right: 2px solid rgba(255, 255, 255, 0.25);
+      transition: transform 0.3s ease;
+    }
 
-      .pcce-logo-container:hover {
-        transform: translateY(-3px);
-      }
+    .pcce-logo-container:hover {
+      transform: translateY(-3px);
+    }
 
-      .pcce-logo-img {
-        width: 65px;
-        height: 65px;
-        object-fit: contain;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #ffffff, #f0f0f0);
-        padding: 8px;
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        transition: all 0.3s ease;
-      }
+    .pcce-logo-img {
+      width: 65px;
+      height: 65px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: white;
+      padding: 8px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
 
-      .pcce-logo-text .main {
-        font-size: 22px;
-        font-weight: 700;
-        color: #fff;
-        line-height: 1.2;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-      }
+    .pcce-logo-text .main {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
 
-      .pcce-logo-text .sub {
-        font-size: 13px;
-        color: #e6f7ff;
-        opacity: 0.95;
-        margin-top: 4px;
-        font-weight: 300;
-      }
+    .pcce-logo-text .sub {
+      font-size: 13px;
+      color: #e6f7ff;
+    }
 
-      .virtual-labs-logo {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        padding: 8px 15px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        backdrop-filter: blur(5px);
-        transition: all 0.3s ease;
-      }
+    .virtual-labs-logo {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 8px 15px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
 
-      .virtual-labs-logo:hover {
-        background: rgba(255, 255, 255, 0.15);
-        transform: translateY(-3px);
-      }
+    .virtual-labs-logo:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+    }
 
-      .virtual-labs-logo i {
-        font-size: 36px;
-        color: #00c6ff;
-        animation: pulse 2s infinite;
-      }
+    .virtual-labs-logo i {
+      font-size: 36px;
+      color: #00c6ff;
+      animation: pulse 2s infinite;
+    }
 
-      @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-      }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
 
-      .virtual-labs-logo h1 {
-        font-size: 28px;
-        font-weight: 700;
-        font-family: "Roboto Slab", serif;
-      }
+    .virtual-labs-logo h1 {
+      font-size: 28px;
+      font-weight: 700;
+    }
 
-      .virtual-labs-logo span {
-        color: #00c6ff;
-      }
+    .virtual-labs-logo span {
+      color: #00c6ff;
+    }
 
-      /* Login Container */
-      .login-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: calc(100vh - 200px);
-        padding: 40px 20px;
-        position: relative;
-        z-index: 1;
-      }
+    .login-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 200px);
+      padding: 40px 20px;
+      z-index: 1;
+      position: relative;
+    }
 
-      .login-container {
-        background: linear-gradient(145deg, #ffffff, #f8f9ff);
-        border-radius: 30px;
-        box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.1),
-                    -10px -10px 30px rgba(255, 255, 255, 0.8);
-        padding: 45px;
-        max-width: 480px;
-        width: 100%;
-        transition: transform 0.3s ease;
-        border: 1px solid rgba(0, 198, 255, 0.2);
-      }
+    .login-container {
+      background: white;
+      border-radius: 30px;
+      box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.1), -10px -10px 30px rgba(255, 255, 255, 0.8);
+      padding: 45px;
+      max-width: 480px;
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
 
-      .login-container:hover {
-        transform: translateY(-5px);
-      }
+    .login-container:hover {
+      transform: translateY(-5px);
+    }
 
-      .login-header {
-        text-align: center;
-        margin-bottom: 35px;
-      }
+    .login-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
 
-      .login-header i {
-        font-size: 70px;
-        background: linear-gradient(135deg, #00c6ff, #0072ff);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 15px;
-      }
+    .login-header i {
+      font-size: 70px;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+    }
 
-      .login-header h2 {
-        font-size: 32px;
-        color: #1e3c72;
-        font-weight: 700;
-        margin-bottom: 8px;
-        font-family: "Roboto Slab", serif;
-      }
+    .login-header h2 {
+      font-size: 32px;
+      color: #1e3c72;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
 
-      .login-header p {
-        color: #666;
-        font-size: 14px;
-      }
+    .login-header p {
+      color: #666;
+      font-size: 14px;
+    }
 
-      .input-group {
-        margin-bottom: 25px;
-        position: relative;
-      }
+    .input-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
 
-      .input-group label {
-        display: block;
-        margin-bottom: 8px;
-        color: #1e3c72;
-        font-weight: 500;
-        font-size: 14px;
-      }
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #1e3c72;
+      font-weight: 500;
+      font-size: 14px;
+    }
 
-      .input-group i {
-        position: absolute;
-        left: 15px;
-        top: 42px;
-        color: #0072ff;
-        font-size: 18px;
-      }
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 42px;
+      color: #0072ff;
+      font-size: 18px;
+    }
 
-      .input-group input {
-        width: 100%;
-        padding: 14px 15px 14px 45px;
-        border: 2px solid #e0e7ff;
-        border-radius: 12px;
-        font-size: 15px;
-        transition: all 0.3s ease;
-        background: white;
-      }
+    .input-group input {
+      width: 100%;
+      padding: 14px 15px 14px 45px;
+      border: 2px solid #e0e7ff;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
 
-      .input-group input:focus {
-        outline: none;
-        border-color: #00c6ff;
-        box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.1);
-      }
+    .input-group input:focus {
+      outline: none;
+      border-color: #00c6ff;
+      box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.1);
+    }
 
-      .otp-section {
-        display: none;
-        animation: slideDown 0.5s ease;
-      }
+    .otp-section {
+      display: none;
+      animation: slideDown 0.5s ease;
+    }
 
-      @keyframes slideDown {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
       }
-
-      .btn {
-        width: 100%;
-        padding: 14px;
-        border: none;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: linear-gradient(135deg, #00c6ff, #0072ff);
-        color: white;
-        margin-bottom: 12px;
-      }
-
-      .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(0, 114, 255, 0.3);
-      }
-
-      .btn:active {
+      to {
+        opacity: 1;
         transform: translateY(0);
       }
+    }
 
-      .btn-secondary {
-        background: linear-gradient(135deg, #6c757d, #5a6268);
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      color: white;
+      margin-bottom: 12px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 114, 255, 0.3);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 14px;
+      display: none;
+    }
+
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      display: block;
+    }
+
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+      display: block;
+    }
+
+    .message.info {
+      background: #d1ecf1;
+      color: #0c5460;
+      display: block;
+    }
+
+    .visitor-counter {
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 2px solid #e0e7ff;
+    }
+
+    .visitor-counter p {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .counter-number {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      margin-left: 8px;
+    }
+
+    .resend-otp {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .resend-otp a {
+      color: #0072ff;
+      text-decoration: none;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .resend-otp a:hover {
+      text-decoration: underline;
+    }
+
+    .timer-text {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #e67e22;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 20px 0;
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        gap: 20px;
       }
-
-      .message {
-        margin-top: 20px;
-        padding: 12px;
-        border-radius: 10px;
-        text-align: center;
-        font-size: 14px;
-        display: none;
+      .logo-section {
+        flex-direction: column;
+        width: 100%;
       }
-
-      .message.success {
-        background: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-        display: block;
+      .pcce-logo-container {
+        border-right: none;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+        padding-bottom: 15px;
+        justify-content: center;
       }
-
-      .message.error {
-        background: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-        display: block;
+      .login-container {
+        padding: 30px 25px;
+        margin: 20px;
       }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
 
-      .visitor-counter {
-        text-align: center;
-        margin-top: 25px;
-        padding-top: 20px;
-        border-top: 2px solid #e0e7ff;
-      }
-
-      .visitor-counter p {
-        color: #666;
-        font-size: 13px;
-        margin-bottom: 8px;
-      }
-
-      .counter-number {
-        font-size: 28px;
-        font-weight: 700;
-        background: linear-gradient(135deg, #00c6ff, #0072ff);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
-        margin-left: 8px;
-      }
-
-      footer {
-        margin-top: 50px;
-        padding: 20px 0;
-        text-align: center;
-        color: #666;
-        font-size: 14px;
-        position: relative;
-        z-index: 1;
-      }
-
-      @media (max-width: 768px) {
-        .header-container {
-          flex-direction: column;
-          gap: 20px;
-        }
-        
-        .logo-section {
-          flex-direction: column;
-          width: 100%;
-        }
-        
-        .pcce-logo-container {
-          border-right: none;
-          padding-right: 0;
-          border-bottom: 2px solid rgba(255, 255, 255, 0.25);
-          padding-bottom: 15px;
-          justify-content: center;
-        }
-        
-        .login-container {
-          padding: 30px 25px;
-          margin: 20px;
-        }
-        
-        .login-header h2 {
-          font-size: 26px;
-        }
-      }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  </head>
-  <body>
-    <div class="particles" id="particles"></div>
-
-    <header>
-      <div class="container header-container">
-        <div class="logo-section">
-          <div class="pcce-logo-container">
-            <img
-              src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png"
-              alt="PCOE Logo"
-              class="pcce-logo-img"
-              onerror="this.src='https://via.placeholder.com/65x65/1e3c72/ffffff?text=PCOE'"
-            />
-            <div class="pcce-logo-text">
-              <div class="main">APPLIED SCIENCES & HUMANITIES</div>
-              <div class="sub">Pimpri Chinchwad College of Engineering</div>
-            </div>
+  <header>
+    <div class="container header-container">
+      <div class="logo-section">
+        <div class="pcce-logo-container">
+          <img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE Logo" class="pcce-logo-img" onerror="this.src='https://via.placeholder.com/65x65/1e3c72/ffffff?text=PCOE'" />
+          <div class="pcce-logo-text">
+            <div class="main">APPLIED SCIENCES & HUMANITIES</div>
+            <div class="sub">Pimpri Chinchwad College of Engineering</div>
           </div>
-          <div class="virtual-labs-logo">
-            <i class="fas fa-flask"></i>
-            <h1>Virtual <span>Labs</span></h1>
-          </div>
         </div>
-      </div>
-    </header>
-
-    <div class="login-wrapper">
-      <div class="login-container">
-        <div class="login-header">
-          <i class="fas fa-user-graduate"></i>
-          <h2>Access Virtual Lab</h2>
-          <p>Enter your credentials to continue</p>
-        </div>
-
-        <div class="input-group">
-          <label>Full Name</label>
-          <i class="fas fa-user"></i>
-          <input type="text" id="fullname" placeholder="Enter your full name">
-        </div>
-
-        <div class="input-group">
-          <label>Email Address</label>
-          <i class="fas fa-envelope"></i>
-          <input type="email" id="email" placeholder="your@email.com">
-        </div>
-
-        <button class="btn" onclick="sendOTP()">
-          <i class="fas fa-paper-plane"></i> Send OTP
-        </button>
-
-        <div id="otpSection" class="otp-section">
-          <div class="input-group">
-            <label>Enter OTP</label>
-            <i class="fas fa-key"></i>
-            <input type="text" id="otp" placeholder="6-digit code" maxlength="6">
-          </div>
-          <button class="btn" onclick="verifyOTP()">
-            <i class="fas fa-check-circle"></i> Verify & Login
-          </button>
-        </div>
-
-        <div id="message" class="message"></div>
-
-        <div class="visitor-counter">
-          <p><i class="fas fa-chart-line"></i> Total Website Visitors</p>
-          <div>
-            <i class="fas fa-users" style="color: #0072ff;"></i>
-            <span class="counter-number" id="visitorCount">0</span>
-          </div>
+        <div class="virtual-labs-logo">
+          <i class="fas fa-flask"></i>
+          <h1>Virtual <span>Labs</span></h1>
         </div>
       </div>
     </div>
+  </header>
 
-    <footer class="container">
-      <p>&copy; 2024 Virtual Labs - Applied Sciences & Humanities, Pimpri Chinchwad College of Engineering</p>
-    </footer>
+  <div class="login-wrapper">
+    <div class="login-container">
+      <div class="login-header">
+        <i class="fas fa-user-graduate"></i>
+        <h2>Access Virtual Lab</h2>
+        <p>Enter your credentials to continue</p>
+      </div>
 
-    <script>
-      // EmailJS Configuration (Replace with your credentials)
-      const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
-      const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
-      const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-      
-      emailjs.init(EMAILJS_PUBLIC_KEY);
-      
-      let currentOTP = null;
-      let currentEmail = null;
-      let currentName = null;
+      <div class="input-group">
+        <label>Full Name</label>
+        <i class="fas fa-user"></i>
+        <input type="text" id="fullname" placeholder="Enter your full name">
+      </div>
 
-      // Create particles
-      function createParticles() {
-        const particlesContainer = document.getElementById("particles");
-        for (let i = 0; i < 30; i++) {
-          const particle = document.createElement("div");
-          particle.classList.add("particle");
-          const size = Math.random() * 100 + 20;
-          particle.style.width = `${size}px`;
-          particle.style.height = `${size}px`;
-          particle.style.left = `${Math.random() * 100}%`;
-          particle.style.top = `${Math.random() * 100}%`;
-          particle.style.opacity = Math.random() * 0.1 + 0.05;
-          particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
-          particle.style.animationDelay = `${Math.random() * 5}s`;
-          particlesContainer.appendChild(particle);
-        }
+      <div class="input-group">
+        <label>Email Address</label>
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="email" placeholder="your@email.com">
+      </div>
+
+      <button class="btn" id="sendOtpBtn" onclick="sendOTP()">
+        <i class="fas fa-paper-plane"></i> Send OTP
+      </button>
+
+      <div id="otpSection" class="otp-section">
+        <div class="input-group">
+          <label>Enter OTP</label>
+          <i class="fas fa-key"></i>
+          <input type="text" id="otp" placeholder="6-digit code" maxlength="6">
+        </div>
+        <button class="btn" onclick="verifyOTP()">
+          <i class="fas fa-check-circle"></i> Verify & Login
+        </button>
+        <div class="resend-otp">
+          <a onclick="resendOTP()">Didn't receive OTP? Resend</a>
+        </div>
+        <div id="otpTimer" class="timer-text"></div>
+      </div>
+
+      <div id="message" class="message"></div>
+
+      <div class="visitor-counter">
+        <p><i class="fas fa-chart-line"></i> Total Website Visitors</p>
+        <div>
+          <i class="fas fa-users" style="color: #0072ff;"></i>
+          <span class="counter-number" id="visitorCount">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="container">
+    <p>&copy; 2024 Virtual Labs - Applied Sciences & Humanities, Pimpri Chinchwad College of Engineering</p>
+  </footer>
+
+  <script>
+    // ========== EMAILJS CONFIGURATION - FINAL WORKING CREDENTIALS ==========
+    const EMAILJS_PUBLIC_KEY = "qDqUbUSb_L4T9OouI";
+    const EMAILJS_SERVICE_ID = "service_k95tq4b";
+    const EMAILJS_TEMPLATE_ID = "template_24mknzw";
+    // =========================================================================
+
+    // Initialize EmailJS
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+    console.log("✅ EmailJS initialized");
+
+    let currentOTP = null;
+    let currentEmail = null;
+    let currentName = null;
+    let otpTimer = null;
+    let timeLeft = 60;
+    let expiryInterval = null;
+
+    // Create particles
+    function createParticles() {
+      const particlesContainer = document.getElementById("particles");
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+        const size = Math.random() * 100 + 20;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.opacity = Math.random() * 0.1 + 0.05;
+        particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        particlesContainer.appendChild(particle);
       }
+    }
 
-      // Visitor Counter using localStorage
-      function updateVisitorCount() {
-        let count = localStorage.getItem('websiteVisitorCount');
-        
-        if (!count) {
-          // First time visitor
-          count = 1;
+    // Visitor Counter
+    function updateVisitorCount() {
+      let count = localStorage.getItem('websiteVisitorCount');
+      if (!count) {
+        count = 1;
+        localStorage.setItem('websiteVisitorCount', count);
+      } else {
+        count = parseInt(count);
+        const lastVisit = localStorage.getItem('lastVisitDate');
+        const today = new Date().toDateString();
+        if (lastVisit !== today) {
+          count++;
           localStorage.setItem('websiteVisitorCount', count);
-        } else {
-          count = parseInt(count);
-          // Check if this is a new session (optional: increment only once per day)
-          const lastVisit = localStorage.getItem('lastVisitDate');
-          const today = new Date().toDateString();
-          
-          if (lastVisit !== today) {
-            count++;
-            localStorage.setItem('websiteVisitorCount', count);
-            localStorage.setItem('lastVisitDate', today);
-          }
+          localStorage.setItem('lastVisitDate', today);
         }
-        
-        document.getElementById('visitorCount').textContent = count;
       }
+      document.getElementById('visitorCount').textContent = count;
+    }
 
-      // Send OTP
-      function sendOTP() {
-        const name = document.getElementById('fullname').value.trim();
-        const email = document.getElementById('email').value.trim();
-        
-        if (!name || !email) {
-          showMessage('Please enter both name and email', 'error');
-          return;
-        }
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-          showMessage('Please enter a valid email address', 'error');
-          return;
-        }
-        
-        currentOTP = Math.floor(100000 + Math.random() * 900000).toString();
-        currentEmail = email;
-        currentName = name;
-        
-        // For testing without email (remove in production)
-        showMessage(`⚠️ TEST MODE: Your OTP is ${currentOTP}`, 'success');
-        
-        // Uncomment below for real email sending
-        /*
+    // Send OTP via Email
+    async function sendOTP() {
+      const name = document.getElementById('fullname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      
+      if (!name || !email) {
+        showMessage('Please enter both name and email', 'error');
+        return;
+      }
+      
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showMessage('Please enter a valid email address', 'error');
+        return;
+      }
+      
+      currentOTP = Math.floor(100000 + Math.random() * 900000).toString();
+      currentEmail = email;
+      currentName = name;
+      
+      const otpData = {
+        code: currentOTP,
+        expiresAt: Date.now() + (5 * 60 * 1000)
+      };
+      sessionStorage.setItem('otpData', JSON.stringify(otpData));
+      
+      const sendBtn = document.getElementById('sendOtpBtn');
+      sendBtn.disabled = true;
+      startTimer(sendBtn);
+      
+      try {
         const templateParams = {
           to_name: name,
           to_email: email,
           otp: currentOTP,
-          lab_name: "Taylor's Theorem Virtual Lab"
+          lab_name: "Virtual Labs - Applied Sciences & Humanities",
+          year: new Date().getFullYear()
         };
         
-        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-          .then(() => {
-            showMessage(`✅ OTP sent to ${email}!`, 'success');
-          })
-          .catch(() => {
-            showMessage('❌ Failed to send OTP. Check configuration.', 'error');
-          });
-        */
+        showMessage('📧 Sending OTP to your email...', 'info');
         
-        document.getElementById('otpSection').style.display = 'block';
+        const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        
+        if (response.status === 200) {
+          showMessage(`✅ OTP sent successfully to ${email}! Valid for 5 minutes.`, 'success');
+          document.getElementById('otpSection').style.display = 'block';
+          startExpiryCountdown();
+        } else {
+          throw new Error('Failed to send');
+        }
+      } catch (error) {
+        console.error("EmailJS Error:", error);
+        showMessage(`❌ Failed to send OTP. ${error.text || 'Please try again.'}`, 'error');
+        sendBtn.disabled = false;
+        stopTimer();
       }
+    }
+    
+    function startExpiryCountdown() {
+      if (expiryInterval) clearInterval(expiryInterval);
       
-      function verifyOTP() {
-        const enteredOTP = document.getElementById('otp').value.trim();
-        
-        if (!enteredOTP) {
-          showMessage('Please enter the OTP', 'error');
+      expiryInterval = setInterval(() => {
+        const storedOtpData = sessionStorage.getItem('otpData');
+        if (!storedOtpData) {
+          clearInterval(expiryInterval);
           return;
         }
         
-        if (enteredOTP === currentOTP) {
-          const userData = {
-            name: currentName,
-            email: currentEmail,
-            loginTime: new Date().toISOString()
-          };
-          localStorage.setItem('taylorLabUser', JSON.stringify(userData));
-          
-          showMessage('✅ Login successful! Redirecting...', 'success');
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 1500);
+        const otpData = JSON.parse(storedOtpData);
+        const timeLeftMs = otpData.expiresAt - Date.now();
+        
+        if (timeLeftMs <= 0) {
+          clearInterval(expiryInterval);
+          document.getElementById('otpTimer').textContent = '⏰ OTP has expired! Please request a new one.';
+          document.getElementById('otpTimer').style.color = '#dc3545';
         } else {
-          showMessage('❌ Invalid OTP! Please try again.', 'error');
+          const minutesLeft = Math.floor(timeLeftMs / 60000);
+          const secondsLeft = Math.floor((timeLeftMs % 60000) / 1000);
+          document.getElementById('otpTimer').textContent = `⏰ OTP expires in: ${minutesLeft}:${secondsLeft.toString().padStart(2, '0')}`;
+          document.getElementById('otpTimer').style.color = '#e67e22';
         }
+      }, 1000);
+    }
+    
+    async function resendOTP() {
+      if (!currentEmail || !currentName) {
+        showMessage('Please enter your details and click Send OTP first', 'error');
+        return;
       }
       
-      function showMessage(msg, type) {
-        const msgDiv = document.getElementById('message');
-        msgDiv.textContent = msg;
-        msgDiv.className = `message ${type}`;
+      currentOTP = Math.floor(100000 + Math.random() * 900000).toString();
+      
+      const otpData = {
+        code: currentOTP,
+        expiresAt: Date.now() + (5 * 60 * 1000)
+      };
+      sessionStorage.setItem('otpData', JSON.stringify(otpData));
+      
+      const sendBtn = document.getElementById('sendOtpBtn');
+      sendBtn.disabled = true;
+      startTimer(sendBtn);
+      
+      try {
+        const templateParams = {
+          to_name: currentName,
+          to_email: currentEmail,
+          otp: currentOTP,
+          lab_name: "Virtual Labs - Applied Sciences & Humanities",
+          year: new Date().getFullYear()
+        };
+        
+        showMessage('📧 Resending OTP to your email...', 'info');
+        
+        const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+        
+        if (response.status === 200) {
+          showMessage(`✅ New OTP sent to ${currentEmail}!`, 'success');
+          startExpiryCountdown();
+        } else {
+          throw new Error('Failed to send');
+        }
+      } catch (error) {
+        showMessage(`❌ Failed to resend OTP. ${error.text || 'Please try again.'}`, 'error');
+        sendBtn.disabled = false;
+        stopTimer();
+      }
+    }
+    
+    function startTimer(button) {
+      timeLeft = 60;
+      button.innerHTML = `<i class="fas fa-hourglass-half"></i> Wait ${timeLeft}s`;
+      
+      otpTimer = setInterval(() => {
+        timeLeft--;
+        if (timeLeft <= 0) {
+          clearInterval(otpTimer);
+          button.disabled = false;
+          button.innerHTML = `<i class="fas fa-paper-plane"></i> Send OTP`;
+        } else {
+          button.innerHTML = `<i class="fas fa-hourglass-half"></i> Wait ${timeLeft}s`;
+        }
+      }, 1000);
+    }
+    
+    function stopTimer() {
+      if (otpTimer) {
+        clearInterval(otpTimer);
+        const sendBtn = document.getElementById('sendOtpBtn');
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = `<i class="fas fa-paper-plane"></i> Send OTP`;
+      }
+    }
+    
+    function verifyOTP() {
+      const enteredOTP = document.getElementById('otp').value.trim();
+      
+      if (!enteredOTP) {
+        showMessage('Please enter the OTP', 'error');
+        return;
+      }
+      
+      const storedOtpData = sessionStorage.getItem('otpData');
+      
+      if (!storedOtpData) {
+        showMessage('❌ No OTP found. Please request a new OTP.', 'error');
+        return;
+      }
+      
+      const otpData = JSON.parse(storedOtpData);
+      
+      if (Date.now() > otpData.expiresAt) {
+        showMessage('❌ OTP has expired! Please request a new OTP.', 'error');
+        sessionStorage.removeItem('otpData');
+        document.getElementById('otp').value = '';
+        return;
+      }
+      
+      if (enteredOTP === otpData.code) {
+        const userData = {
+          name: currentName,
+          email: currentEmail,
+          loginTime: new Date().toISOString()
+        };
+        localStorage.setItem('taylorLabUser', JSON.stringify(userData));
+        
+        showMessage('✅ Login successful! Redirecting...', 'success');
         setTimeout(() => {
-          msgDiv.style.display = 'none';
-        }, 5000);
-      }
-      
-      // Check if already logged in
-      function checkExistingLogin() {
-        const userData = localStorage.getItem('taylorLabUser');
-        if (userData) {
           window.location.href = 'index.html';
-        }
+        }, 1500);
+      } else {
+        showMessage('❌ Invalid OTP! Please try again.', 'error');
       }
+    }
+    
+    function showMessage(msg, type) {
+      const msgDiv = document.getElementById('message');
+      msgDiv.textContent = msg;
+      msgDiv.className = `message ${type}`;
+      setTimeout(() => {
+        msgDiv.style.display = 'none';
+      }, 5000);
+    }
+    
+    // Clear existing login
+    localStorage.removeItem('taylorLabUser');
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      updateVisitorCount();
       
-      // Initialize
-      document.addEventListener('DOMContentLoaded', () => {
-        createParticles();
-        updateVisitorCount();
-        checkExistingLogin();
+      // Enter key support
+      document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            if (input.id === 'otp' && currentOTP) {
+              verifyOTP();
+            } else if (input.id === 'email' || input.id === 'fullname') {
+              sendOTP();
+            }
+          }
+        });
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
