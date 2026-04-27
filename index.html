@@ -4,6 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Virtual Labs - LAUC</title>
+    
+    <!-- AUTHENTICATION PROTECTION - Users cannot access this page without logging in -->
+    <script>
+      // Check if user is logged in
+      const userData = localStorage.getItem('taylorLabUser');
+      
+      if (!userData) {
+        // Not logged in - redirect to login page immediately
+        window.location.href = 'login.html';
+      }
+      
+      // Parse user data for later use
+      const currentUser = JSON.parse(userData);
+    </script>
+    
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -176,6 +191,8 @@
         backdrop-filter: blur(5px);
         border: 1px solid rgba(255, 255, 255, 0.2);
         transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
       }
 
       .user-info:hover {
@@ -193,109 +210,49 @@
         font-size: 15px;
       }
 
+      /* Logout Dropdown */
+      .logout-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        min-width: 180px;
+        display: none;
+        margin-top: 10px;
+        z-index: 100;
+        overflow: hidden;
+      }
+
+      .user-info:hover .logout-dropdown {
+        display: block;
+      }
+
+      .logout-dropdown a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 20px;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .logout-dropdown a:hover {
+        background: #f8d7da;
+        color: #dc3545;
+      }
+
+      .logout-dropdown i {
+        font-size: 16px;
+      }
+
       /* Main Content Layout */
       .main-content {
         display: flex;
         margin-top: 40px;
         gap: 35px;
-      }
-
-      /* Sidebar Navigation */
-      .sidebar {
-        flex: 0 0 300px;
-        background: linear-gradient(145deg, #ffffff, #f0f0f0);
-        border-radius: 20px;
-        box-shadow: 8px 8px 16px #d9d9d9, -8px -8px 16px #ffffff;
-        padding: 25px 0;
-        height: fit-content;
-        position: sticky;
-        top: 30px;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-      }
-
-      .sidebar h3 {
-        padding: 0 25px 20px;
-        color: #1e3c72;
-        border-bottom: 2px solid #e0e7ff;
-        margin-bottom: 20px;
-        font-size: 22px;
-        font-weight: 600;
-        position: relative;
-      }
-
-      .sidebar h3::after {
-        content: "";
-        position: absolute;
-        bottom: -2px;
-        left: 25px;
-        width: 50px;
-        height: 2px;
-        background: #00c6ff;
-      }
-
-      .nav-menu {
-        list-style: none;
-      }
-
-      .nav-item {
-        padding: 15px 30px;
-        border-left: 5px solid transparent;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin: 5px 0;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .nav-item::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(0, 198, 255, 0.1),
-          transparent
-        );
-        transition: left 0.5s ease;
-      }
-
-      .nav-item:hover::before {
-        left: 100%;
-      }
-
-      .nav-item:hover {
-        background: linear-gradient(
-          90deg,
-          rgba(0, 198, 255, 0.05),
-          rgba(30, 60, 114, 0.05)
-        );
-        border-left-color: #00c6ff;
-        padding-left: 35px;
-      }
-
-      .nav-item.active {
-        background: linear-gradient(
-          90deg,
-          rgba(0, 198, 255, 0.1),
-          rgba(30, 60, 114, 0.05)
-        );
-        border-left-color: #0072ff;
-        color: #0072ff;
-        font-weight: 600;
-        box-shadow: inset 3px 0 10px rgba(0, 114, 255, 0.1);
-      }
-
-      .nav-item i {
-        width: 24px;
-        text-align: center;
-        font-size: 18px;
       }
 
       /* Content Area */
@@ -319,58 +276,6 @@
           opacity: 1;
           transform: translateY(0);
         }
-      }
-
-      .content-header {
-        margin-bottom: 35px;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #e0e7ff;
-        position: relative;
-      }
-
-      .breadcrumb {
-        font-size: 14px;
-        color: #666;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .breadcrumb a {
-        color: #0072ff;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        font-weight: 500;
-      }
-
-      .breadcrumb a:hover {
-        color: #00c6ff;
-        text-decoration: underline;
-      }
-
-      .breadcrumb i {
-        font-size: 12px;
-        color: #999;
-      }
-
-      .content-header h2 {
-        font-size: 32px;
-        color: #1e3c72;
-        font-weight: 700;
-        margin-bottom: 8px;
-        background: linear-gradient(90deg, #1e3c72, #0072ff);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-family: "Roboto Slab", serif;
-      }
-
-      .content-header p {
-        color: #666;
-        margin-top: 5px;
-        font-size: 16px;
-        padding-left: 5px;
       }
 
       /* Aim Sections */
@@ -466,119 +371,9 @@
         line-height: 1.5;
       }
 
-      /* Feedback Section */
-      .feedback-section {
-        background: linear-gradient(135deg, #e6f7ff, #d6eaff);
-        border-radius: 16px;
-        padding: 30px;
-        border: 2px solid rgba(0, 198, 255, 0.3);
-        box-shadow: 5px 5px 15px rgba(0, 114, 255, 0.1);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .feedback-section::before {
-        content: "";
-        position: absolute;
-        top: -50px;
-        right: -50px;
-        width: 150px;
-        height: 150px;
-        background: rgba(0, 198, 255, 0.1);
-        border-radius: 50%;
-      }
-
-      .feedback-header {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        margin-bottom: 25px;
-        position: relative;
-        z-index: 1;
-      }
-
-      .feedback-header i {
-        font-size: 32px;
-        color: #0072ff;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 15px;
-        border-radius: 50%;
-        box-shadow: 0 5px 15px rgba(0, 114, 255, 0.2);
-      }
-
-      .feedback-header h3 {
-        color: #1e3c72;
-        font-size: 26px;
-        font-weight: 600;
-      }
-
-      .feedback-content {
-        margin-bottom: 30px;
-        position: relative;
-        z-index: 1;
-      }
-
-      .feedback-content p {
-        margin-bottom: 18px;
-        color: #333;
-        line-height: 1.7;
-        font-size: 16px;
-      }
-
-      .feedback-button {
-        background: linear-gradient(135deg, #00c6ff, #0072ff);
-        color: white;
-        border: none;
-        padding: 15px 35px;
-        font-size: 16px;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        box-shadow: 0 8px 20px rgba(0, 114, 255, 0.3);
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-        text-decoration: none;
-      }
-
-      .feedback-button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.2),
-          transparent
-        );
-        transition: left 0.5s ease;
-        z-index: -1;
-      }
-
-      .feedback-button:hover::before {
-        left: 100%;
-      }
-
-      .feedback-button:hover {
-        transform: translateY(-5px) scale(1.05);
-        box-shadow: 0 15px 30px rgba(0, 114, 255, 0.4);
-      }
-
-      .feedback-button:active {
-        transform: translateY(-2px) scale(1.02);
-      }
-
-      /* Footer (simplified) */
       footer {
         margin-top: 50px;
-        padding: 20px 0; /* normal spacing */
+        padding: 20px 0;
         text-align: center;
         color: #666;
         font-size: 15px;
@@ -588,22 +383,37 @@
         box-shadow: none;
       }
 
-      .footer-logo {
-        display: inline-block;
-        margin: 0 8px;
-        font-weight: 700;
-        color: #1e3c72;
-        background: linear-gradient(90deg, #1e3c72, #0072ff);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-family: "Roboto Slab", serif;
-      }
-
       footer p {
         max-width: 800px;
         margin: 0 auto;
         line-height: 1.8;
+      }
+
+      /* Particles effect for background */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        background: rgba(0, 198, 255, 0.1);
+        border-radius: 50%;
+        animation: float 15s infinite linear;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        100% {
+          transform: translateY(-1000px) rotate(720deg);
+        }
       }
 
       /* Responsive Design */
@@ -621,11 +431,6 @@
       @media (max-width: 992px) {
         .main-content {
           flex-direction: column;
-        }
-
-        .sidebar {
-          width: 100%;
-          position: static;
         }
 
         .aim-sections {
@@ -663,10 +468,6 @@
         .aim-sections {
           grid-template-columns: repeat(2, 1fr);
         }
-
-        .content-header h2 {
-          font-size: 28px;
-        }
       }
 
       @media (max-width: 576px) {
@@ -697,39 +498,6 @@
           font-size: 14px;
         }
       }
-
-      /* Particles effect for background */
-      .particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: -1;
-      }
-
-      .particle {
-        position: absolute;
-        background: rgba(0, 198, 255, 0.1);
-        border-radius: 50%;
-        animation: float 15s infinite linear;
-      }
-
-      @keyframes float {
-        0% {
-          transform: translateY(0) rotate(0deg);
-        }
-        100% {
-          transform: translateY(-1000px) rotate(720deg);
-        }
-      }
-
-      /* Feedback Button Link Style */
-      .feedback-button-link {
-        display: inline-block;
-        text-decoration: none;
-      }
     </style>
   </head>
   <body>
@@ -740,7 +508,6 @@
     <header>
       <div class="container header-container">
         <div class="logo-section">
-          <!-- PCOE Logo -->
           <div class="pcce-logo-container">
             <img
               src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png"
@@ -755,7 +522,6 @@
             </div>
           </div>
 
-          <!-- Virtual Labs Logo -->
           <div class="virtual-labs-logo">
             <i class="fas fa-flask"></i>
             <h1>Virtual <span>Labs</span></h1>
@@ -764,7 +530,13 @@
 
         <div class="user-info">
           <i class="fas fa-user-circle"></i>
-          <span>Welcome, Student</span>
+          <span id="userNameDisplay">Welcome, Student</span>
+          <div class="logout-dropdown">
+            <a href="#" onclick="logout()">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
+            </a>
+          </div>
         </div>
       </div>
     </header>
@@ -772,9 +544,7 @@
     <!-- Main Content -->
     <div class="container">
       <div class="main-content">
-        <!-- Content Area -->
         <main class="content">
-          <!-- Aim Sections -->
           <div class="aim-sections">
             <a href="aim.html" class="section-card-link">
               <div class="section-card active">
@@ -844,12 +614,23 @@
       </div>
     </div>
 
-    <!-- Footer (content removed per request) -->
     <footer class="container">
-      <!-- footer intentionally left empty to provide normal spacing -->
+      <p>&copy; 2024 Virtual Labs - Applied Sciences & Humanities, Pimpri Chinchwad College of Engineering</p>
     </footer>
 
     <script>
+      // Display user name in header
+      if (currentUser && currentUser.name) {
+        const nameDisplay = document.getElementById('userNameDisplay');
+        nameDisplay.innerHTML = `Welcome, ${currentUser.name.split(' ')[0]}`;
+      }
+      
+      // Logout function
+      function logout() {
+        localStorage.removeItem('taylorLabUser');
+        window.location.href = 'login.html';
+      }
+      
       // Create particles effect
       function createParticles() {
         const particlesContainer = document.getElementById("particles");
@@ -858,8 +639,6 @@
         for (let i = 0; i < particleCount; i++) {
           const particle = document.createElement("div");
           particle.classList.add("particle");
-
-          // Random properties
           const size = Math.random() * 100 + 20;
           const posX = Math.random() * 100;
           const posY = Math.random() * 100;
@@ -879,82 +658,34 @@
         }
       }
 
-      // Image loading debug
       document.addEventListener("DOMContentLoaded", function () {
         createParticles();
-
-        const logoImg = document.getElementById("pcceLogo");
-
-        logoImg.onload = function () {
-          console.log("✓ PCOE logo loaded successfully");
-        };
-
-        logoImg.onerror = function () {
-          console.log("✗ PCOE logo failed to load, using fallback");
-        };
       });
 
-      // Navigation menu interaction
-      const navItems = document.querySelectorAll(".nav-item");
-      navItems.forEach((item) => {
-        item.addEventListener("click", () => {
-          navItems.forEach((i) => i.classList.remove("active"));
-          item.classList.add("active");
-        });
-      });
-
-      // Section cards interaction with enhanced animation
+      // Section cards interaction
       document.querySelectorAll(".section-card-link").forEach((link) => {
         link.addEventListener("click", function (e) {
           e.preventDefault();
           const card = this.querySelector(".section-card");
 
-          // Add click animation
           card.style.transform = "translateY(-5px) scale(0.98)";
 
-          // Remove active class from all cards
           document.querySelectorAll(".section-card").forEach((c) => {
             c.classList.remove("active");
           });
 
-          // Add active class to clicked card
           card.classList.add("active");
 
-          // Reset transform
           setTimeout(() => {
             card.style.transform = "";
           }, 200);
 
-          // Navigate after animation
           const href = this.getAttribute("href");
           setTimeout(() => {
             window.location.href = href;
           }, 300);
         });
       });
-
-      // Feedback button animation (for the anchor tag)
-      const feedbackButton = document.querySelector(".feedback-button");
-      if (feedbackButton) {
-        feedbackButton.addEventListener("click", function (e) {
-          // Animation effect
-          this.style.transform = "scale(0.95)";
-          setTimeout(() => {
-            this.style.transform = "";
-          }, 200);
-
-          // Optional: Add a smooth transition before navigating
-          // The default anchor tag behavior will navigate to feedback.html
-          // You can remove this if you want immediate navigation
-          e.preventDefault();
-          const href = this.getAttribute("href");
-
-          // Add navigation delay for animation
-          setTimeout(() => {
-            window.location.href = href;
-          }, 300);
-        });
-      }
 
       // Add scroll effect to header
       window.addEventListener("scroll", () => {
@@ -967,31 +698,16 @@
           header.style.padding = "18px 0";
         }
       });
-
-      // Hover effect for all interactive elements
-      document
-        .querySelectorAll(
-          ".pcce-logo-container, .virtual-labs-logo, .user-info, .section-card, .feedback-button"
-        )
-        .forEach((element) => {
-          element.addEventListener("mouseenter", () => {
-            element.style.transition = "all 0.3s ease";
-          });
-        });
-
-      // Highlight current page in navigation
-      function highlightCurrentPage() {
-        const currentPage = window.location.pathname.split("/").pop();
-        if (currentPage === "index.html" || currentPage === "") {
-          // On home page, highlight the first card
-          document
-            .querySelectorAll(".section-card")[0]
-            ?.classList.add("active");
+      
+      // Prevent back button after logout
+      window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+          const checkUser = localStorage.getItem('taylorLabUser');
+          if (!checkUser) {
+            window.location.href = 'login.html';
+          }
         }
-      }
-
-      // Call on page load
-      highlightCurrentPage();
+      });
     </script>
   </body>
 </html>
