@@ -1,727 +1,412 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taylor's Theorem: Explanation & Visualization</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taylor's Theorem Theory</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        padding: 22px;
+        background: linear-gradient(135deg, #0c2461, #1e3799 45%, #4a69bd 100%);
+        color: #24324a;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        padding: 30px 24px;
+        margin-bottom: 28px;
+        background: rgba(255, 255, 255, 0.96);
+        border-radius: 18px;
+        box-shadow: 0 16px 38px rgba(0, 0, 0, 0.18);
+        border: 1px solid rgba(12, 36, 97, 0.12);
+      }
+
+      h1 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        color: #0c2461;
+        margin-bottom: 8px;
+        background: linear-gradient(90deg, #0c2461, #4a69bd);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: "Cormorant Garamond", serif;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        color: #4a69bd;
+        font-size: 1.08rem;
+        font-weight: 500;
+      }
+
+      .progress-indicator {
+        height: 5px;
+        background: #edf2ff;
+        border-radius: 999px;
+        margin-top: 18px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(90deg, #0c2461, #4a69bd);
+        border-radius: inherit;
+      }
+
+      .page-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .content-card {
+        position: relative;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 18px;
+        padding: 36px 32px;
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
+      }
+
+      .content-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto auto 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #4a69bd, #0c2461);
+      }
+
+      .theory-intro {
+        background: #f8faff;
+        border-left: 5px solid #4a69bd;
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 28px;
+        line-height: 1.9;
+      }
+
+      .theory-intro p {
+        color: #334155;
+        font-size: 1.08rem;
+        margin-bottom: 12px;
+      }
+
+      .theory-intro p:last-child {
+        margin-bottom: 0;
+      }
+
+      .rule {
+        margin-bottom: 32px;
+      }
+
+      .rule-title {
+        color: #0c2461;
+        font-size: 1.45rem;
+        font-weight: 700;
+        margin-bottom: 14px;
+        font-family: "Cormorant Garamond", serif;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e0e7ff;
+      }
+
+      .rule-subtitle {
+        color: #4a69bd;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 14px;
+        margin-top: 14px;
+      }
+
+      .rule-description {
+        color: #334155;
+        font-size: 1.06rem;
+        line-height: 1.85;
+        margin-bottom: 18px;
+      }
+
+      .formula-section {
+        background: #f8faff;
+        border: 2px dashed #9cb3e8;
+        border-radius: 12px;
+        padding: 28px 24px;
+        margin: 20px 0 22px 0;
+        text-align: center;
+      }
+
+      .formula-box {
+        font-size: 1.3rem;
+        color: #0c2461;
+        font-family: "Times New Roman", serif;
+        line-height: 2;
+      }
+
+      .note-box {
+        background: linear-gradient(120deg, #fff8e1, #fffde7);
+        border-left: 5px solid #ffc107;
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin: 20px 0;
+        color: #333;
+        font-size: 1.05rem;
+        line-height: 1.8;
+      }
+
+      .conditions-list {
+        background: #f8faff;
+        border-left: 5px solid #4a69bd;
+        border-radius: 12px;
+        padding: 20px 24px;
+        margin: 20px 0;
+      }
+
+      .conditions-list ol {
+        margin-left: 20px;
+      }
+
+      .conditions-list li {
+        color: #334155;
+        font-size: 1.06rem;
+        margin-bottom: 12px;
+        line-height: 1.8;
+      }
+
+      .conditions-list li:last-child {
+        margin-bottom: 0;
+      }
+
+      .divider {
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #d0d9ff, transparent);
+        margin: 32px 0;
+      }
+
+      .navigation-buttons {
+        display: flex;
+        justify-content: center;
+        margin-top: 16px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 13px 28px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #0c2461, #4a69bd);
+        color: #fff;
+        box-shadow: 0 10px 22px rgba(12, 36, 97, 0.24);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 30px rgba(12, 36, 97, 0.3);
+      }
+
+      .btn-primary:active {
+        transform: translateY(-1px);
+      }
+
+      @media (max-width: 768px) {
         body {
-            background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            min-height: 100vh;
+          padding: 14px;
         }
-        
-        header {
-            text-align: center;
-            margin-bottom: 20px; /* Reduced from 30px */
-            padding: 20px; /* Reduced from 30px */
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border: 3px solid #0c2461;
+
+        .header,
+        .content-card {
+          padding-left: 20px;
+          padding-right: 20px;
         }
-        
-        h1 {
-            color: #0c2461;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #0c2461, #4a69bd);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        .content-card {
+          padding-top: 24px;
+          padding-bottom: 24px;
         }
-        
-        .subtitle {
-            color: #4a6fa5;
-            font-size: 1.2rem;
-            font-weight: normal;
+
+        .formula-section {
+          padding: 20px 16px;
         }
-        
-        .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px; /* Reduced from 30px */
-            margin-bottom: 20px; /* Reduced from 30px */
+
+        .rule-title {
+          font-size: 1.25rem;
         }
-        
-        @media (max-width: 900px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .card {
-            background-color: white;
-            border-radius: 15px;
-            padding: 25px; /* Reduced from 30px */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-left: 6px solid #4a69bd;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 20px; /* Reduced space between cards */
-        }
-        
-        .card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #4a69bd, #0c2461);
-        }
-        
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-        
-        .card h2 {
-            color: #0c2461;
-            margin-bottom: 15px; /* Reduced from 20px */
-            padding-bottom: 10px; /* Reduced from 15px */
-            border-bottom: 2px solid #f0f0f0;
-            font-size: 1.8rem;
-        }
-        
-        .theorem-box {
-            background-color: #f8f9fa;
-            border-left: 4px solid #4a6fa5;
-            padding: 15px; /* Reduced from 20px */
-            margin: 20px 0; /* Reduced from 25px */
-            border-radius: 0 10px 10px 0;
-        }
-        
-        .formula {
-            font-size: 1.2rem;
-            text-align: center;
-            margin: 15px 0; /* Reduced from 20px */
-            padding: 12px; /* Reduced from 15px */
-            background: linear-gradient(120deg, #f0f5ff 0%, #e6eeff 100%);
-            border-radius: 8px;
-            overflow-x: auto;
-            border: 1px solid #d0d9ff;
-        }
-        
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px; /* Reduced from 20px */
-            margin-bottom: 20px; /* Reduced from 25px */
-        }
-        
-        .control-group {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #0c2461;
-            font-size: 1.1rem;
-        }
-        
-        select, input[type="range"] {
-            width: 100%;
-            padding: 10px; /* Reduced from 12px */
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: white;
-            transition: border-color 0.3s ease;
-        }
-        
-        select:focus, input[type="range"]:focus {
-            outline: none;
-            border-color: #4a69bd;
-        }
-        
-        .range-value {
-            display: inline-block;
-            margin-left: 10px;
-            font-weight: bold;
-            color: #0c2461;
-            background: #f0f5ff;
-            padding: 3px 10px;
-            border-radius: 15px;
-        }
-        
-        .chart-container {
-            position: relative;
-            height: 350px; /* Reduced from 400px */
-            margin-top: 15px; /* Reduced from 20px */
-            background: white;
-            border-radius: 10px;
-            padding: 12px; /* Reduced from 15px */
-            border: 2px solid #f0f0f0;
-        }
-        
-        .note {
-            background: linear-gradient(120deg, #fffde7 0%, #fff9c4 100%);
-            border-left: 4px solid #ffd600;
-            padding: 15px; /* Reduced from 20px */
-            margin: 20px 0; /* Reduced from 25px */
-            border-radius: 0 10px 10px 0;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 20px; /* Reduced from 40px */
-            padding: 15px; /* Reduced from 25px */
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 0.9rem;
-            background: rgba(12, 36, 97, 0.3);
-            border-radius: 10px;
-        }
-        
-        .example-list {
-            margin-left: 20px; /* Reduced from 25px */
-            margin-top: 12px; /* Reduced from 15px */
-        }
-        
-        .example-list li {
-            margin-bottom: 8px; /* Reduced from 10px */
-            padding-left: 8px; /* Reduced from 10px */
-            position: relative;
-        }
-        
-        .example-list li:before {
-            content: '•';
-            color: #4a69bd;
-            font-weight: bold;
-            position: absolute;
-            left: -12px; /* Reduced from -15px */
-        }
-        
-        .back-button {
-            display: block;
-            margin: 20px auto 15px; /* Reduced top margin from 40px */
-            background: linear-gradient(135deg, #0c2461, #4a69bd);
-            color: white;
-            border: none;
-            padding: 14px 35px; /* Reduced from 16px 45px */
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.1rem; /* Reduced from 1.2rem */
-            font-weight: 600;
-            text-align: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(12, 36, 97, 0.3);
-            width: fit-content;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px; /* Reduced from 12px */
-        }
-        
-        .back-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(12, 36, 97, 0.4);
-            background: linear-gradient(135deg, #4a69bd, #0c2461);
-        }
-        
-        .button-container {
-            display: flex;
-            justify-content: center;
-            margin: 30px 0 20px; /* Reduced from 50px 0 30px */
-        }
-        
-        @media (max-width: 768px) {
-            .back-button {
-                width: 90%;
-                padding: 12px 20px; /* Reduced from 14px 25px */
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            header {
-                padding: 15px; /* Reduced from 20px */
-            }
-            
-            .card {
-                padding: 18px; /* Reduced from 20px */
-            }
-            
-            .chart-container {
-                height: 300px; /* Further reduced for mobile */
-            }
-        }
-        
-        .progress-indicator {
-            height: 5px;
-            background: #f0f0f0;
-            border-radius: 5px;
-            margin: 15px 0; /* Reduced from 20px */
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #0c2461, #4a69bd);
-            width: 100%;
-            transition: width 0.5s ease;
-        }
-        
-        /* Added to reduce bottom space in mathematical examples section */
-        .card:last-of-type {
-            margin-bottom: 10px;
-        }
-        
-        .card h3 {
-            margin-top: 15px; /* Reduced spacing */
-            margin-bottom: 10px; /* Reduced spacing */
-        }
-        
-        .card p {
-            margin-bottom: 12px; /* Reduced spacing */
-        }
+      }
     </style>
-</head>
-<body>
-    <header>
-        <h1>Taylor's Theorem</h1>
-        <p class="subtitle">Approximating functions with polynomials</p>
-        
-        <div class="progress-indicator">
-            <div class="progress-fill"></div>
-        </div>
-    </header>
-    
+  </head>
+  <body>
     <div class="container">
-        <div class="card">
-            <h2>Theorem Statement</h2>
-            <p>Taylor's Theorem states that any smooth function can be approximated by a polynomial, known as a Taylor polynomial, centered at a point \(a\).</p>
-            
-            <div class="theorem-box">
-                <p>If \(f\) is a function that is \(n+1\) times differentiable on an interval containing \(a\), then for each \(x\) in that interval:</p>
-                <div class="formula">
-                    \[
-                    f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!} (x-a)^k + R_n(x)
-                    \]
-                </div>
-                <p>where \(R_n(x)\) is the remainder term, representing the error in the approximation.</p>
-            </div>
-            
-            <h3>Taylor Series Expansion</h3>
-            <div class="formula">
-                \[
-                f(x) = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \frac{f'''(a)}{3!}(x-a)^3 + \cdots
-                \]
-            </div>
-            <h3>Applications</h3>
-            <ul class="example-list">
-                <li>Numerical analysis and scientific computing</li>
-                <li>Physics and engineering approximations</li>
-                <li>Solving differential equations</li>
-            </ul>
+      <div class="header">
+        <h1>Taylor's Theorem</h1>
+        <div class="subtitle">Theoretical Foundation & Mathematical Rules</div>
+        <div class="progress-indicator" aria-hidden="true">
+          <div class="progress-fill"></div>
         </div>
-        
-        <div class="card">
-            <h2>Interactive Visualization</h2>
-            <p>Adjust the parameters below to see how Taylor polynomials approximate different functions:</p>
-            
-            <div class="controls">
-                <div class="control-group">
-                    <label for="function">Function:</label>
-                    <select id="function">
-                        <option value="sin">sin(x)</option>
-                        <option value="cos">cos(x)</option>
-                        <option value="exp">exp(x)</option>
-                        <option value="ln">ln(x+1)</option>
-                        <option value="poly">1/(1-x)</option>
-                    </select>
-                </div>
-                
-                <div class="control-group">
-                    <label for="center">Center (a): <span id="center-value" class="range-value">0</span></label>
-                    <input type="range" id="center" min="-3" max="3" step="0.1" value="0">
-                </div>
-                
-                <div class="control-group">
-                    <label for="degree">Polynomial Degree (n): <span id="degree-value" class="range-value">3</span></label>
-                    <input type="range" id="degree" min="1" max="10" step="1" value="3">
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <canvas id="taylorChart"></canvas>
-            </div>
-            
-            <p id="polynomial-text" style="margin-top: 15px; font-size: 1rem; color: #0c2461; background: #f0f5ff; padding: 12px; border-radius: 8px;">
-                Current approximation: <span id="polynomial" style="font-weight: bold;"></span>
+      </div>
+
+      <div class="page-stack">
+        <section class="content-card">
+          <div class="theory-intro">
+            <p>
+              <strong
+                >Let f(x) be any given function having infinite
+                derivatives.</strong
+              >
             </p>
-        </div>
+            <p>
+              <strong
+                >Then f(x) can be represented as an infinite series.</strong
+              >
+            </p>
+          </div>
+
+          <div class="rule">
+            <div class="rule-title">
+              <i
+                class="fas fa-calculator"
+                style="margin-right: 12px; color: #4a69bd"
+              ></i
+              >Rule 1: Expansion of f(x) in powers of (x − a)
+            </div>
+
+            <div class="formula-section">
+              <div class="formula-box">
+                \[f(x) = f(a) + (x-a)f'(a) + \frac{(x-a)^2}{2!}f''(a) +
+                \frac{(x-a)^3}{3!}f'''(a) + \cdots\]
+              </div>
+            </div>
+
+            <p class="rule-description">
+              This is called <strong>Taylor Series about point a.</strong>
+            </p>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="rule">
+            <div class="rule-title">
+              <i
+                class="fas fa-expand"
+                style="margin-right: 12px; color: #4a69bd"
+              ></i
+              >Rule 2: Expansion of f(x + h)
+            </div>
+
+            <div class="formula-section">
+              <div class="formula-box">
+                \[f(x+h) = f(x) + hf'(x) + \frac{h^2}{2!}f''(x) +
+                \frac{h^3}{3!}f'''(x) + \cdots\]
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="rule">
+            <div class="rule-title">
+              <i
+                class="fas fa-star"
+                style="margin-right: 12px; color: #ffc107"
+              ></i
+              >Special Case (Maclaurin Series)
+            </div>
+
+            <p class="rule-description">If a = 0, then:</p>
+
+            <div class="formula-section">
+              <div class="formula-box">
+                \[f(x) = f(0) + xf'(0) + \frac{x^2}{2!}f''(0) +
+                \frac{x^3}{3!}f'''(0) + \cdots\]
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="rule">
+            <div class="rule-title">
+              <i
+                class="fas fa-check-circle"
+                style="margin-right: 12px; color: #4a69bd"
+              ></i
+              >Conditions
+            </div>
+
+            <div class="conditions-list">
+              <ol>
+                <li>Function should be <strong>continuous</strong></li>
+                <li>Derivatives should <strong>exist</strong></li>
+                <li>Series should be <strong>convergent</strong></li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="note-box">
+            <i
+              class="fas fa-lightbulb"
+              style="margin-right: 10px; color: #ff9800"
+            ></i>
+            <strong>Note:</strong> Taylor's Theorem forms the foundation for
+            many numerical methods and is essential for function approximation,
+            differential equations, and calculus applications.
+          </div>
+
+          <div class="navigation-buttons">
+            <a href="index.html" class="btn btn-primary">
+              <i class="fas fa-home"></i> Back to Home
+            </a>
+          </div>
+        </section>
+      </div>
     </div>
-    
-    <div class="card">
-        <h2>Mathematical Examples</h2>
-        
-        <h3>1. Exponential Function (\(e^x\)) centered at 0</h3>
-        <div class="formula">
-            \[
-            e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \frac{x^4}{4!} + \cdots
-            \]
-        </div>
-        
-        <h3>2. Sine Function centered at 0</h3>
-        <div class="formula">
-            \[
-            \sin(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots
-            \]
-        </div>
-        
-        <h3>3. Geometric Series as a Taylor Series</h3>
-        <div class="formula">
-            \[
-            \frac{1}{1-x} = 1 + x + x^2 + x^3 + x^4 + \cdots \quad \text{for } |x| < 1
-            \]
-        </div>
-        
-        <h3>Remainder (Error) Term</h3>
-        <p>The Lagrange form of the remainder is given by:</p>
-        <div class="formula">
-            \[
-            R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!} (x-a)^{n+1}
-            \]
-        </div>
-        <p>for some \(\xi\) between \(a\) and \(x\). This provides a bound on the approximation error.</p>
-    </div>
-    
-    <!-- Back to Home Button at the bottom -->
-    <div class="button-container">
-        <a href="index.html" class="back-button">
-            <i class="fas fa-home"></i> Back to Home
-        </a>
-    </div>
+
     <script>
-        // Initialize MathJax
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            }
-        };
-        
-        // Set up the chart
-        const ctx = document.getElementById('taylorChart').getContext('2d');
-        let taylorChart;
-        
-        // Function definitions and their derivatives
-        const functions = {
-            sin: {
-                name: "sin(x)",
-                func: x => Math.sin(x),
-                derivatives: (a, k) => {
-                    const cycle = [
-                        x => Math.sin(x),
-                        x => Math.cos(x),
-                        x => -Math.sin(x),
-                        x => -Math.cos(x)
-                    ];
-                    return cycle[k % 4](a);
-                },
-                domain: [-2 * Math.PI, 2 * Math.PI]
-            },
-            cos: {
-                name: "cos(x)",
-                func: x => Math.cos(x),
-                derivatives: (a, k) => {
-                    const cycle = [
-                        x => Math.cos(x),
-                        x => -Math.sin(x),
-                        x => -Math.cos(x),
-                        x => Math.sin(x)
-                    ];
-                    return cycle[k % 4](a);
-                },
-                domain: [-2 * Math.PI, 2 * Math.PI]
-            },
-            exp: {
-                name: "exp(x)",
-                func: x => Math.exp(x),
-                derivatives: (a, k) => Math.exp(a), // All derivatives of e^x are e^x
-                domain: [-3, 3]
-            },
-            ln: {
-                name: "ln(x+1)",
-                func: x => Math.log(x + 1),
-                derivatives: (a, k) => {
-                    // Derivatives of ln(x+1): 1/(x+1), -1/(x+1)^2, 2/(x+1)^3, -6/(x+1)^4, ...
-                    if (k === 0) return Math.log(a + 1);
-                    const sign = k % 2 === 0 ? 1 : -1;
-                    return sign * factorial(k - 1) / Math.pow(a + 1, k);
-                },
-                domain: [-0.9, 3]
-            },
-            poly: {
-                name: "1/(1-x)",
-                func: x => 1 / (1 - x),
-                derivatives: (a, k) => {
-                    // Derivatives of 1/(1-x): 1/(1-x), 1/(1-x)^2, 2/(1-x)^3, 6/(1-x)^4, ...
-                    return factorial(k) / Math.pow(1 - a, k + 1);
-                },
-                domain: [-2, 0.9]
-            }
-        };
-        
-        // Helper function for factorial
-        function factorial(n) {
-            if (n <= 1) return 1;
-            let result = 1;
-            for (let i = 2; i <= n; i++) {
-                result *= i;
-            }
-            return result;
-        }
-        
-        // Calculate Taylor polynomial for a given function, center, and degree
-        function taylorPolynomial(funcObj, center, degree, x) {
-            let result = 0;
-            for (let k = 0; k <= degree; k++) {
-                const derivative = funcObj.derivatives(center, k);
-                result += derivative * Math.pow(x - center, k) / factorial(k);
-            }
-            return result;
-        }
-        
-        // Generate data for the chart
-        function generateChartData(funcObj, center, degree) {
-            const domain = funcObj.domain;
-            const step = (domain[1] - domain[0]) / 200;
-            
-            const originalData = [];
-            const taylorData = [];
-            const labels = [];
-            
-            for (let x = domain[0]; x <= domain[1]; x += step) {
-                labels.push(x.toFixed(2));
-                originalData.push({x: x, y: funcObj.func(x)});
-                
-                // Check if x is in domain for Taylor approximation
-                if (funcObj.name === "ln(x+1)" && x <= -1) {
-                    taylorData.push(null);
-                } else if (funcObj.name === "1/(1-x)" && Math.abs(1 - x) < 0.01) {
-                    taylorData.push(null);
-                } else {
-                    taylorData.push({x: x, y: taylorPolynomial(funcObj, center, degree, x)});
-                }
-            }
-            
-            return { labels, originalData, taylorData };
-        }
-        
-        // Update the chart with new data
-        function updateChart() {
-            const funcName = document.getElementById('function').value;
-            const center = parseFloat(document.getElementById('center').value);
-            const degree = parseInt(document.getElementById('degree').value);
-            
-            // Update displayed values
-            document.getElementById('center-value').textContent = center.toFixed(1);
-            document.getElementById('degree-value').textContent = degree;
-            
-            const funcObj = functions[funcName];
-            const chartData = generateChartData(funcObj, center, degree);
-            
-            // Generate polynomial expression
-            let polynomialExpr = "";
-            for (let k = 0; k <= degree; k++) {
-                const derivative = funcObj.derivatives(center, k);
-                const term = derivative / factorial(k);
-                
-                if (Math.abs(term) > 0.0001) {
-                    if (k === 0) {
-                        polynomialExpr += term.toFixed(3);
-                    } else {
-                        const sign = term >= 0 ? " + " : " - ";
-                        const absTerm = Math.abs(term).toFixed(3);
-                        const power = k === 1 ? `(x-${center})` : `(x-${center})^${k}`;
-                        
-                        if (absTerm === "1.000") {
-                            polynomialExpr += sign + power;
-                        } else {
-                            polynomialExpr += sign + absTerm + "·" + power;
-                        }
-                    }
-                }
-            }
-            
-            document.getElementById('polynomial').textContent = polynomialExpr;
-            
-            // Update or create the chart
-            if (taylorChart) {
-                taylorChart.data.datasets[0].label = `Original: ${funcObj.name}`;
-                taylorChart.data.datasets[1].label = `Taylor (n=${degree})`;
-                taylorChart.data.datasets[0].data = chartData.originalData;
-                taylorChart.data.datasets[1].data = chartData.taylorData;
-                taylorChart.update();
-            } else {
-                taylorChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        datasets: [
-                            {
-                                label: `Original: ${funcObj.name}`,
-                                data: chartData.originalData,
-                                borderColor: 'rgb(54, 162, 235)',
-                                backgroundColor: 'rgba(54, 162, 235, 0.1)',
-                                borderWidth: 3,
-                                fill: false,
-                                tension: 0.4,
-                                pointRadius: 0
-                            },
-                            {
-                                label: `Taylor (n=${degree})`,
-                                data: chartData.taylorData,
-                                borderColor: 'rgb(255, 99, 132)',
-                                backgroundColor: 'rgba(255, 99, 132, 0.1)',
-                                borderWidth: 3,
-                                borderDash: [5, 5],
-                                fill: false,
-                                tension: 0,
-                                pointRadius: 0
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            x: {
-                                type: 'linear',
-                                position: 'bottom',
-                                title: {
-                                    display: true,
-                                    text: 'x',
-                                    color: '#0c2461',
-                                    font: {
-                                        size: 14,
-                                        weight: 'bold'
-                                    }
-                                },
-                                grid: {
-                                    color: 'rgba(12, 36, 97, 0.1)'
-                                },
-                                ticks: {
-                                    color: '#0c2461'
-                                }
-                            },
-                            y: {
-                                title: {
-                                    display: true,
-                                    text: 'f(x)',
-                                    color: '#0c2461',
-                                    font: {
-                                        size: 14,
-                                        weight: 'bold'
-                                    }
-                                },
-                                grid: {
-                                    color: 'rgba(12, 36, 97, 0.1)'
-                                },
-                                ticks: {
-                                    color: '#0c2461'
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    color: '#0c2461',
-                                    font: {
-                                        size: 13,
-                                        weight: 'bold'
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                mode: 'index',
-                                intersect: false,
-                                backgroundColor: 'rgba(12, 36, 97, 0.9)',
-                                titleColor: 'white',
-                                bodyColor: 'white'
-                            }
-                        }
-                    }
-                });
-            }
-            
-            // Add center point to the chart
-            const centerPoint = {
-                x: center,
-                y: funcObj.func(center)
-            };
-            
-            // Check if the center point dataset already exists
-            const centerDatasetIndex = taylorChart.data.datasets.findIndex(ds => ds.label === 'Center (a)');
-            
-            if (centerDatasetIndex !== -1) {
-                taylorChart.data.datasets[centerDatasetIndex].data = [centerPoint];
-            } else {
-                taylorChart.data.datasets.push({
-                    label: 'Center (a)',
-                    data: [centerPoint],
-                    borderColor: 'rgb(75, 192, 192)',
-                    backgroundColor: 'rgb(75, 192, 192)',
-                    borderWidth: 0,
-                    pointRadius: 8,
-                    pointHoverRadius: 12,
-                    pointStyle: 'circle'
-                });
-            }
-            
-            taylorChart.update();
-        }
-        
-        // Initialize the chart when the page loads
-        window.onload = function() {
-            updateChart();
-            
-            // Add event listeners to controls
-            document.getElementById('function').addEventListener('change', updateChart);
-            document.getElementById('center').addEventListener('input', updateChart);
-            document.getElementById('degree').addEventListener('input', updateChart);
-            
-            // Update center value display as slider moves
-            document.getElementById('center').addEventListener('input', function() {
-                document.getElementById('center-value').textContent = parseFloat(this.value).toFixed(1);
-            });
-            
-            // Update degree value display as slider moves
-            document.getElementById('degree').addEventListener('input', function() {
-                document.getElementById('degree-value').textContent = this.value;
-            });
-            
-            // Animate progress bar
-            setTimeout(() => {
-                const progressFill = document.querySelector('.progress-fill');
-                if (progressFill) {
-                    progressFill.style.width = '100%';
-                }
-            }, 500);
-        };
+      window.MathJax = {
+        tex: {
+          displayMath: [["\\[", "\\]"]],
+          inlineMath: [["$", "$"]],
+        },
+        chtml: {
+          scale: 1.08,
+        },
+      };
     </script>
-</body>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+    ></script>
+  </body>
 </html>
