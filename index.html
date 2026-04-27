@@ -167,10 +167,44 @@
         text-shadow: 0 0 8px rgba(0, 198, 255, 0.4);
       }
 
+      /* Page Title */
+      .page-title {
+        text-align: center;
+        margin: 40px 0 20px 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #ffffff, #f8f9ff);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        border-left: 5px solid #0072ff;
+        border-right: 5px solid #00c6ff;
+      }
+
+      .page-title h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        font-family: "Roboto Slab", serif;
+        background: linear-gradient(135deg, #1e3c72, #0072ff);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+      }
+
+      .page-title p {
+        color: #4a6fa5;
+        font-size: 1rem;
+      }
+
+      .page-title i {
+        color: #0072ff;
+        margin-right: 10px;
+      }
+
       /* Main Content Layout */
       .main-content {
         display: flex;
-        margin-top: 40px;
+        margin-top: 20px;
         gap: 35px;
       }
 
@@ -387,6 +421,10 @@
         .aim-sections {
           grid-template-columns: repeat(2, 1fr);
         }
+
+        .page-title h2 {
+          font-size: 1.6rem;
+        }
       }
 
       @media (max-width: 576px) {
@@ -410,6 +448,10 @@
 
         .virtual-labs-logo h1 {
           font-size: 24px;
+        }
+
+        .page-title h2 {
+          font-size: 1.3rem;
         }
       }
     </style>
@@ -443,6 +485,17 @@
         </div>
       </div>
     </header>
+
+    <!-- Page Title Section -->
+    <div class="container">
+      <div class="page-title">
+        <h2>
+          <i class="fas fa-chart-line"></i>
+          Virtual Lab on Taylor's Theorem
+        </h2>
+        <p>Explore the fascinating world of Taylor series and polynomial approximations</p>
+      </div>
+    </div>
 
     <!-- Main Content -->
     <div class="container">
@@ -518,7 +571,7 @@
     </div>
 
     <footer class="container">
-      <p>&copy; 2024 Virtual Labs - Applied Sciences & Humanities, Pimpri Chinchwad College of Engineering</p>
+      
     </footer>
 
     <script>
