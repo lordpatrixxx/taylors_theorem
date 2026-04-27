@@ -49,6 +49,7 @@
         color: #0c2461;
         margin-bottom: 8px;
         background: linear-gradient(90deg, #0c2461, #4a69bd);
+        background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font-family: "Cormorant Garamond", serif;
@@ -240,6 +241,66 @@
         transform: translateY(-1px);
       }
 
+      .standard-functions {
+        margin: 32px 0;
+      }
+
+      .standard-functions-title {
+        color: #0c2461;
+        font-size: 1.45rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        font-family: "Cormorant Garamond", serif;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e0e7ff;
+      }
+
+      .functions-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 20px;
+      }
+
+      .function-box {
+        background: linear-gradient(135deg, #f8faff 0%, #eff3ff 100%);
+        border: 2px solid #9cb3e8;
+        border-radius: 12px;
+        padding: 28px;
+        position: relative;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .function-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(74, 105, 189, 0.15);
+      }
+
+      .function-number {
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.3rem;
+        background: linear-gradient(135deg, #4a69bd, #0c2461);
+        padding: 10px 16px;
+        border-radius: 8px;
+        min-width: 45px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      .function-content {
+        color: #334155;
+        font-size: 1.2rem;
+        line-height: 2;
+        text-align: left;
+        flex: 1;
+      }
+
       @media (max-width: 768px) {
         body {
           padding: 14px;
@@ -372,6 +433,88 @@
               </ol>
             </div>
           </div>
+
+          <div class="divider"></div>
+
+          <div class="standard-functions">
+            <div class="standard-functions-title">
+              <i
+                class="fas fa-book"
+                style="margin-right: 12px; color: #4a69bd"
+              ></i>
+              Standard Functions (Maclaurin Series)
+            </div>
+
+            <div class="functions-grid">
+              <div class="function-box">
+                <div class="function-number">1</div>
+                <div class="function-content">
+                  \[e^{x}=1+x+\frac{x^{2}}{2!}+\frac{x^{3}}{3!}+\frac{x^{4}}{4!}+\cdots\]
+                </div>
+              </div>
+
+              <div class="function-box">
+                <div class="function-number">2</div>
+                <div class="function-content">
+                  \[e^{-x}=1-x+\frac{x^{2}}{2!}-\frac{x^{3}}{3!}+\frac{x^{4}}{4!}-\cdots\]
+                </div>
+              </div>
+
+              <div class="function-box">
+                <div class="function-number">3</div>
+                <div class="function-content">
+                  \[\sin
+                  x=x-\frac{x^{3}}{3!}+\frac{x^{5}}{5!}-\frac{x^{7}}{7!}+\cdots\]
+                </div>
+              </div>
+
+              <div class="function-box">
+                <div class="function-number">4</div>
+                <div class="function-content">
+                  \[\cos
+                  x=1-\frac{x^{2}}{2!}+\frac{x^{4}}{4!}-\frac{x^{6}}{6!}+\cdots\]
+                </div>
+              </div>
+
+              <div class="function-box">
+                <div class="function-number">5</div>
+                <div class="function-content">
+                  \[\tan
+                  x=x+\frac{x^{3}}{3}+\frac{2x^{5}}{15}+\frac{17x^{7}}{315}+\cdots\]
+                </div>
+              </div>
+
+              <div class="function-box">
+                <div class="function-number">6</div>
+                <div class="function-content">
+                  \[\frac{1}{1+x}=1-x+x^{2}-x^{3}+x^{4}-x^{5}+\cdots\]
+                </div>
+              </div>
+
+              <div class="function-box">
+                <div class="function-number">7</div>
+                <div class="function-content">
+                  \[\log(1+x)=x-\frac{x^{2}}{2}+\frac{x^{3}}{3}-\frac{x^{4}}{4}+\cdots\]
+                </div>
+              </div>
+
+              <div class="function-box">
+                <div class="function-number">8</div>
+                <div class="function-content">
+                  \[\frac{1}{1-x}=1+x+x^{2}+x^{3}+x^{4}+\cdots\]
+                </div>
+              </div>
+
+              <div class="function-box">
+                <div class="function-number">9</div>
+                <div class="function-content">
+                  \[\log(1-x)=-\left[x+\frac{x^{2}}{2}+\frac{x^{3}}{3}+\frac{x^{4}}{4}+\cdots\right]\]
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
 
           <div class="note-box">
             <i
