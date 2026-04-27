@@ -3,22 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Virtual Labs - LAUC</title>
-    
-    <!-- AUTHENTICATION PROTECTION - Users cannot access this page without logging in -->
-    <script>
-      // Check if user is logged in
-      const userData = localStorage.getItem('taylorLabUser');
-      
-      if (!userData) {
-        // Not logged in - redirect to login page immediately
-        window.location.href = 'login.html';
-      }
-      
-      // Parse user data for later use
-      const currentUser = JSON.parse(userData);
-    </script>
-    
+    <title>Login - Virtual Labs LAUC</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -38,14 +23,36 @@
       body {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         color: #333;
-        line-height: 1.6;
         min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
       }
 
-      .container {
-        max-width: 1300px;
-        margin: 0 auto;
-        padding: 0 25px;
+      /* Particles background */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .particle {
+        position: absolute;
+        background: rgba(0, 198, 255, 0.1);
+        border-radius: 50%;
+        animation: float 15s infinite linear;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        100% {
+          transform: translateY(-1000px) rotate(720deg);
+        }
       }
 
       /* Header Styles */
@@ -56,6 +63,7 @@
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         position: relative;
         overflow: hidden;
+        z-index: 1;
       }
 
       header::before {
@@ -67,6 +75,12 @@
         height: 4px;
         background: linear-gradient(90deg, #00c6ff, #0072ff);
         z-index: 1;
+      }
+
+      .container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 25px;
       }
 
       .header-container {
@@ -108,22 +122,12 @@
         transition: all 0.3s ease;
       }
 
-      .pcce-logo-img:hover {
-        transform: rotate(5deg) scale(1.05);
-      }
-
-      .pcce-logo-text {
-        display: flex;
-        flex-direction: column;
-      }
-
       .pcce-logo-text .main {
         font-size: 22px;
         font-weight: 700;
         color: #fff;
         line-height: 1.2;
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-        letter-spacing: 0.5px;
       }
 
       .pcce-logo-text .sub {
@@ -142,7 +146,6 @@
         background: rgba(255, 255, 255, 0.1);
         border-radius: 12px;
         backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
         transition: all 0.3s ease;
       }
 
@@ -154,20 +157,12 @@
       .virtual-labs-logo i {
         font-size: 36px;
         color: #00c6ff;
-        text-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
         animation: pulse 2s infinite;
       }
 
       @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-        100% {
-          transform: scale(1);
-        }
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
       }
 
       .virtual-labs-logo h1 {
@@ -178,99 +173,108 @@
 
       .virtual-labs-logo span {
         color: #00c6ff;
-        text-shadow: 0 0 8px rgba(0, 198, 255, 0.4);
       }
 
-      .user-info {
+      /* Login Container */
+      .login-wrapper {
         display: flex;
+        justify-content: center;
         align-items: center;
-        gap: 12px;
-        padding: 10px 18px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50px;
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease;
-        cursor: pointer;
+        min-height: calc(100vh - 200px);
+        padding: 40px 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .login-container {
+        background: linear-gradient(145deg, #ffffff, #f8f9ff);
+        border-radius: 30px;
+        box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.1),
+                    -10px -10px 30px rgba(255, 255, 255, 0.8);
+        padding: 45px;
+        max-width: 480px;
+        width: 100%;
+        transition: transform 0.3s ease;
+        border: 1px solid rgba(0, 198, 255, 0.2);
+      }
+
+      .login-container:hover {
+        transform: translateY(-5px);
+      }
+
+      .login-header {
+        text-align: center;
+        margin-bottom: 35px;
+      }
+
+      .login-header i {
+        font-size: 70px;
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 15px;
+      }
+
+      .login-header h2 {
+        font-size: 32px;
+        color: #1e3c72;
+        font-weight: 700;
+        margin-bottom: 8px;
+        font-family: "Roboto Slab", serif;
+      }
+
+      .login-header p {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .input-group {
+        margin-bottom: 25px;
         position: relative;
       }
 
-      .user-info:hover {
-        background: rgba(255, 255, 255, 0.15);
-        transform: translateX(5px);
-      }
-
-      .user-info i {
-        font-size: 22px;
-        color: #00c6ff;
-      }
-
-      .user-info span {
-        font-weight: 500;
-        font-size: 15px;
-      }
-
-      /* Logout Dropdown */
-      .logout-dropdown {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        min-width: 180px;
-        display: none;
-        margin-top: 10px;
-        z-index: 100;
-        overflow: hidden;
-      }
-
-      .user-info:hover .logout-dropdown {
+      .input-group label {
         display: block;
+        margin-bottom: 8px;
+        color: #1e3c72;
+        font-weight: 500;
+        font-size: 14px;
       }
 
-      .logout-dropdown a {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 12px 20px;
-        color: #333;
-        text-decoration: none;
+      .input-group i {
+        position: absolute;
+        left: 15px;
+        top: 42px;
+        color: #0072ff;
+        font-size: 18px;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 14px 15px 14px 45px;
+        border: 2px solid #e0e7ff;
+        border-radius: 12px;
+        font-size: 15px;
         transition: all 0.3s ease;
+        background: white;
       }
 
-      .logout-dropdown a:hover {
-        background: #f8d7da;
-        color: #dc3545;
+      .input-group input:focus {
+        outline: none;
+        border-color: #00c6ff;
+        box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.1);
       }
 
-      .logout-dropdown i {
-        font-size: 16px;
+      .otp-section {
+        display: none;
+        animation: slideDown 0.5s ease;
       }
 
-      /* Main Content Layout */
-      .main-content {
-        display: flex;
-        margin-top: 40px;
-        gap: 35px;
-      }
-
-      /* Content Area */
-      .content {
-        flex: 1;
-        background: linear-gradient(145deg, #ffffff, #f8f9ff);
-        border-radius: 20px;
-        box-shadow: 8px 8px 16px #d9d9d9, -8px -8px 16px #ffffff;
-        padding: 35px;
-        min-height: 650px;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        animation: fadeIn 0.8s ease-out;
-      }
-
-      @keyframes fadeIn {
+      @keyframes slideDown {
         from {
           opacity: 0;
-          transform: translateY(20px);
+          transform: translateY(-20px);
         }
         to {
           opacity: 1;
@@ -278,97 +282,78 @@
         }
       }
 
-      /* Aim Sections */
-      .aim-sections {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 25px;
-        margin-top: 20px;
-        margin-bottom: 45px;
-      }
-
-      .section-card-link {
-        text-decoration: none;
-        color: inherit;
-        display: block;
-        height: 100%;
-        perspective: 1000px;
-      }
-
-      .section-card {
-        background: linear-gradient(145deg, #ffffff, #f8f9ff);
-        border-radius: 16px;
-        padding: 25px 20px;
-        text-align: center;
+      .btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
         cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        border: 2px solid transparent;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05),
-          -5px -5px 15px rgba(255, 255, 255, 0.8);
-        position: relative;
-        overflow: hidden;
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+        color: white;
+        margin-bottom: 12px;
       }
 
-      .section-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #00c6ff, #0072ff);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.4s ease;
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 114, 255, 0.3);
       }
 
-      .section-card:hover::before {
-        transform: scaleX(1);
+      .btn:active {
+        transform: translateY(0);
       }
 
-      .section-card:hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: 0 15px 30px rgba(0, 114, 255, 0.15);
-        border-color: rgba(0, 198, 255, 0.3);
+      .btn-secondary {
+        background: linear-gradient(135deg, #6c757d, #5a6268);
       }
 
-      .section-card.active {
-        background: linear-gradient(135deg, #e6f7ff, #d6eaff);
-        border-color: #0072ff;
-        box-shadow: 0 10px 25px rgba(0, 114, 255, 0.2);
+      .message {
+        margin-top: 20px;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 14px;
+        display: none;
       }
 
-      .section-card i {
-        font-size: 40px;
-        margin-bottom: 20px;
-        color: #0072ff;
+      .message.success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        display: block;
+      }
+
+      .message.error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        display: block;
+      }
+
+      .visitor-counter {
+        text-align: center;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 2px solid #e0e7ff;
+      }
+
+      .visitor-counter p {
+        color: #666;
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+
+      .counter-number {
+        font-size: 28px;
+        font-weight: 700;
         background: linear-gradient(135deg, #00c6ff, #0072ff);
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
-        transition: all 0.3s ease;
-      }
-
-      .section-card:hover i {
-        transform: scale(1.2) rotate(5deg);
-      }
-
-      .section-card h3 {
-        font-size: 20px;
-        margin-bottom: 10px;
-        color: #1e3c72;
-        font-weight: 600;
-      }
-
-      .section-card p {
-        font-size: 14px;
-        color: #666;
-        line-height: 1.5;
+        display: inline-block;
+        margin-left: 8px;
       }
 
       footer {
@@ -376,135 +361,45 @@
         padding: 20px 0;
         text-align: center;
         color: #666;
-        font-size: 15px;
-        border-top: none;
-        background: transparent;
-        border-radius: 0;
-        box-shadow: none;
-      }
-
-      footer p {
-        max-width: 800px;
-        margin: 0 auto;
-        line-height: 1.8;
-      }
-
-      /* Particles effect for background */
-      .particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: -1;
-      }
-
-      .particle {
-        position: absolute;
-        background: rgba(0, 198, 255, 0.1);
-        border-radius: 50%;
-        animation: float 15s infinite linear;
-      }
-
-      @keyframes float {
-        0% {
-          transform: translateY(0) rotate(0deg);
-        }
-        100% {
-          transform: translateY(-1000px) rotate(720deg);
-        }
-      }
-
-      /* Responsive Design */
-      @media (max-width: 1200px) {
-        .container {
-          max-width: 100%;
-          padding: 0 20px;
-        }
-
-        .aim-sections {
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        }
-      }
-
-      @media (max-width: 992px) {
-        .main-content {
-          flex-direction: column;
-        }
-
-        .aim-sections {
-          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        }
+        font-size: 14px;
+        position: relative;
+        z-index: 1;
       }
 
       @media (max-width: 768px) {
         .header-container {
           flex-direction: column;
-          gap: 25px;
-          text-align: center;
+          gap: 20px;
         }
-
+        
         .logo-section {
           flex-direction: column;
-          gap: 25px;
           width: 100%;
         }
-
+        
         .pcce-logo-container {
           border-right: none;
           padding-right: 0;
           border-bottom: 2px solid rgba(255, 255, 255, 0.25);
-          padding-bottom: 25px;
+          padding-bottom: 15px;
           justify-content: center;
-          width: 100%;
         }
-
-        .virtual-labs-logo {
-          justify-content: center;
-          padding: 10px 20px;
+        
+        .login-container {
+          padding: 30px 25px;
+          margin: 20px;
         }
-
-        .aim-sections {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-
-      @media (max-width: 576px) {
-        .aim-sections {
-          grid-template-columns: 1fr;
-        }
-
-        .content {
-          padding: 25px;
-        }
-
-        .pcce-logo-container {
-          flex-direction: column;
-          text-align: center;
-        }
-
-        .pcce-logo-img {
-          width: 75px;
-          height: 75px;
-        }
-
-        .virtual-labs-logo h1 {
-          font-size: 24px;
-        }
-
-        .user-info {
-          padding: 8px 15px;
-          font-size: 14px;
+        
+        .login-header h2 {
+          font-size: 26px;
         }
       }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   </head>
   <body>
-    <!-- Particles background -->
     <div class="particles" id="particles"></div>
 
-    <!-- Header -->
     <header>
       <div class="container header-container">
         <div class="logo-section">
@@ -513,104 +408,65 @@
               src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png"
               alt="PCOE Logo"
               class="pcce-logo-img"
-              id="pcceLogo"
-              onerror="this.onerror=null; this.src='https://via.placeholder.com/65x65/1e3c72/ffffff?text=PCOE'"
+              onerror="this.src='https://via.placeholder.com/65x65/1e3c72/ffffff?text=PCOE'"
             />
             <div class="pcce-logo-text">
               <div class="main">APPLIED SCIENCES & HUMANITIES</div>
               <div class="sub">Pimpri Chinchwad College of Engineering</div>
             </div>
           </div>
-
           <div class="virtual-labs-logo">
             <i class="fas fa-flask"></i>
             <h1>Virtual <span>Labs</span></h1>
           </div>
         </div>
-
-        <div class="user-info">
-          <i class="fas fa-user-circle"></i>
-          <span id="userNameDisplay">Welcome, Student</span>
-          <div class="logout-dropdown">
-            <a href="#" onclick="logout()">
-              <i class="fas fa-sign-out-alt"></i>
-              Logout
-            </a>
-          </div>
-        </div>
       </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="container">
-      <div class="main-content">
-        <main class="content">
-          <div class="aim-sections">
-            <a href="aim.html" class="section-card-link">
-              <div class="section-card active">
-                <i class="fas fa-bullseye"></i>
-                <h3>Aim</h3>
-                <p>Objective of the experiment</p>
-              </div>
-            </a>
+    <div class="login-wrapper">
+      <div class="login-container">
+        <div class="login-header">
+          <i class="fas fa-user-graduate"></i>
+          <h2>Access Virtual Lab</h2>
+          <p>Enter your credentials to continue</p>
+        </div>
 
-            <a href="theory.html" class="section-card-link">
-              <div class="section-card">
-                <i class="fas fa-book-open"></i>
-                <h3>Theory</h3>
-                <p>Background concepts</p>
-              </div>
-            </a>
+        <div class="input-group">
+          <label>Full Name</label>
+          <i class="fas fa-user"></i>
+          <input type="text" id="fullname" placeholder="Enter your full name">
+        </div>
 
-            <a href="pretest.html" class="section-card-link">
-              <div class="section-card">
-                <i class="fas fa-question-circle"></i>
-                <h3>Pretest</h3>
-                <p>Pre-experiment assessment</p>
-              </div>
-            </a>
+        <div class="input-group">
+          <label>Email Address</label>
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" placeholder="your@email.com">
+        </div>
 
-            <a href="simulation.html" class="section-card-link">
-              <div class="section-card">
-                <i class="fas fa-desktop"></i>
-                <h3>Simulation</h3>
-                <p>Interactive simulation</p>
-              </div>
-            </a>
+        <button class="btn" onclick="sendOTP()">
+          <i class="fas fa-paper-plane"></i> Send OTP
+        </button>
 
-            <a href="posttest.html" class="section-card-link">
-              <div class="section-card">
-                <i class="fas fa-clipboard-check"></i>
-                <h3>Posttest</h3>
-                <p>Post-experiment assessment</p>
-              </div>
-            </a>
-
-            <a href="references.html" class="section-card-link">
-              <div class="section-card">
-                <i class="fas fa-book"></i>
-                <h3>References</h3>
-                <p>Further reading materials</p>
-              </div>
-            </a>
-
-            <a href="contributors.html" class="section-card-link">
-              <div class="section-card">
-                <i class="fas fa-users"></i>
-                <h3>Contributors</h3>
-                <p>People involved</p>
-              </div>
-            </a>
-
-            <a href="feedback.html" class="section-card-link">
-              <div class="section-card feedback-card">
-                <i class="fas fa-comment-alt"></i>
-                <h3>Feedback</h3>
-                <p>Share your experience</p>
-              </div>
-            </a>
+        <div id="otpSection" class="otp-section">
+          <div class="input-group">
+            <label>Enter OTP</label>
+            <i class="fas fa-key"></i>
+            <input type="text" id="otp" placeholder="6-digit code" maxlength="6">
           </div>
-        </main>
+          <button class="btn" onclick="verifyOTP()">
+            <i class="fas fa-check-circle"></i> Verify & Login
+          </button>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <div class="visitor-counter">
+          <p><i class="fas fa-chart-line"></i> Total Website Visitors</p>
+          <div>
+            <i class="fas fa-users" style="color: #0072ff;"></i>
+            <span class="counter-number" id="visitorCount">0</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -619,94 +475,150 @@
     </footer>
 
     <script>
-      // Display user name in header
-      if (currentUser && currentUser.name) {
-        const nameDisplay = document.getElementById('userNameDisplay');
-        nameDisplay.innerHTML = `Welcome, ${currentUser.name.split(' ')[0]}`;
-      }
+      // EmailJS Configuration (Replace with your credentials)
+      const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+      const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+      const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
       
-      // Logout function
-      function logout() {
-        localStorage.removeItem('taylorLabUser');
-        window.location.href = 'login.html';
-      }
+      emailjs.init(EMAILJS_PUBLIC_KEY);
       
-      // Create particles effect
+      let currentOTP = null;
+      let currentEmail = null;
+      let currentName = null;
+
+      // Create particles
       function createParticles() {
         const particlesContainer = document.getElementById("particles");
-        const particleCount = 30;
-
-        for (let i = 0; i < particleCount; i++) {
+        for (let i = 0; i < 30; i++) {
           const particle = document.createElement("div");
           particle.classList.add("particle");
           const size = Math.random() * 100 + 20;
-          const posX = Math.random() * 100;
-          const posY = Math.random() * 100;
-          const opacity = Math.random() * 0.1 + 0.05;
-          const animationDuration = Math.random() * 20 + 10;
-          const animationDelay = Math.random() * 5;
-
           particle.style.width = `${size}px`;
           particle.style.height = `${size}px`;
-          particle.style.left = `${posX}%`;
-          particle.style.top = `${posY}%`;
-          particle.style.opacity = opacity;
-          particle.style.animationDuration = `${animationDuration}s`;
-          particle.style.animationDelay = `${animationDelay}s`;
-
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100}%`;
+          particle.style.opacity = Math.random() * 0.1 + 0.05;
+          particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+          particle.style.animationDelay = `${Math.random() * 5}s`;
           particlesContainer.appendChild(particle);
         }
       }
 
-      document.addEventListener("DOMContentLoaded", function () {
-        createParticles();
-      });
-
-      // Section cards interaction
-      document.querySelectorAll(".section-card-link").forEach((link) => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          const card = this.querySelector(".section-card");
-
-          card.style.transform = "translateY(-5px) scale(0.98)";
-
-          document.querySelectorAll(".section-card").forEach((c) => {
-            c.classList.remove("active");
-          });
-
-          card.classList.add("active");
-
-          setTimeout(() => {
-            card.style.transform = "";
-          }, 200);
-
-          const href = this.getAttribute("href");
-          setTimeout(() => {
-            window.location.href = href;
-          }, 300);
-        });
-      });
-
-      // Add scroll effect to header
-      window.addEventListener("scroll", () => {
-        const header = document.querySelector("header");
-        if (window.scrollY > 50) {
-          header.style.boxShadow = "0 6px 20px rgba(0, 0, 0, 0.2)";
-          header.style.padding = "12px 0";
+      // Visitor Counter using localStorage
+      function updateVisitorCount() {
+        let count = localStorage.getItem('websiteVisitorCount');
+        
+        if (!count) {
+          // First time visitor
+          count = 1;
+          localStorage.setItem('websiteVisitorCount', count);
         } else {
-          header.style.boxShadow = "0 6px 20px rgba(0, 0, 0, 0.15)";
-          header.style.padding = "18px 0";
-        }
-      });
-      
-      // Prevent back button after logout
-      window.addEventListener('pageshow', function(event) {
-        if (event.persisted) {
-          const checkUser = localStorage.getItem('taylorLabUser');
-          if (!checkUser) {
-            window.location.href = 'login.html';
+          count = parseInt(count);
+          // Check if this is a new session (optional: increment only once per day)
+          const lastVisit = localStorage.getItem('lastVisitDate');
+          const today = new Date().toDateString();
+          
+          if (lastVisit !== today) {
+            count++;
+            localStorage.setItem('websiteVisitorCount', count);
+            localStorage.setItem('lastVisitDate', today);
           }
         }
+        
+        document.getElementById('visitorCount').textContent = count;
+      }
+
+      // Send OTP
+      function sendOTP() {
+        const name = document.getElementById('fullname').value.trim();
+        const email = document.getElementById('email').value.trim();
+        
+        if (!name || !email) {
+          showMessage('Please enter both name and email', 'error');
+          return;
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          showMessage('Please enter a valid email address', 'error');
+          return;
+        }
+        
+        currentOTP = Math.floor(100000 + Math.random() * 900000).toString();
+        currentEmail = email;
+        currentName = name;
+        
+        // For testing without email (remove in production)
+        showMessage(`⚠️ TEST MODE: Your OTP is ${currentOTP}`, 'success');
+        
+        // Uncomment below for real email sending
+        /*
+        const templateParams = {
+          to_name: name,
+          to_email: email,
+          otp: currentOTP,
+          lab_name: "Taylor's Theorem Virtual Lab"
+        };
+        
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+          .then(() => {
+            showMessage(`✅ OTP sent to ${email}!`, 'success');
+          })
+          .catch(() => {
+            showMessage('❌ Failed to send OTP. Check configuration.', 'error');
+          });
+        */
+        
+        document.getElementById('otpSection').style.display = 'block';
+      }
+      
+      function verifyOTP() {
+        const enteredOTP = document.getElementById('otp').value.trim();
+        
+        if (!enteredOTP) {
+          showMessage('Please enter the OTP', 'error');
+          return;
+        }
+        
+        if (enteredOTP === currentOTP) {
+          const userData = {
+            name: currentName,
+            email: currentEmail,
+            loginTime: new Date().toISOString()
+          };
+          localStorage.setItem('taylorLabUser', JSON.stringify(userData));
+          
+          showMessage('✅ Login successful! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1500);
+        } else {
+          showMessage('❌ Invalid OTP! Please try again.', 'error');
+        }
+      }
+      
+      function showMessage(msg, type) {
+        const msgDiv = document.getElementById('message');
+        msgDiv.textContent = msg;
+        msgDiv.className = `message ${type}`;
+        setTimeout(() => {
+          msgDiv.style.display = 'none';
+        }, 5000);
+      }
+      
+      // Check if already logged in
+      function checkExistingLogin() {
+        const userData = localStorage.getItem('taylorLabUser');
+        if (userData) {
+          window.location.href = 'index.html';
+        }
+      }
+      
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        createParticles();
+        updateVisitorCount();
+        checkExistingLogin();
       });
     </script>
   </body>
